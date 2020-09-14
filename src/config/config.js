@@ -13,12 +13,12 @@ module.exports = {
   },
   production: {
     database: {
-      host: "us-cdbr-east-05.cleardb.net",
+      host: " mysql669.umbler.com",
       port: 3306,
-      name: "heroku_6686a82ce984b99",
+      name: "pointdojogador",
       dialect: "mysql",
-      user: "b1ac962dfa9f37",
-      password: "afe01cee",
+      user: "pointdojogador",
+      password: "xedsi5-soWpet-cextek",
       secret: process.env.JWT_SECRET
     }
   }
