@@ -1,0 +1,369 @@
+[
+    {
+        "id": 1,
+        "nomeTime": "Inter-RS",
+        "nomeAbvd": "INT",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/internacional.png"
+    },
+    {
+        "id": 2,
+        "nomeTime": "Grêmio-RS",
+        "nomeAbvd": "GRE",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/gremio.png"
+    },
+    {
+        "id": 3,
+        "nomeTime": "Atletico-MG",
+        "nomeAbvd": "CAM",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/atletico-mg.png"
+    },
+    {
+        "id": 4,
+        "nomeTime": "Palmeiras",
+        "nomeAbvd": "PAL",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/palmeiras.png"
+    },
+    {
+        "id": 5,
+        "nomeTime": "São Paulo",
+        "nomeAbvd": "SPA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/sao-paulo.png"
+    },
+    {
+        "id": 6,
+        "nomeTime": "Santos",
+        "nomeAbvd": "SAN",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/santos.png"
+    },
+    {
+        "id": 7,
+        "nomeTime": "Bahia",
+        "nomeAbvd": "BAH",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/bahia.png"
+    },
+    {
+        "id": 8,
+        "nomeTime": "Botafogo",
+        "nomeAbvd": "BOT",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/botafogo.png"
+    },
+    {
+        "id": 9,
+        "nomeTime": "Cruzeiro",
+        "nomeAbvd": "CRU",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/cruzeiro.png"
+    },
+    {
+        "id": 10,
+        "nomeTime": "Athletico-PR",
+        "nomeAbvd": "CAP",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/athletico.png"
+    },
+    {
+        "id": 11,
+        "nomeTime": "Flamengo",
+        "nomeAbvd": "FLA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/flamengo.png"
+    },
+    {
+        "id": 12,
+        "nomeTime": "Chapecoense",
+        "nomeAbvd": "CHA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/chapecoense.png"
+    },
+    {
+        "id": 13,
+        "nomeTime": "Corinthians",
+        "nomeAbvd": "COR",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/corinthians.png"
+    },
+    {
+        "id": 14,
+        "nomeTime": "Ceara",
+        "nomeAbvd": "CEA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/ceara.png"
+    },
+    {
+        "id": 15,
+        "nomeTime": "Fluminense",
+        "nomeAbvd": "FLU",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/fluminense.png"
+    },
+    {
+        "id": 16,
+        "nomeTime": "Goiás",
+        "nomeAbvd": "GOI",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/goias.png"
+    },
+    {
+        "id": 17,
+        "nomeTime": "Fortaleza",
+        "nomeAbvd": "FOR",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/fortaleza.png"
+    },
+    {
+        "id": 18,
+        "nomeTime": "CSA",
+        "nomeAbvd": "CSA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/csa.png"
+    },
+    {
+        "id": 19,
+        "nomeTime": "Avaí",
+        "nomeAbvd": "AVA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/avai.png"
+    },
+    {
+        "id": 20,
+        "nomeTime": "Vasco",
+        "nomeAbvd": "VAS",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/vasco.png"
+    },
+    {
+        "id": 21,
+        "nomeTime": "Botafogo-SP",
+        "nomeAbvd": "BTS",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/botafogo-sp.png"
+    },
+    {
+        "id": 22,
+        "nomeTime": "Cuiabá",
+        "nomeAbvd": "CUI",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/cuiaba-mt.png"
+    },
+    {
+        "id": 23,
+        "nomeTime": "Londrina",
+        "nomeAbvd": "LON",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/londrina-pr.png"
+    },
+    {
+        "id": 24,
+        "nomeTime": "Atlético-GO",
+        "nomeAbvd": "CAG",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/atletico-go.png"
+    },
+    {
+        "id": 25,
+        "nomeTime": "Coritiba",
+        "nomeAbvd": "COR",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/coritiba.png"
+    },
+    {
+        "id": 26,
+        "nomeTime": "Oeste",
+        "nomeAbvd": "OES",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/oeste.png"
+    },
+    {
+        "id": 27,
+        "nomeTime": "Paraná",
+        "nomeAbvd": "PAR",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/parana.png"
+    },
+    {
+        "id": 28,
+        "nomeTime": "Bragantino",
+        "nomeAbvd": "BRA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/bragantino.png"
+    },
+    {
+        "id": 29,
+        "nomeTime": "Operário",
+        "nomeAbvd": "OPE",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/operario.png"
+    },
+    {
+        "id": 30,
+        "nomeTime": "Vitória",
+        "nomeAbvd": "VIT",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/vitoria.png"
+    },
+    {
+        "id": 31,
+        "nomeTime": "Figueirense",
+        "nomeAbvd": "FIG",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/figueirense.png"
+    },
+    {
+        "id": 32,
+        "nomeTime": "Sport",
+        "nomeAbvd": "SPO",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/sport.png"
+    },
+    {
+        "id": 33,
+        "nomeTime": "Vila Nova",
+        "nomeAbvd": "VIL",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/vila-nova-go.png"
+    },
+    {
+        "id": 34,
+        "nomeTime": "Criciúma",
+        "nomeAbvd": "CRI",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/criciuma.png"
+    },
+    {
+        "id": 35,
+        "nomeTime": "São Bento",
+        "nomeAbvd": "SAB",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/sao-bento.png"
+    },
+    {
+        "id": 36,
+        "nomeTime": "Ponte Preta",
+        "nomeAbvd": "PON",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/ponte-preta.png"
+    },
+    {
+        "id": 37,
+        "nomeTime": "Guarani",
+        "nomeAbvd": "GUA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/guarani.png"
+    },
+    {
+        "id": 38,
+        "nomeTime": "CRB",
+        "nomeAbvd": "CRB",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/crb.png"
+    },
+    {
+        "id": 39,
+        "nomeTime": "Brasil de pelotas",
+        "nomeAbvd": "BRA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/brasil-de-pelotas.png"
+    },
+    {
+        "id": 40,
+        "nomeTime": "América-MG",
+        "nomeAbvd": "AME",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/america-mg.png"
+    },
+    {
+        "id": 41,
+        "nomeTime": "Ferroviário",
+        "nomeAbvd": "FER",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/ferroviario-ce.png"
+    },
+    {
+        "id": 42,
+        "nomeTime": "Sampaio Corrêa",
+        "nomeAbvd": "SAM",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/sampaio-correa.png"
+    },
+    {
+        "id": 43,
+        "nomeTime": "ABC",
+        "nomeAbvd": "ABC",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/abc.png"
+    },
+    {
+        "id": 44,
+        "nomeTime": "Náutico",
+        "nomeAbvd": "NAU",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/nautico.png"
+    },
+    {
+        "id": 45,
+        "nomeTime": "Imperatriz",
+        "nomeAbvd": "IMP",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/imperatriz.png"
+    },
+    {
+        "id": 46,
+        "nomeTime": "Globo",
+        "nomeAbvd": "GLO",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/globo-rn.png"
+    },
+    {
+        "id": 47,
+        "nomeTime": "Botafogo-PB",
+        "nomeAbvd": "BOT",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/botafogo-pb.png"
+    },
+    {
+        "id": 48,
+        "nomeTime": "Treze",
+        "nomeAbvd": "TRE",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/treze-pb.png"
+    },
+    {
+        "id": 49,
+        "nomeTime": "Santa Cruz",
+        "nomeAbvd": "SAN",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/santa-cruz.png"
+    },
+    {
+        "id": 50,
+        "nomeTime": "Confiança",
+        "nomeAbvd": "CON",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/confianca.png"
+    },
+    {
+        "id": 51,
+        "nomeTime": "Volta Redonda",
+        "nomeAbvd": "VOL",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/volta-redonda.png"
+    },
+    {
+        "id": 52,
+        "nomeTime": "São José",
+        "nomeAbvd": "SAO",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/sao-jose.png"
+    },
+    {
+        "id": 53,
+        "nomeTime": "Remo",
+        "nomeAbvd": "REM",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/remo.png"
+    },
+    {
+        "id": 54,
+        "nomeTime": "Paysandu",
+        "nomeAbvd": "PAY",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/paysandu.png"
+    },
+    {
+        "id": 55,
+        "nomeTime": "Juventude",
+        "nomeAbvd": "JUV",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/juventude.png"
+    },
+    {
+        "id": 56,
+        "nomeTime": "Tombense",
+        "nomeAbvd": "TOM",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/tombense.png"
+    },
+    {
+        "id": 57,
+        "nomeTime": "Ypiranga",
+        "nomeAbvd": "YPI",
+        "UrlEscudo": "//ssl.gstatic.com/onebox/media/sports/logos/hNX_cbKDANEj_oTo1jlL7Q_48x48.png"
+    },
+    {
+        "id": 58,
+        "nomeTime": "Boa",
+        "nomeAbvd": "BOA",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/boa.png"
+    },
+    {
+        "id": 59,
+        "nomeTime": "Luverdense",
+        "nomeAbvd": "LUV",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/luverdense.png"
+    },
+    {
+        "id": 60,
+        "nomeTime": "Atletico-AC",
+        "nomeAbvd": "CAA",
+        "UrlEscudo": "https://ssl.gstatic.com/onebox/media/sports/logos/zqaQcJv59s55dqVf1m7VoA_48x48.png"
+    },
+    {
+        "id": 61,
+        "nomeTime": "Paris Saint-Germain",
+        "nomeAbvd": "PSG",
+        "UrlEscudo": "https://e.imguol.com/futebol/brasoes/40x40/psg.png"
+    }
+
+]
