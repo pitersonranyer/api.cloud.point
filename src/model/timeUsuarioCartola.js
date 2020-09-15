@@ -4,17 +4,14 @@ const sequelize = require("../database/database");
 const TimeUsuarioCartola = sequelize.define("timeUsuarioCartola", {
  
   idUsuario: {
-    type: Sequelize.INTEGER,
+    primaryKey: true,
     allowNull: false,
-    references: {         // Fk usuario 1:n
-      model: 'Usuario',
-      key: 'id'
-    }
+    type: Sequelize.INTEGER
   },
 
   time_id: {
-    allowNull: false,
     primaryKey: true,
+    allowNull: false,
     type: Sequelize.INTEGER
   },
 
