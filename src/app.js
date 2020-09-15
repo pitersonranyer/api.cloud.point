@@ -39,7 +39,7 @@ app.use((error, request, response, next) => {
 });
   
 
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
     const port = process.env.PORT || 3000;
   
     app.set("port", port);
