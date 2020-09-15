@@ -4,7 +4,6 @@ module.exports = {
       name: "pointdojogador",
       dialect: "mysql",
       user: "pointdojogador",
-      password: "xedsi5-soWpet-cextek",
-      secret: process.env.JWT_SECRET
+      password: "xedsi5-soWpet-cextek"
     }
 };
