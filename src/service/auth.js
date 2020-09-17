@@ -16,7 +16,10 @@ const gerarJWT = (id, email, nome, contato, timeFavorito, saldo, admin ) => {
             saldo, 
             admin
         },
-        secret
+        secret,
+        {
+            expiresIn: 864000
+        }
     );
     return { token };
 };

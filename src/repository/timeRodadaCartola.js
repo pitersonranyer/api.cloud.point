@@ -72,27 +72,27 @@ const getTimeRodadaCartolaOne = (anoTemporada, idRodada, idUsuario, time_id) => 
 // listar time por rodada e usuario
 const getTimeRodadaCartolaPorId = (anoTemporada, idRodada, idUsuario) => {
 
-    return sequelize.query("SELECT `timeusuariocartola`.`idUsuario` " +
-        ",    `timeusuariocartola`.`time_id` " +
-        ",    `timeusuariocartola`.`assinante` " +
-        ",    `timeusuariocartola`.`foto_perfil` " +
-        ",    `timeusuariocartola`.`nome` " +
-        ",    `timeusuariocartola`.`nome_cartola` " +
-        ",    `timeusuariocartola`.`slug` " +
-        ",    `timeusuariocartola`.`url_escudo_png` " +
-        ",    `timeusuariocartola`.`url_escudo_svg` " +
-        ",    `timeusuariocartola`.`facebook_id` " +
-        ",    `timerodadacartola`.`anoTemporada` " +
-        ",    `timerodadacartola`.`idRodada` " +
-        ",    `timerodadacartola`.`pontosTotais` " +
-        ",    `timerodadacartola`.`statusPgto` " +
-        " FROM `timeusuariocartola` " +
-        " inner join `timerodadacartola` " +
-        " on    `timeusuariocartola`.`idUsuario` = `timerodadacartola`.`idUsuario` " +
-        " and   `timeusuariocartola`.`time_id` = `timerodadacartola`.`time_id` " +
-        " where `timerodadacartola`.`anoTemporada` " + `= ${anoTemporada} ` + 
-        " and   `timerodadacartola`.`idRodada` " + `= ${idRodada} ` +
-        " and   `timerodadacartola`.`idUsuario` " + `= ${idUsuario} `
+    return sequelize.query("SELECT `timeUsuarioCartola`.`idUsuario` " +
+        ",    `timeUsuarioCartola`.`time_id` " +
+        ",    `timeUsuarioCartola`.`assinante` " +
+        ",    `timeUsuarioCartola`.`foto_perfil` " +
+        ",    `timeUsuarioCartola`.`nome` " +
+        ",    `timeUsuarioCartola`.`nome_cartola` " +
+        ",    `timeUsuarioCartola`.`slug` " +
+        ",    `timeUsuarioCartola`.`url_escudo_png` " +
+        ",    `timeUsuarioCartola`.`url_escudo_svg` " +
+        ",    `timeUsuarioCartola`.`facebook_id` " +
+        ",    `timeRodadaCartola`.`anoTemporada` " +
+        ",    `timeRodadaCartola`.`idRodada` " +
+        ",    `timeRodadaCartola`.`pontosTotais` " +
+        ",    `timeRodadaCartola`.`statusPgto` " +
+        " FROM `timeUsuarioCartola` " +
+        " inner join `timeRodadaCartola` " +
+        " on    `timeUsuarioCartola`.`idUsuario` = `timeRodadaCartola`.`idUsuario` " +
+        " and   `timeUsuarioCartola`.`time_id` = `timeRodadaCartola`.`time_id` " +
+        " where `timeRodadaCartola`.`anoTemporada` " + `= ${anoTemporada} ` +
+        " and   `timeRodadaCartola`.`idRodada` " + `= ${idRodada} ` +
+        " and   `timeRodadaCartola`.`idUsuario` " + `= ${idUsuario} `
         , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
             if (data === null) {
                 data = 0;
@@ -129,28 +129,28 @@ const getTimeRodadaCartolaPorId = (anoTemporada, idRodada, idUsuario) => {
 // Classificação geral da rodada
 const getTimeRodadaCartolaPorRodada = (anoTemporada, idRodada) => {
 
-    return sequelize.query("SELECT `timeusuariocartola`.`idUsuario` " +
-        ",    `timeusuariocartola`.`time_id` " +
-        ",    `timeusuariocartola`.`assinante` " +
-        ",    `timeusuariocartola`.`foto_perfil` " +
-        ",    `timeusuariocartola`.`nome` " +
-        ",    `timeusuariocartola`.`nome_cartola` " +
-        ",    `timeusuariocartola`.`slug` " +
-        ",    `timeusuariocartola`.`url_escudo_png` " +
-        ",    `timeusuariocartola`.`url_escudo_svg` " +
-        ",    `timeusuariocartola`.`facebook_id` " +
-        ",    `timerodadacartola`.`anoTemporada` " +
-        ",    `timerodadacartola`.`idRodada` " +
-        ",    `timerodadacartola`.`pontosTotais` " +
-        ",    `timerodadacartola`.`statusPgto` " +
-        " FROM `timeusuariocartola` " +
-        " inner join `timerodadacartola` " +
-        " on    `timeusuariocartola`.`idUsuario` = `timerodadacartola`.`idUsuario` " +
-        " and   `timeusuariocartola`.`time_id` = `timerodadacartola`.`time_id` " +
-        " where  `timerodadacartola`.`idRodada` " + `= ${idRodada} ` +
-        " and   `timerodadacartola`.`anoTemporada` " + `= ${anoTemporada} ` +
-        " and   `timerodadacartola`.`statusPgto` = 'Pago' " +
-        " order by  `timerodadacartola`.`pontosTotais` DESC "
+    return sequelize.query("SELECT `timeUsuarioCartola`.`idUsuario` " +
+        ",    `timeUsuarioCartola`.`time_id` " +
+        ",    `timeUsuarioCartola`.`assinante` " +
+        ",    `timeUsuarioCartola`.`foto_perfil` " +
+        ",    `timeUsuarioCartola`.`nome` " +
+        ",    `timeUsuarioCartola`.`nome_cartola` " +
+        ",    `timeUsuarioCartola`.`slug` " +
+        ",    `timeUsuarioCartola`.`url_escudo_png` " +
+        ",    `timeUsuarioCartola`.`url_escudo_svg` " +
+        ",    `timeUsuarioCartola`.`facebook_id` " +
+        ",    `timeRodadaCartola`.`anoTemporada` " +
+        ",    `timeRodadaCartola`.`idRodada` " +
+        ",    `timeRodadaCartola`.`pontosTotais` " +
+        ",    `timeRodadaCartola`.`statusPgto` " +
+        " FROM `timeUsuarioCartola` " +
+        " inner join `timeRodadaCartola` " +
+        " on    `timeUsuarioCartola`.`idUsuario` = `timeRodadaCartola`.`idUsuario` " +
+        " and   `timeUsuarioCartola`.`time_id` = `timeRodadaCartola`.`time_id` " +
+        " where  `timeRodadaCartola`.`idRodada` " + `= ${idRodada} ` +
+        " and   `timeRodadaCartola`.`anoTemporada` " + `= ${anoTemporada} ` +
+        " and   `timeRodadaCartola`.`statusPgto` = 'Pago' " +
+        " order by  `timeRodadaCartola`.`pontosTotais` DESC "
         , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
             if (data === null) {
                 data = 0;
@@ -164,27 +164,27 @@ const getTimeRodadaCartolaPorRodada = (anoTemporada, idRodada) => {
 // Lista de Time Pendente de Pagamento
 const getTimeRodadaPendentePgto = (anoTemporada, idRodada) => {
 
-    return sequelize.query("SELECT `timeusuariocartola`.`idUsuario` " +
-        ",    `timeusuariocartola`.`time_id` " +
-        ",    `timeusuariocartola`.`assinante` " +
-        ",    `timeusuariocartola`.`foto_perfil` " +
-        ",    `timeusuariocartola`.`nome` " +
-        ",    `timeusuariocartola`.`nome_cartola` " +
-        ",    `timeusuariocartola`.`slug` " +
-        ",    `timeusuariocartola`.`url_escudo_png` " +
-        ",    `timeusuariocartola`.`url_escudo_svg` " +
-        ",    `timeusuariocartola`.`facebook_id` " +
-        ",    `timerodadacartola`.`anoTemporada` " +
-        ",    `timerodadacartola`.`idRodada` " +
-        ",    `timerodadacartola`.`pontosTotais` " +
-        ",    `timerodadacartola`.`statusPgto` " +
-        " FROM `timeusuariocartola` " +
-        " inner join `timerodadacartola` " +
-        " on    `timeusuariocartola`.`idUsuario` = `timerodadacartola`.`idUsuario` " +
-        " and   `timeusuariocartola`.`time_id` = `timerodadacartola`.`time_id` " +
-        " where  `timerodadacartola`.`idRodada` " + `= ${idRodada} ` +
-        " and   `timerodadacartola`.`anoTemporada` " + `= ${anoTemporada} ` +
-        " and   `timerodadacartola`.`statusPgto` = 'Pendente' "
+    return sequelize.query("SELECT `timeUsuarioCartola`.`idUsuario` " +
+        ",    `timeUsuarioCartola`.`time_id` " +
+        ",    `timeUsuarioCartola`.`assinante` " +
+        ",    `timeUsuarioCartola`.`foto_perfil` " +
+        ",    `timeUsuarioCartola`.`nome` " +
+        ",    `timeUsuarioCartola`.`nome_cartola` " +
+        ",    `timeUsuarioCartola`.`slug` " +
+        ",    `timeUsuarioCartola`.`url_escudo_png` " +
+        ",    `timeUsuarioCartola`.`url_escudo_svg` " +
+        ",    `timeUsuarioCartola`.`facebook_id` " +
+        ",    `timeRodadaCartola`.`anoTemporada` " +
+        ",    `timeRodadaCartola`.`idRodada` " +
+        ",    `timeRodadaCartola`.`pontosTotais` " +
+        ",    `timeRodadaCartola`.`statusPgto` " +
+        " FROM `timeUsuarioCartola` " +
+        " inner join `timeRodadaCartola` " +
+        " on    `timeUsuarioCartola`.`idUsuario` = `timeRodadaCartola`.`idUsuario` " +
+        " and   `timeUsuarioCartola`.`time_id` = `timeRodadaCartola`.`time_id` " +
+        " where  `timeRodadaCartola`.`idRodada` " + `= ${idRodada} ` +
+        " and   `timeRodadaCartola`.`anoTemporada` " + `= ${anoTemporada} ` +
+        " and   `timeRodadaCartola`.`statusPgto` = 'Pendente' "
         , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
             if (data === null) {
                 data = 0;
@@ -286,11 +286,11 @@ const putStatusPgtoTimeCartola = dadostimeRodadaCartola => {
 };
 
 const getMeusJogosMeusPgtos = (idUsuario) => {
-    return sequelize.query("SELECT `rodadacartola`.`anoTemporada` , `timerodadacartola`.`idRodada` , `timerodadacartola`.`statusPgto`,  sum(`rodadacartola`.`valorRodada`) AS `sum`" +
-        "FROM `rodadacartola`" +
-        "INNER JOIN timerodadacartola ON `timerodadacartola`.`idRodada` = `rodadacartola`.`idRodada` " +
-        "WHERE `timerodadacartola`.`idUsuario` " + `= ${idUsuario} ` +
-        "GROUP BY `rodadacartola`.`anoTemporada` , `timerodadacartola`.`idRodada` , `timerodadacartola`.`statusPgto`"
+    return sequelize.query("SELECT `rodadaCartola`.`anoTemporada` , `timeRodadaCartola`.`idRodada` , `timeRodadaCartola`.`statusPgto`,  sum(`rodadaCartola`.`valorRodada`) AS `sum`" +
+        "FROM `rodadaCartola`" +
+        "INNER JOIN timeRodadaCartola ON `timeRodadaCartola`.`idRodada` = `rodadaCartola`.`idRodada` " +
+        "WHERE `timeRodadaCartola`.`idUsuario` " + `= ${idUsuario} ` +
+        "GROUP BY `rodadaCartola`.`anoTemporada` , `timeRodadaCartola`.`idRodada` , `timeRodadaCartola`.`statusPgto`"
         , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
             if (data === null) {
                 data = 0;

@@ -21,7 +21,7 @@ const validarSenha = (req, res, next) => {
     const schema = new passwordValidator();
 
     schema
-        .is().min(8)
+        .is().min(4)
   //      .has().lowercase()
   //     .has().digits()
         .has().not().spaces();
