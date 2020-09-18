@@ -51,27 +51,27 @@ const delTimeUsuarioCartola = (idu, idt) => {
 };
 
 const getTimesUsuarioCartolaRodada = (anoTemporada, idUsuario, idRodada) => {
-    return sequelize.query("SELECT `timeusuariocartola`.`idUsuario` " +
-    ",    `timeusuariocartola`.`time_id` " +
-    ",    `timeusuariocartola`.`assinante` " +
-    ",    `timeusuariocartola`.`foto_perfil` " +
-    ",    `timeusuariocartola`.`nome` " +
-    ",    `timeusuariocartola`.`nome_cartola` " +
-    ",    `timeusuariocartola`.`slug` " +
-    ",    `timeusuariocartola`.`url_escudo_png` " +
-    ",    `timeusuariocartola`.`url_escudo_svg` " +
-    ",    `timeusuariocartola`.`facebook_id` " +
-    ",    `timerodadacartola`.`anoTemporada` " +
-    ",    `timerodadacartola`.`idRodada` " +
-    ",    `timerodadacartola`.`pontosTotais` " +
-    ",    `timerodadacartola`.`statusPgto` " +
-    " FROM `timeusuariocartola` " + 
-    " left outer join `timerodadacartola` " +
-    " on    `timeusuariocartola`.`idUsuario` = `timerodadacartola`.`idUsuario` " +
-    " and   `timeusuariocartola`.`time_id` = `timerodadacartola`.`time_id` " +
-    " and   `timerodadacartola`.`idRodada` "  + `= ${idRodada} `  +
-    " and   `timerodadacartola`.`anoTemporada` "  + `= ${anoTemporada} `  +
-    " where `timeusuariocartola`.`idUsuario` "  + `= ${idUsuario} `
+    return sequelize.query("SELECT `timeUsuarioCartola`.`idUsuario` " +
+    ",    `timeUsuarioCartola`.`time_id` " +
+    ",    `timeUsuarioCartola`.`assinante` " +
+    ",    `timeUsuarioCartola`.`foto_perfil` " +
+    ",    `timeUsuarioCartola`.`nome` " +
+    ",    `timeUsuarioCartola`.`nome_cartola` " +
+    ",    `timeUsuarioCartola`.`slug` " +
+    ",    `timeUsuarioCartola`.`url_escudo_png` " +
+    ",    `timeUsuarioCartola`.`url_escudo_svg` " +
+    ",    `timeUsuarioCartola`.`facebook_id` " +
+    ",    `timeRodadaCartola`.`anoTemporada` " +
+    ",    `timeRodadaCartola`.`idRodada` " +
+    ",    `timeRodadaCartola`.`pontosTotais` " +
+    ",    `timeRodadaCartola`.`statusPgto` " +
+    " FROM `timeUsuarioCartola` " + 
+    " left outer join `timeRodadaCartola` " +
+    " on    `timeUsuarioCartola`.`idUsuario` = `timeRodadaCartola`.`idUsuario` " +
+    " and   `timeUsuarioCartola`.`time_id` = `timeRodadaCartola`.`time_id` " +
+    " and   `timeRodadaCartola`.`idRodada` "  + `= ${idRodada} `  +
+    " and   `timeRodadaCartola`.`anoTemporada` "  + `= ${anoTemporada} `  +
+    " where `timeUsuarioCartola`.`idUsuario` "  + `= ${idUsuario} `
         , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
             if (data === null) {
                 data = 0;
