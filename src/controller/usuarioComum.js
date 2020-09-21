@@ -33,7 +33,7 @@ const atualizar = (req, res, next) => {
 };
 
 const listar = (req, res, next) => {
-    return listarTodos()
+   return listarTodos()
         .then(usuarios => res.json(usuarios))
         .catch(err => next(err));
 };

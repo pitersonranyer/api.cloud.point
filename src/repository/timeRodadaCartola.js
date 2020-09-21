@@ -249,7 +249,6 @@ const putPontosRodadaCartola = dadostimeRodadaCartola => {
             return true;
         }
         else {
-            console.log('erro ao atualizar parciais');
             return false;
         }
     });

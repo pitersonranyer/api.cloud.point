@@ -20,6 +20,7 @@ const checarToken = token => {
 
 
 const login = (email, senha) => {
+    email  =  email.toLowerCase();
     return Usuario.findOne({ where: { email } }).then(cadastrado => {
         
         if (cadastrado && senhaConfere(senha, cadastrado)) {

@@ -47,7 +47,6 @@ const getTimeUsuarioLogado = (glbId) => {
             if (data === null) {
                 return false;
             } else {
-     //           console.log(data);
                 return data.body;
             }
         });

@@ -5,22 +5,22 @@ const controller = require('../../controller/timeRodadaCartola');
 
 Router.post('/', controller.cadastro);
 
-Router.get('/consultaTimeRodadaCartolaOne/:anoTemporada/:idRodada/:idUsuario/:time_id', controller.consultaTimeRodadaCartolaOne);
+Router.get('/consultaTimeRodadaCartolaOne/:anoTemporada/:idRodada/:idUsuario/:time_id', autenticarRequisicao, controller.consultaTimeRodadaCartolaOne);
 
-Router.get('/listaTimeRodadaCartolaPorId/:anoTemporada/:idRodada/:idUsuario', controller.listaTimeRodadaCartolaPorId);
+Router.get('/listaTimeRodadaCartolaPorId/:anoTemporada/:idRodada/:idUsuario', autenticarRequisicao, controller.listaTimeRodadaCartolaPorId);
 
-Router.get('/listaTimeRodadaCartolaPorRodada/:anoTemporada/:idRodada', controller.listaTimeRodadaCartolaPorRodada);
+Router.get('/listaTimeRodadaCartolaPorRodada/:anoTemporada/:idRodada', autenticarRequisicao, controller.listaTimeRodadaCartolaPorRodada);
 
-Router.get('/listaTimeRodadaPendentePgto/:anoTemporada/:idRodada', controller.listaTimeRodadaPendentePgto);
+Router.get('/listaTimeRodadaPendentePgto/:anoTemporada/:idRodada', autenticarRequisicao, controller.listaTimeRodadaPendentePgto);
 
 
 Router.get('/consultaTimeRodadaCartolaCount/:anoTemporada/:idRodada', controller.consultaTimeRodadaCartolaCount);
 
-Router.get('/listaMeusJogosMeusPgtos/:idUsuario', controller.listaMeusJogosMeusPgtos);
+Router.get('/listaMeusJogosMeusPgtos/:idUsuario', autenticarRequisicao, controller.listaMeusJogosMeusPgtos);
 
-Router.put('/atualizarPontosRodadaCartola', controller.atualizarPontosRodadaCartola);
+Router.put('/atualizarPontosRodadaCartola', autenticarRequisicao, controller.atualizarPontosRodadaCartola);
 
-Router.put('/atualizarStatusPagamento', controller.atualizarStatusPagamento);
+Router.put('/atualizarStatusPagamento', autenticarRequisicao, controller.atualizarStatusPagamento);
 
 
 module.exports = Router;

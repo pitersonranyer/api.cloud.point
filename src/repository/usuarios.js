@@ -2,6 +2,7 @@ const Usuario = require('../model/usuario');
 const { gerarCredenciais } = require('../service/auth');
 
 const cadastrarUsuario = dadosUsuario => {
+    dadosUsuario.email  =  dadosUsuario.email.toLowerCase();
     return Usuario.findOne({ where: { email: dadosUsuario.email } }).then(psq1 => {
         if (psq1 === null) {
             return Usuario.max('id').then(max => {

@@ -7,6 +7,9 @@ const { internalServer, notFound } = require('./middleware/errorHandler');
 const environment = process.env.ENV || 'development';
 
 const app = express();
+//app.use(cors({
+//  origin: '*'
+//}))
 
 const http = require("http");
 const status = require("http-status");
@@ -35,17 +38,17 @@ app.use((request, response, next) => {
 
 
 app.use((error, request, response, next) => {
-    response.status(status.INTERNAL_SERVER_ERROR).json({ error });
+  response.status(status.INTERNAL_SERVER_ERROR).json({ error });
 });
-  
+
 
 sequelize.sync({ force: false }).then(() => {
-    const port = process.env.PORT || 3000;
-  
-    app.set("port", port);
-  
-    const server = http.createServer(app);
-  
-    server.listen(port);
+  const port = process.env.PORT || 3000;
+
+  app.set("port", port);
+
+  const server = http.createServer(app);
+
+  server.listen(port);
 });
-  
+

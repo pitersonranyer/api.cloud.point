@@ -1,12 +1,13 @@
 const Router = require('express').Router();
+const { autenticarRequisicao } = require('../../middleware/auth');
 
 const controller = require('../../controller/rodadaCartola');
 
-Router.post('/', controller.cadastro);
+Router.post('/', autenticarRequisicao, controller.cadastro);
 
-Router.delete('/excluirRodadaCartolaPorId/:anoTemporada/:idRodada', controller.excluirRodadaCartolaPorId);
+Router.delete('/excluirRodadaCartolaPorId/:anoTemporada/:idRodada', autenticarRequisicao,  controller.excluirRodadaCartolaPorId);
 
-Router.put('/alterarStatusRodada', controller.alterarStatusRodada);
+Router.put('/alterarStatusRodada', autenticarRequisicao, controller.alterarStatusRodada);
 
 Router.get('/listarTodasRodadaCartola', controller.listarTodasRodadaCartola);
 

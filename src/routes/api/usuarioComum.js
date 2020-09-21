@@ -1,10 +1,10 @@
 const Router = require('express').Router();
-// versão
 const controller = require('../../controller/usuarioComum');
+const { autenticarRequisicao } = require('../../middleware/auth');
 
-Router.get('/todos', controller.listar);
-Router.get('/consultarUsuarioPorLogin', controller.consultarUsuarioPorLogin); 
-Router.get('/:id', controller.consultarUsuario); 
-Router.put('/atualizar', controller.atualizar);
+Router.get('/todos', autenticarRequisicao, controller.listar);
+Router.get('/consultarUsuarioPorLogin', autenticarRequisicao, controller.consultarUsuarioPorLogin); 
+Router.get('/:id', autenticarRequisicao, controller.consultarUsuario); 
+Router.put('/atualizar', autenticarRequisicao, controller.atualizar);
 
 module.exports = Router;
