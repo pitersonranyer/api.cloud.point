@@ -1,11 +1,20 @@
 module.exports = {
   development: {
     database: {
+
       host: "mysql669.umbler.com",
-      name: "pointdojogador",
+      name: "pointdojogador-u",
       dialect: "mysql",
-      user: "pointdojogador",
-      password: "xedsi5-soWpet-cextek",
+      user: "piterson",
+      password: "sWXFuvbtpFA3V6i",
+
+
+
+//      host: "mysql669.umbler.com",
+//      name: "pointdojogador",
+//      dialect: "mysql",
+//      user: "pointdojogador",
+//      password: "xedsi5-soWpet-cextek",
 
 //      host: "localhost",
 //      port: 3306,
