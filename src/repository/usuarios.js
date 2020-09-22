@@ -29,21 +29,4 @@ const cadastrarUsuario = dadosUsuario => {
     });
 };
 
-
-// const alterarSenhaUsuario = dadosUsuario => {
-//    return Usuario.findOne({ where: { email: dadosUsuario.email } }).then(psq1 => {
-//        if (psq1 != null) {
-
-//            const credenciais = gerarCredenciais(dadosUsuario.senha);
-//            const usuario = new Usuario({ ...dadosUsuario, ...credenciais });
-//            usuario.update();
-//            return true;
-
-//        } else {
-//            return false
-//        }
-//    });
-// };
-
-
 module.exports = { cadastrarUsuario };

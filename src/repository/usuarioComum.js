@@ -1,4 +1,7 @@
 const Usuario = require('../model/usuario');
+const { gerarCredenciais } = require('../service/auth');
+
+
 
 const consultaPorId = (id) => {
     return Usuario.findByPk(id).then(data => {
@@ -60,5 +63,31 @@ const listarTodos = () => {
     });
 };
 
+const reiniciarSenhaUsuario = dadosUsuario => {
+    return Usuario.findOne({ where: { email: dadosUsuario.email } }).then(psq1 => {
+        if (psq1 != null) {
+            const credenciais = gerarCredenciais(dadosUsuario.senha);
+            return Usuario.update(
+                { salt: credenciais.salt,
+                  hash: credenciais.hash
+                },
+                {
+                    where: {
+                        email: dadosUsuario.email
+                    }
+                }
+            ).then(function (updatedRecord) {
+                if (updatedRecord) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+        } else {
+           return false
+        }
+    });
+ };
 
-module.exports = { consultaPorId, alterarDadosUsuario, listarTodos, getByLogin}; 
+module.exports = { consultaPorId, alterarDadosUsuario, listarTodos, getByLogin, reiniciarSenhaUsuario}; 

@@ -6,5 +6,6 @@ Router.get('/todos', autenticarRequisicao, controller.listar);
 Router.get('/consultarUsuarioPorLogin', autenticarRequisicao, controller.consultarUsuarioPorLogin); 
 Router.get('/:id', autenticarRequisicao, controller.consultarUsuario); 
 Router.put('/atualizar', autenticarRequisicao, controller.atualizar);
+Router.put('/reiniciarSenhaUsuario', autenticarRequisicao, controller.reiniciarSenha);
 
 module.exports = Router;
