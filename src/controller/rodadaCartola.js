@@ -4,7 +4,8 @@ const {
     getRodadaCartolaPorId,
     delRodadaCartolaPorId,
     getRodadaCartolaPorTemporada,
-    putStatusRodadaCartola
+    putStatusRodadaCartola,
+    getRodadaCartolaAtivas
 } = require('../repository/rodadaCartola');
 
 const cadastro = (req, res, next) => {
@@ -22,6 +23,12 @@ const cadastro = (req, res, next) => {
 
 const listarTodasRodadaCartola = (req, res, next) => {
     return getTodasRodadaCartola()
+        .then(rodadasCartola => res.json(rodadasCartola))
+        .catch(err => next(err));
+};
+
+const listarRodadaCartolaAtivas = (req, res, next) => {
+    return getRodadaCartolaAtivas()
         .then(rodadasCartola => res.json(rodadasCartola))
         .catch(err => next(err));
 };
@@ -77,6 +84,7 @@ module.exports = {
     listarRodadaCartolaPorId,
     excluirRodadaCartolaPorId,
     listarRodadaCartolaTemporada,
-    alterarStatusRodada
+    alterarStatusRodada,
+    listarRodadaCartolaAtivas
 };
 

@@ -1,4 +1,5 @@
 const RodadaCartola = require('../model/rodadaCartola');
+const { Op } = require("sequelize");
 
 const cadastrarRodadaCartola = dadosRodadaCartola => {
     return RodadaCartola.findOne({
@@ -32,9 +33,27 @@ const getTodasRodadaCartola = () => {
         });
 };
 
+const getRodadaCartolaAtivas = () => {
+    return RodadaCartola.findAll({
+        where:
+        {
+            status: {
+                [Op.ne]: 'Encerrada' 
+            }
+        }
+    })
+        .then(data => {
+            if (data === null) {
+                return false;
+            } else {
+                return data;
+            }
+        });
+};
+
 const getRodadaCartolaPorId = (anoTemporada, idRodada) => {
 
-    return RodadaCartola.findAll({
+    return RodadaCartola.findOne({
         where:
         {
             anoTemporada: anoTemporada,
@@ -49,12 +68,20 @@ const getRodadaCartolaPorId = (anoTemporada, idRodada) => {
     });
 };
 
+/**
+ * rodada em andamento;
+ */
 const getRodadaCartolaPorTemporada = (anoTemporada) => {
 
     return RodadaCartola.findOne({
         where:
         {
             anoTemporada: anoTemporada,
+            [Op.or]: [
+                { status: 'Aberta' },
+                { status: 'Fechada' }
+            ]
+
         },
         order: [
             ['idRodada', 'DESC']
@@ -119,5 +146,6 @@ module.exports = {
     getRodadaCartolaPorId,
     delRodadaCartolaPorId,
     getRodadaCartolaPorTemporada,
-    putStatusRodadaCartola
+    putStatusRodadaCartola,
+    getRodadaCartolaAtivas
 };

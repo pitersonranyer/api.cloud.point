@@ -11,6 +11,8 @@ Router.put('/alterarStatusRodada', autenticarRequisicao, controller.alterarStatu
 
 Router.get('/listarTodasRodadaCartola', controller.listarTodasRodadaCartola);
 
+Router.get('/listarRodadaCartolaAtivas', controller.listarRodadaCartolaAtivas);
+
 Router.get('/listarRodadaCartolaPorId/:anoTemporada/:idRodada', controller.listarRodadaCartolaPorId);
 
 Router.get('/listarRodadaCartolaTemporada/:anoTemporada', controller.listarRodadaCartolaTemporada);
