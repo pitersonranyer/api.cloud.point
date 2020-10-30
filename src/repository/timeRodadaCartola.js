@@ -182,7 +182,7 @@ const getTimeRodadaPendentePgto = (anoTemporada, idRodada) => {
         " inner join `timeRodadaCartola` " +
         " on    `timeUsuarioCartola`.`idUsuario` = `timeRodadaCartola`.`idUsuario` " +
         " and   `timeUsuarioCartola`.`time_id` = `timeRodadaCartola`.`time_id` " +
-        " where  `timeRodadaCartola`.`idRodada` " + `= ${idRodada} ` +
+        " where  `timeRodadaCartola`.`idRodada` " + `>= ${idRodada} ` +
         " and   `timeRodadaCartola`.`anoTemporada` " + `= ${anoTemporada} ` +
         " and   `timeRodadaCartola`.`statusPgto` = 'Pendente' "
         , { type: sequelize.QueryTypes.SELECT }).then(function (data) {

@@ -7,7 +7,7 @@ module.exports = {
       name: "pointdojogador-u",
       dialect: "mysql",
       user: "piterson",
-      password: "sWXFuvbtpFA3V6i"
+      password: "sWXFuvbtpFA3V6i",
 
 
 // --> banco antigo
