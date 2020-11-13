@@ -9,7 +9,7 @@ Router.get('/consultaTimeRodadaCartolaOne/:anoTemporada/:idRodada/:idUsuario/:ti
 
 Router.get('/listaTimeRodadaCartolaPorId/:anoTemporada/:idRodada/:idUsuario', autenticarRequisicao, controller.listaTimeRodadaCartolaPorId);
 
-Router.get('/listaTimeRodadaCartolaPorRodada/:anoTemporada/:idRodada', autenticarRequisicao, controller.listaTimeRodadaCartolaPorRodada);
+Router.get('/listaTimeRodadaCartolaPorRodada/:anoTemporada/:idRodada',  controller.listaTimeRodadaCartolaPorRodada);
 
 Router.get('/listaTimeRodadaPendentePgto/:anoTemporada/:idRodada', autenticarRequisicao, controller.listaTimeRodadaPendentePgto);
 

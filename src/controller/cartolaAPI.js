@@ -2,7 +2,8 @@ const { getTimesCartola,
     getTimeCartola, 
     getAtletasPontuados, 
     postLoginCartola, 
-    getTimeUsuarioLogado } = require('../repository/cartolaAPI');
+    getTimeUsuarioLogado,
+    getMercadoStatus } = require('../repository/cartolaAPI');
 
 
  const loginCartola = (req, res, next) => {
@@ -44,10 +45,20 @@ const listarAtletasPontuados = (req, res, next) => {
         .catch(err => next(err));
 };
 
+const consultarMercadoStatus = (req, res, next) => {
+    return getMercadoStatus()
+        .then(status => res.json(status))
+        .catch(err => next(err));
+};
+
+
+
+
 module.exports = {
     listarTimesCartola,
     consultarTimeCartola,
     listarAtletasPontuados,
     loginCartola,
-    buscarTimeUsuarioLogado
+    buscarTimeUsuarioLogado,
+    consultarMercadoStatus
 };

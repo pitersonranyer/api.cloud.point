@@ -12,5 +12,7 @@ Router.get('/listarTimesCartola/:time', autenticarRequisicao, controller.listarT
 
 Router.get('/consultarTimeCartola/:idTime', autenticarRequisicao, controller.consultarTimeCartola);
 
+Router.get('/consultarMercadoStatus/', controller.consultarMercadoStatus);
+
 module.exports = Router;
 
