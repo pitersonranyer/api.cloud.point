@@ -18,7 +18,7 @@ Router.get('/consultaTimeRodadaCartolaCount/:anoTemporada/:idRodada', controller
 
 Router.get('/listaMeusJogosMeusPgtos/:idUsuario', autenticarRequisicao, controller.listaMeusJogosMeusPgtos);
 
-Router.put('/atualizarPontosRodadaCartola', autenticarRequisicao, controller.atualizarPontosRodadaCartola);
+Router.put('/atualizarPontosRodadaCartola',  controller.atualizarPontosRodadaCartola);
 
 Router.put('/atualizarStatusPagamento', autenticarRequisicao, controller.atualizarStatusPagamento);
 
