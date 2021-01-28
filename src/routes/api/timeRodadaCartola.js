@@ -22,5 +22,6 @@ Router.put('/atualizarPontosRodadaCartola',  controller.atualizarPontosRodadaCar
 
 Router.put('/atualizarStatusPagamento', autenticarRequisicao, controller.atualizarStatusPagamento);
 
+Router.delete('/cancelarInscricaoTime/:anoTemporada/:idRodada/:idUsuario/:time_id', autenticarRequisicao, controller.cancelarInscricaoTime);
 
 module.exports = Router;

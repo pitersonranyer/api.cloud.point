@@ -8,6 +8,9 @@ const timeRodadaCartolaRouter = require('./timeRodadaCartola');
 const timesRouter = require('./times');
 const cartolaAPIrouter = require('./cartolaAPI');
 const authRouter = require('./auth');
+const ligaRouter = require('./liga');
+const timeLigaRouter = require('./timeLiga');
+
 
 
 
@@ -32,6 +35,16 @@ const endpoints = {
         rodadaCartola: {
             caminho: '/rodadaCartola'
         },
+
+        liga: {
+            caminho: '/liga'
+        },
+
+        timeLiga: {
+            caminho: '/timeLiga'
+        },
+
+        
         timeRodadaCartola: {
             caminho: '/timeRodadaCartola'
         },
@@ -49,6 +62,8 @@ Router.use('/cartolaAPI', cartolaAPIrouter);
 Router.use('/timeUsuarioCartola', timeUsuarioCartolaRouter);
 Router.use('/rodadaCartola', rodadaCartolaRouter);
 Router.use('/timeRodadaCartola', timeRodadaCartolaRouter);
+Router.use('/liga', ligaRouter);
+Router.use('/timeLiga', timeLigaRouter);
 Router.use('/auth', authRouter);
 
 module.exports = Router;

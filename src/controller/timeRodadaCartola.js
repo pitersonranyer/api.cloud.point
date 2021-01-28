@@ -7,7 +7,8 @@ const {
     putPontosRodadaCartola,
     putStatusPgtoTimeCartola,
     getMeusJogosMeusPgtos,
-    getTimeRodadaPendentePgto
+    getTimeRodadaPendentePgto,
+    delInscricaoTime
 } = require('../repository/timeRodadaCartola');
 
 const cadastro = (req, res, next) => {
@@ -43,6 +44,27 @@ const listaTimeRodadaCartolaPorId = (req, res, next) => {
         .then(timeRodadaCartola => res.json(timeRodadaCartola))
         .catch(err => next(err));
 };
+
+// Cancelar inscrição time.
+const cancelarInscricaoTime = (req, res, next) => {
+  const anoTemporada = req.params.anoTemporada;
+    const idRodada = req.params.idRodada;
+    const idUsuario = req.params.idUsuario;
+    const time_id = req.params.time_id;
+
+  return delInscricaoTime(anoTemporada, idRodada, idUsuario, time_id )
+      .then(timeRodadaCartola => {
+          if (!timeRodadaCartola) {
+              return res.status(404).end();
+          }
+          return res.status(200).end();
+      })
+      .catch(function (error) {
+          res.status(500).json(error);
+      });
+};
+
+
 
 // Classificacao geral
 const listaTimeRodadaCartolaPorRodada = (req, res, next) => {
@@ -117,7 +139,7 @@ module.exports = {
     atualizarPontosRodadaCartola,
     atualizarStatusPagamento,
     listaMeusJogosMeusPgtos,
-    listaTimeRodadaPendentePgto
-    
+    listaTimeRodadaPendentePgto,
+    cancelarInscricaoTime
 };
 
