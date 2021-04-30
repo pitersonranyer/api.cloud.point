@@ -84,11 +84,11 @@ const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
 
 const getTimesDaCompeticao = ( nrSequencialRodadaCartola) => {
 
-  return sequelize.query("SELECT `bilhetecompeticaocartola`.`idBilhete` " +
-     " , `bilhetecompeticaocartola`.`nomeUsuario` " +
-     " , `bilhetecompeticaocartola`.`nrContatoUsuario` " +
-     " , `bilhetecompeticaocartola`.`nrSequencialRodadaCartola` " +
-     " , `bilhetecompeticaocartola`.`statusAtualBilhete` " +
+  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+     " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+     " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+     " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+     " , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
      " , `timeBilheteCompeticaoCartola`.`time_id` " +
      " , `timeBilheteCompeticaoCartola`.`assinante` " +
      " , `timeBilheteCompeticaoCartola`.`foto_perfil` " +
@@ -101,11 +101,11 @@ const getTimesDaCompeticao = ( nrSequencialRodadaCartola) => {
      " , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
      " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
      " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
-     " FROM `bilhetecompeticaocartola` " +
+     " FROM `bilheteCompeticaoCartola` " +
      " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
-     " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilhetecompeticaocartola`.`idBilhete`  " +
-     " WHERE `bilhetecompeticaocartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
-     " AND `bilhetecompeticaocartola`.`statusAtualBilhete` = 'Pago' " +
+     " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
+     " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
+     " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' " +
      " ORDER BY `timeBilheteCompeticaoCartola`.`time_id` "
      , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
        if (data === null) {
@@ -145,11 +145,11 @@ const delTimeBilhete = (idBilhete, time_id) => {
 const getTimeCompeticaoCount = (nrSequencialRodadaCartola) => {
 
   return sequelize.query( "SELECT COUNT(*) as `count` " +
-            "FROM `bilhetecompeticaocartola` "  +
+            "FROM `bilheteCompeticaoCartola` "  +
             "INNER JOIN `timeBilheteCompeticaoCartola`  " +
-            "ON `bilhetecompeticaocartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` "  +
-            " WHERE `bilhetecompeticaocartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` + 
-            " AND `bilhetecompeticaocartola`.`statusAtualBilhete` = 'Pago' "  
+            "ON `bilheteCompeticaoCartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` "  +
+            " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` + 
+            " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' "  
      , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
        if (data === null) {
          data = 0;

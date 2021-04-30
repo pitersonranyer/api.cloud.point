@@ -66,11 +66,11 @@ const cadastrarBilhete = dadosBilhete => {
 
 
 const getBilheteGerado = () => {
-  return sequelize.query("SELECT `bilhetecompeticaocartola`.`idBilhete` " +
-    " , `bilhetecompeticaocartola`.`nomeUsuario` " +
-    " , `bilhetecompeticaocartola`.`nrContatoUsuario` " +
-    " , `bilhetecompeticaocartola`.`nrSequencialRodadaCartola` " +
-    " , `bilhetecompeticaocartola`.`statusAtualBilhete` " +
+  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+    " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    " , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
     " , `competicaoCartola`.`idUsuarioAdmLiga` " +
     " , `competicaoCartola`.`nomeLiga` " +
     " , `competicaoCartola`.`anoTemporada` " +
@@ -80,11 +80,11 @@ const getBilheteGerado = () => {
     " , `competicaoCartola`.`valorCompeticao` " +
     " , `competicaoCartola`.`statusCompeticao` " +
     " , `competicaoCartola`.`tipoCompeticao` " +
-    " FROM `bilhetecompeticaocartola` " +
+    " FROM `bilheteCompeticaoCartola` " +
     " INNER JOIN `competicaoCartola` " +
-    " ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilhetecompeticaocartola`.`nrSequencialRodadaCartola`  " +
-    " WHERE `bilhetecompeticaocartola`.`statusAtualBilhete`  = 'Gerado' " +
-    " ORDER BY `bilhetecompeticaocartola`.`idBilhete` "
+    " ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola`  " +
+    " WHERE `bilheteCompeticaoCartola`.`statusAtualBilhete`  = 'Gerado' " +
+    " ORDER BY `bilheteCompeticaoCartola`.`idBilhete` "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {
         data = 0;
