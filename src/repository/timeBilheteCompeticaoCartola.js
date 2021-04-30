@@ -47,11 +47,11 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
 
 const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
 
- return sequelize.query("SELECT `bilhetecompeticaocartola`.`idBilhete` " +
-    " , `bilhetecompeticaocartola`.`nomeUsuario` " +
-    " , `bilhetecompeticaocartola`.`nrContatoUsuario` " +
-    " , `bilhetecompeticaocartola`.`nrSequencialRodadaCartola` " +
-    " , `bilhetecompeticaocartola`.`statusAtualBilhete` " +
+ return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+    " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    " , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
     " , `timeBilheteCompeticaoCartola`.`time_id` " +
     " , `timeBilheteCompeticaoCartola`.`assinante` " +
     " , `timeBilheteCompeticaoCartola`.`foto_perfil` " +
@@ -64,12 +64,12 @@ const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
     " , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
     " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
     " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
-    " FROM `bilhetecompeticaocartola` " +
+    " FROM `bilheteCompeticaoCartola` " +
     " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
-    " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilhetecompeticaocartola`.`idBilhete`  " +
-    " WHERE `bilhetecompeticaocartola`.`nrContatoUsuario` " + `= "${nrContatoUsuario}" ` +
-    " AND `bilhetecompeticaocartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
-    " AND `bilhetecompeticaocartola`.`statusAtualBilhete` = 'Gerado' " +
+    " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
+    " WHERE `bilheteCompeticaoCartola`.`nrContatoUsuario` " + `= "${nrContatoUsuario}" ` +
+    " AND `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
+    " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Gerado' " +
     " ORDER BY `timeBilheteCompeticaoCartola`.`time_id` "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {
