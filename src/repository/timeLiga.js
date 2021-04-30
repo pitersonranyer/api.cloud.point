@@ -28,7 +28,6 @@ const cadastrarTimeLiga = dadostimeLiga => {
 
 // Classificação geral da rodada
 const getTimeLigaPorRodada = (anoTemporada, idRodada, idUsuarioAdmLiga, idLiga) => {
-    console.log(anoTemporada, idRodada, idUsuarioAdmLiga, idLiga);
 
     return sequelize.query("SELECT `timeLiga`.`idLiga` " +
         ",    `timeLiga`.`time_id` " +

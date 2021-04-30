@@ -12,46 +12,68 @@ const ligaRouter = require('./liga');
 const timeLigaRouter = require('./timeLiga');
 
 
+const competicaoCartolaRouter = require('./competicaoCartola');
+const bilheteCompeticaoCartolaRouter = require('./bilheteCompeticaoCartola');
+const timeBilheteCompeticaoCartolaRouter = require('./timeBilheteCompeticaoCartola');
+const historicoTimeUsuarioRouter = require('./historicoTimeUsuario')
 
 
 const endpoints = {
-    message: 'essa é a API da nossa rede social!',
-    endpoints: {
-        usuarios: {
-            caminho: '/usuarios'
-        },
-        times: {
-            caminho: '/times'
-        },
-        usuarioComum: {
-            caminho: '/usuarioComum'
-        },
-        cartolaAPI: {
-            caminho: '/cartolaAPI'
-        },
-        timeUsuarioCartola: {
-            caminho: '/timeUsuarioCartola'
-        },
-        rodadaCartola: {
-            caminho: '/rodadaCartola'
-        },
+  message: 'essa é a API da nossa rede social!',
+  endpoints: {
+    usuarios: {
+      caminho: '/usuarios'
+    },
+    times: {
+      caminho: '/times'
+    },
+    usuarioComum: {
+      caminho: '/usuarioComum'
+    },
+    cartolaAPI: {
+      caminho: '/cartolaAPI'
+    },
+    timeUsuarioCartola: {
+      caminho: '/timeUsuarioCartola'
+    },
+    rodadaCartola: {
+      caminho: '/rodadaCartola'
+    },
 
-        liga: {
-            caminho: '/liga'
-        },
+    liga: {
+      caminho: '/liga'
+    },
 
-        timeLiga: {
-            caminho: '/timeLiga'
-        },
+    timeLiga: {
+      caminho: '/timeLiga'
+    },
+    timeRodadaCartola: {
+      caminho: '/timeRodadaCartola'
+    },
+    autenticacao: {
+      caminho: '/auth'
+    },
 
-        
-        timeRodadaCartola: {
-            caminho: '/timeRodadaCartola'
-        },
-        autenticacao: {
-            caminho: '/auth'
-        }
-    }
+
+
+
+    competicaoCartola: {
+      caminho: '/competicaoCartola'
+    },
+    bilheteCompeticaoCartola: {
+      caminho: '/bilheteCompeticaoCartola'
+    },
+    timeBilheteCompeticaoCartola: {
+      caminho: '/timeBilheteCompeticaoCartola'
+    },
+    historicoTimeUsuario: {
+      caminho: '/historicoTimeUsuario'
+    },
+
+
+
+    
+  }
 };
 
 Router.get('/', (req, res, next) => res.json(endpoints));
@@ -65,5 +87,13 @@ Router.use('/timeRodadaCartola', timeRodadaCartolaRouter);
 Router.use('/liga', ligaRouter);
 Router.use('/timeLiga', timeLigaRouter);
 Router.use('/auth', authRouter);
+
+
+Router.use('/competicaoCartola', competicaoCartolaRouter);
+Router.use('/bilheteCompeticaoCartola', bilheteCompeticaoCartolaRouter);
+Router.use('/timeBilheteCompeticaoCartola', timeBilheteCompeticaoCartolaRouter);
+Router.use('/historicoTimeUsuario', historicoTimeUsuarioRouter);
+
+
 
 module.exports = Router;
