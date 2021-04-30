@@ -2,12 +2,12 @@ module.exports = {
   development: {
     database: {
 
-// --> banco atual. 
-//      host: "mysql669.umbler.com",
-//      name: "pointdojogador-u",
-//      dialect: "mysql",
-//      user: "piterson",
-//      password: "sWXFuvbtpFA3V6i",
+// --> banco atual. UMBLER
+      host: "mysql669.umbler.com",
+      name: "pointdojogador-u",
+      dialect: "mysql",
+      user: "piterson",
+      password: "sWXFuvbtpFA3V6i",
 
 
 // --> banco antigo
@@ -26,12 +26,12 @@ module.exports = {
 //      password: "afe01cee",
 //      secret: process.env.JWT_SECRET
 
-      host: "localhost",
-      port: 3306,
-      name: "pointdojogador",
-      dialect: "mysql",
-      user: "root",
-      password: "admin"
+//      host: "localhost",
+//      port: 3306,
+//      name: "pointdojogador",
+//      dialect: "mysql",
+//      user: "root",
+//      password: "admin"
       
     },
     secret: '1C3C7E1694F1E9DAD939399E87E5FFB5DF06B2327CA31B409CB3'
