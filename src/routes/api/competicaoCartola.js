@@ -3,9 +3,9 @@ const { autenticarRequisicao } = require('../../middleware/auth');
 
 const controller = require('../../controller/competicaoCartola');
 
-Router.post('/', autenticarRequisicao,  controller.cadastro);
-
 Router.get('/listarCompeticaoCartolaAtivas',  controller.listarCompeticaoCartolaAtivas);
+
+Router.post('/', autenticarRequisicao,  controller.cadastro);
 
 Router.delete('/excluirCompeticaoCartolaPorId/:nrSequencialRodadaCartola', autenticarRequisicao,  controller.excluirCompeticaoCartolaPorId);
 

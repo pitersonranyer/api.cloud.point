@@ -5,6 +5,12 @@ const { Op } = require("sequelize");
 
 const cadastrarCompeticaoCartola = dadosCompeticaoCartola => {
 
+  if (dadosCompeticaoCartola.nomeLiga === 'POINT DO JOGADOR') {
+    dadosCompeticaoCartola.prioridadeConsulta = 0;
+  } else {
+    dadosCompeticaoCartola.prioridadeConsulta = 1;
+  }
+
   return CompeticaoCartola.findOne({
     where:
     {
@@ -45,14 +51,19 @@ const cadastrarCompeticaoCartola = dadosCompeticaoCartola => {
 
 
 const getCompeticaoCartolaAtivas = () => {
+ // return CompeticaoCartola.findAll(
+ //    { order: [['prioridadeConsulta', 'ASC']] }
+ // )
+   
   return CompeticaoCartola.findAll({
-    where:
-    {
-      statusCompeticao: {
-        [Op.ne]: 'Encerrada'
-      }
-    }
-  })
+      where:
+       {
+         statusCompeticao: {
+           [Op.ne]: 'Encerrada'
+         },
+        // order: [['prioridadeConsulta', 'ASC']] 
+       }
+     })
     .then(data => {
       if (data === null) {
         return false;
@@ -96,6 +107,10 @@ const putCompeticaoCartola = dadosCompeticaoCartola => {
   const valorCompeticao = dadosCompeticaoCartola.valorCompeticao;
   const statusCompeticao = dadosCompeticaoCartola.statusCompeticao;
   const tipoCompeticao = dadosCompeticaoCartola.tipoCompeticao;
+  const txAdm = dadosCompeticaoCartola.txAdm;
+  const linkGrupoWapp = dadosCompeticaoCartola.linkGrupoWapp;
+  const prioridadeConsulta = dadosCompeticaoCartola.prioridadeConsulta;
+
 
   return CompeticaoCartola.update(
     {
@@ -107,7 +122,11 @@ const putCompeticaoCartola = dadosCompeticaoCartola => {
       horaFimInscricao: horaFimInscricao,
       valorCompeticao: valorCompeticao,
       statusCompeticao: statusCompeticao,
-      tipoCompeticao: tipoCompeticao
+      tipoCompeticao: tipoCompeticao,
+      txAdm: txAdm,
+      linkGrupoWapp: linkGrupoWapp,
+      prioridadeConsulta: prioridadeConsulta
+
 
     },
     {

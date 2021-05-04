@@ -35,7 +35,22 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
           // Salvar dados do Timebilhete
         const timeBilheteCompeticaoCartola = new TimeBilheteCompeticaoCartola({ ...dadosSomenteTimeBilhete });
         timeBilheteCompeticaoCartola.save();
+
+
+        const dadosHistorico = {
+          nrContatoUsuario: dadosTimeBilhete.nrContatoUsuario,
+          nomeUsuario: dadosTimeBilhete.nomeUsuario,
+          time_id: dadosTimeBilhete.time_id,
+          
+        };
+
+        //Gravar Historico
+        const historicoTimeUsuario = new HistoricoTimeUsuario({ ...dadosHistorico });
+        historicoTimeUsuario.save();
+
+
         return true;
+
 
       } else {
           return false
@@ -48,6 +63,7 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
 const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
 
  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+    " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
     " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
     " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
     " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
@@ -85,6 +101,7 @@ const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
 const getTimesDaCompeticao = ( nrSequencialRodadaCartola) => {
 
   return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+     " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
      " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
      " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
      " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +

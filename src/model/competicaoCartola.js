@@ -44,6 +44,11 @@ const CompeticaoCartola = sequelize.define("competicaoCartola", {
     type: Sequelize.DECIMAL(15,2)
   },
 
+  txAdm: {
+    allowNull: false,
+    type: Sequelize.SMALLINT
+  },
+
   statusCompeticao: {
     allowNull: false,
     type: Sequelize.STRING(10)
@@ -52,6 +57,16 @@ const CompeticaoCartola = sequelize.define("competicaoCartola", {
   tipoCompeticao: {
     allowNull: false,
     type: Sequelize.STRING(15) 
+  },
+
+  linkGrupoWapp: {
+    allowNull: false,
+    type: Sequelize.STRING(100) 
+  },
+
+  prioridadeConsulta: {
+    allowNull: false,
+    type: Sequelize.SMALLINT
   },
   
 },

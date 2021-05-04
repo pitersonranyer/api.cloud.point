@@ -8,7 +8,7 @@ Router.get('/buscarTimeUsuarioLogado/:glbId', controller.buscarTimeUsuarioLogado
 
 Router.get('/listarAtletasPontuados',  controller.listarAtletasPontuados);
 
-Router.get('/listarTimesCartola/:time', autenticarRequisicao, controller.listarTimesCartola);
+Router.get('/listarTimesCartola/:time',  controller.listarTimesCartola);
 
 Router.get('/consultarTimeCartola/:idTime',  controller.consultarTimeCartola);
 

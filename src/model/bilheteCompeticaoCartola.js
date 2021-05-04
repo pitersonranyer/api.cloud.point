@@ -10,6 +10,11 @@ const BilheteCompeticaoCartola = sequelize.define("bilheteCompeticaoCartola", {
     type: Sequelize.INTEGER
   },
 
+  codigoBilhete: { 
+    allowNull: false,
+    type: Sequelize.STRING(12)
+  },
+
   nomeUsuario: {
     allowNull: false,
     type: Sequelize.STRING(30)
