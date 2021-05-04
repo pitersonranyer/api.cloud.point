@@ -128,7 +128,7 @@ const getBilheteGerado = () => {
     " FROM `bilheteCompeticaoCartola` " +
     " INNER JOIN `competicaoCartola` " +
     " ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola`  " +
-    " WHERE `bilheteCompeticaoCartola`.`statusAtualBilhete`  = 'Gerado' " +
+    " WHERE `bilheteCompeticaoCartola`.`statusAtualBilhete`  = 'Finalizado' " +
     " ORDER BY `bilheteCompeticaoCartola`.`idBilhete` "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {
@@ -160,7 +160,7 @@ const getBilheteGeradoId = (idUsuarioAdmLiga) => {
     " FROM `bilheteCompeticaoCartola` " +
     " INNER JOIN `competicaoCartola` " +
     " ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola`  " +
-    " WHERE `bilheteCompeticaoCartola`.`statusAtualBilhete`  = 'Gerado' " +
+    " WHERE `bilheteCompeticaoCartola`.`statusAtualBilhete`  = 'Finalizado' " +
     " and   `competicaoCartola`.`idUsuarioAdmLiga` " + `= ${idUsuarioAdmLiga} ` +
     " ORDER BY `bilheteCompeticaoCartola`.`idBilhete` "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
@@ -197,6 +197,7 @@ const putStatusBilhete = dadosBilhete => {
         respAtualizacaoBilhete: dadosBilhete.nomeUsuario,
         nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
       };
+
 
       //Gravar Status
       const statusCompeticaoCartola = new StatusBilheteCompeticaoCartola({ ...dadosStatusBilhete });
