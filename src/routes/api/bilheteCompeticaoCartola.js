@@ -5,9 +5,13 @@ const controller = require('../../controller/bilheteCompeticaoCartola');
 
 Router.post('/',  controller.cadastro);
 
+Router.get('/listarBilheteGeradoId/:idUsuarioAdmLiga', autenticarRequisicao, controller.listarBilheteGeradoId);
+
 Router.get('/listarBilheteGerado', controller.listarBilheteGerado);
 
 Router.put('/alterarStatusBilhete', autenticarRequisicao, controller.alterarStatusBilhete);
+
+
 
 
 module.exports = Router;

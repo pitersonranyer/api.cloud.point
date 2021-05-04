@@ -5,6 +5,8 @@ const controller = require('../../controller/competicaoCartola');
 
 Router.get('/listarCompeticaoCartolaAtivas',  controller.listarCompeticaoCartolaAtivas);
 
+Router.get('/listarCompeticaoCartolaAtivasId/:idUsuarioAdmLiga', autenticarRequisicao, controller.listarCompeticaoCartolaAtivasId);
+
 Router.post('/', autenticarRequisicao,  controller.cadastro);
 
 Router.delete('/excluirCompeticaoCartolaPorId/:nrSequencialRodadaCartola', autenticarRequisicao,  controller.excluirCompeticaoCartolaPorId);

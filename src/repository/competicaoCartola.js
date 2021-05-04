@@ -1,4 +1,5 @@
 const CompeticaoCartola = require('../model/competicaoCartola');
+const sequelize = require('../database/database');
 const { Op } = require("sequelize");
 
 
@@ -49,23 +50,55 @@ const cadastrarCompeticaoCartola = dadosCompeticaoCartola => {
 
 };
 
+const getCompeticaoCartolaAtivasId = (idUsuarioAdmLiga) => {
+  return sequelize.query("SELECT `competicaoCartola`.`nrSequencialRodadaCartola` " +
+    " ,  `competicaoCartola`.`idUsuarioAdmLiga` " +
+    " ,  `competicaoCartola`.`nomeLiga` " +
+    " ,  `competicaoCartola`.`anoTemporada` " +
+    " ,  `competicaoCartola`.`nrRodada` " +
+    " ,  `competicaoCartola`.`dataFimInscricao` " +
+    " ,  `competicaoCartola`.`horaFimInscricao` " +
+    " ,  `competicaoCartola`.`valorCompeticao` " +
+    " ,  `competicaoCartola`.`txAdm` " +
+    " ,  `competicaoCartola`.`statusCompeticao` " +
+    " ,  `competicaoCartola`.`tipoCompeticao` " +
+    " ,  `competicaoCartola`.`linkGrupoWapp` " +
+    " ,  `competicaoCartola`.`prioridadeConsulta` " +
+    " FROM  `competicaoCartola` " +
+    " WHERE `competicaoCartola`.`idUsuarioAdmLiga` " + `= "${idUsuarioAdmLiga}" ` +
+    " AND `competicaoCartola`.`statusCompeticao` <> 'Encerrada' " +
+    " order by  `competicaoCartola`.`prioridadeConsulta` ASC "
+    , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
+      if (data === null) {
+        data = 0;
+        return false;
+      } else {
+        return data;
+      }
+    });
+};
+
 
 const getCompeticaoCartolaAtivas = () => {
- // return CompeticaoCartola.findAll(
- //    { order: [['prioridadeConsulta', 'ASC']] }
- // )
-   
-  return CompeticaoCartola.findAll({
-      where:
-       {
-         statusCompeticao: {
-           [Op.ne]: 'Encerrada'
-         },
-        // order: [['prioridadeConsulta', 'ASC']] 
-       }
-     })
-    .then(data => {
+  return sequelize.query("SELECT `competicaoCartola`.`nrSequencialRodadaCartola` " +
+    " ,  `competicaoCartola`.`idUsuarioAdmLiga` " +
+    " ,  `competicaoCartola`.`nomeLiga` " +
+    " ,  `competicaoCartola`.`anoTemporada` " +
+    " ,  `competicaoCartola`.`nrRodada` " +
+    " ,  `competicaoCartola`.`dataFimInscricao` " +
+    " ,  `competicaoCartola`.`horaFimInscricao` " +
+    " ,  `competicaoCartola`.`valorCompeticao` " +
+    " ,  `competicaoCartola`.`txAdm` " +
+    " ,  `competicaoCartola`.`statusCompeticao` " +
+    " ,  `competicaoCartola`.`tipoCompeticao` " +
+    " ,  `competicaoCartola`.`linkGrupoWapp` " +
+    " ,  `competicaoCartola`.`prioridadeConsulta` " +
+    " FROM  `competicaoCartola` " +
+    " WHERE `competicaoCartola`.`statusCompeticao` <> 'Encerrada' " +
+    " order by  `competicaoCartola`.`prioridadeConsulta` ASC "
+    , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {
+        data = 0;
         return false;
       } else {
         return data;
@@ -148,5 +181,6 @@ module.exports = {
   cadastrarCompeticaoCartola,
   getCompeticaoCartolaAtivas,
   delCompeticaoCartolaPorId,
-  putCompeticaoCartola
+  putCompeticaoCartola,
+  getCompeticaoCartolaAtivasId
 };

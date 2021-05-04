@@ -1,7 +1,8 @@
 const {
   cadastrarBilhete,
   getBilheteGerado,
-  putStatusBilhete
+  putStatusBilhete,
+  getBilheteGeradoId
 } = require('../repository/bilheteCompeticaoCartola');
 
 
@@ -26,6 +27,13 @@ const listarBilheteGerado = (req, res, next) => {
       .catch(err => next(err));
 };
 
+const listarBilheteGeradoId = (req, res, next) => {
+  const idUsuarioAdmLiga = req.params.idUsuarioAdmLiga;
+  return getBilheteGeradoId(idUsuarioAdmLiga)
+      .then(bilhete => res.json(bilhete))
+      .catch(err => next(err));
+};
+
 
 const alterarStatusBilhete = (req, res, next) => {
   const dadosBilhete = req.body;
@@ -44,6 +52,7 @@ const alterarStatusBilhete = (req, res, next) => {
 module.exports = {
     cadastro,
     listarBilheteGerado,
-    alterarStatusBilhete
+    alterarStatusBilhete,
+    listarBilheteGeradoId
 };
 

@@ -140,6 +140,39 @@ const getBilheteGerado = () => {
     });
 };
 
+const getBilheteGeradoId = (idUsuarioAdmLiga) => {
+  
+  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+    " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
+    " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    " , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
+    " , `competicaoCartola`.`idUsuarioAdmLiga` " +
+    " , `competicaoCartola`.`nomeLiga` " +
+    " , `competicaoCartola`.`anoTemporada` " +
+    " , `competicaoCartola`.`nrRodada` " +
+    " , `competicaoCartola`.`dataFimInscricao` " +
+    " , `competicaoCartola`.`horaFimInscricao` " +
+    " , `competicaoCartola`.`valorCompeticao` " +
+    " , `competicaoCartola`.`statusCompeticao` " +
+    " , `competicaoCartola`.`tipoCompeticao` " +
+    " FROM `bilheteCompeticaoCartola` " +
+    " INNER JOIN `competicaoCartola` " +
+    " ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola`  " +
+    " WHERE `bilheteCompeticaoCartola`.`statusAtualBilhete`  = 'Gerado' " +
+    " and   `competicaoCartola`.`idUsuarioAdmLiga` " + `= ${idUsuarioAdmLiga} ` +
+    " ORDER BY `bilheteCompeticaoCartola`.`idBilhete` "
+    , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
+      if (data === null) {
+        data = 0;
+        return false;
+      } else {
+        return data;
+      }
+    });
+};
+
 
 const putStatusBilhete = dadosBilhete => {
   const idBilhete = dadosBilhete.idBilhete;
@@ -181,5 +214,6 @@ const putStatusBilhete = dadosBilhete => {
 module.exports = {
   cadastrarBilhete,
   getBilheteGerado,
-  putStatusBilhete
+  putStatusBilhete,
+  getBilheteGeradoId
 };

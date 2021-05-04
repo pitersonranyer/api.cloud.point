@@ -2,7 +2,8 @@ const {
     cadastrarCompeticaoCartola,
     getCompeticaoCartolaAtivas,
     delCompeticaoCartolaPorId,
-    putCompeticaoCartola
+    putCompeticaoCartola,
+    getCompeticaoCartolaAtivasId
 } = require('../repository/competicaoCartola');
 
 const cadastro = (req, res, next) => {
@@ -23,6 +24,16 @@ const listarCompeticaoCartolaAtivas = (req, res, next) => {
       .then(competicaoCartola => res.json(competicaoCartola))
       .catch(err => next(err));
 };
+
+
+
+const listarCompeticaoCartolaAtivasId = (req, res, next) => {
+  const idUsuarioAdmLiga = req.params.idUsuarioAdmLiga;
+  return getCompeticaoCartolaAtivasId(idUsuarioAdmLiga)
+      .then(competicaoCartola => res.json(competicaoCartola))
+      .catch(err => next(err));
+};
+
 
 const excluirCompeticaoCartolaPorId = (req, res, next) => {
   const nrSequencialRodadaCartola = req.params.nrSequencialRodadaCartola;
@@ -58,6 +69,7 @@ module.exports = {
     cadastro,
     listarCompeticaoCartolaAtivas,
     excluirCompeticaoCartolaPorId,
-    alterarCompeticaoCartola
+    alterarCompeticaoCartola,
+    listarCompeticaoCartolaAtivasId
 };
 
