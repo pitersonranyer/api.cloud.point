@@ -11,101 +11,54 @@ let anoAtual = data.getFullYear();
 
 const cadastrarBilhete = dadosBilhete => {
 
-  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
-    "FROM `bilheteCompeticaoCartola` " +
-    "INNER JOIN `timeBilheteCompeticaoCartola`  " +
-    "ON `bilheteCompeticaoCartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` " +
-    " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= ${dadosBilhete.nrSequencialRodadaCartola} ` +
-    " AND `timeBilheteCompeticaoCartola`.`time_id` " + `= ${dadosBilhete.time_id} `
-    , { type: sequelize.QueryTypes.SELECT }).then(function (psq1) {
-      
-      if (!psq1.length) {
+  return BilheteCompeticaoCartola.max('idBilhete').then(max => {
 
-        return BilheteCompeticaoCartola.max('idBilhete').then(max => {
-
-
-          if (Number.isNaN(max)) {
-            let numbersAsString = `${anoAtual}${'00000'}`;
-            max = numbersAsString;
-            const numMax = max + 1;
-            dadosBilhete.idBilhete = numMax;
-          } else {
-            const numMax = max + 1;
-            dadosBilhete.idBilhete = numMax;
-          }
+    if (Number.isNaN(max)) {
+      let numbersAsString = `${anoAtual}${'00000'}`;
+      max = numbersAsString;
+      const numMax = max + 1;
+      dadosBilhete.idBilhete = numMax;
+    } else {
+      const numMax = max + 1;
+      dadosBilhete.idBilhete = numMax;
+    }
 
 
-          let text = "";
-          let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-          for (var i = 0; i < 6; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
+    for (var i = 0; i < 6; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-          let codigoBilhete = "pJ" + anoAtual + text;
-          dadosBilhete.codigoBilhete = codigoBilhete;
-
-
-          //Gravar bilhete
-          dadosBilhete.statusAtualBilhete = 'Gerado';
-          const bilheteCompeticaoCartola = new BilheteCompeticaoCartola({ ...dadosBilhete });
-          bilheteCompeticaoCartola.save();
-
-          const dadosStatusBilhete = {
-            idBilhete: dadosBilhete.idBilhete,
-            dataHoraAtualizacaoBilhete: timesTamp,
-            statusBilhete: 'Gerado',
-            respAtualizacaoBilhete: dadosBilhete.nomeUsuario,
-            nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
-          };
-
-          //Gravar Status
-          const statusCompeticaoCartola = new StatusBilheteCompeticaoCartola({ ...dadosStatusBilhete });
-          statusCompeticaoCartola.save();
-
-          const dadosTimeBilhete = {
-            idBilhete: dadosBilhete.idBilhete,
-            time_id: dadosBilhete.time_id,
-            assinante: dadosBilhete.assinante,
-            foto_perfil: dadosBilhete.foto_perfil,
-            nome: dadosBilhete.nome,
-            nome_cartola: dadosBilhete.nome_cartola,
-            slug: dadosBilhete.slug,
-            url_escudo_png: dadosBilhete.url_escudo_png,
-            url_escudo_svg: dadosBilhete.url_escudo_svg,
-            facebook_id: dadosBilhete.facebook_id,
-          };
-
-          //Gravar TimeBilhete
-          const timeBilheteCompeticaoCartola = new TimeBilheteCompeticaoCartola({ ...dadosTimeBilhete });
-          timeBilheteCompeticaoCartola.save();
+    let codigoBilhete = "pJ" + anoAtual + text;
+    dadosBilhete.codigoBilhete = codigoBilhete;
 
 
+    //Gravar bilhete
+    dadosBilhete.statusAtualBilhete = 'Gerado';
+    const bilheteCompeticaoCartola = new BilheteCompeticaoCartola({ ...dadosBilhete });
+    bilheteCompeticaoCartola.save();
 
-          const dadosHistorico = {
-            nrContatoUsuario: dadosBilhete.nrContatoUsuario,
-            nomeUsuario: dadosBilhete.nomeUsuario,
-            time_id: dadosBilhete.time_id,
-            
-          };
+    const dadosStatusBilhete = {
+      idBilhete: dadosBilhete.idBilhete,
+      dataHoraAtualizacaoBilhete: timesTamp,
+      statusBilhete: 'Gerado',
+      respAtualizacaoBilhete: dadosBilhete.nomeUsuario,
+      nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
+    };
 
+    //Gravar Status
+    const statusBilheteCompeticaoCartola = new StatusBilheteCompeticaoCartola({ ...dadosStatusBilhete });
+    statusBilheteCompeticaoCartola.save();
 
-          //Gravar Historico
-          const historicoTimeUsuario = new HistoricoTimeUsuario({ ...dadosHistorico });
-          historicoTimeUsuario.save();
+    const retDados = {
+      idBilhete: dadosBilhete.idBilhete,
+      codigoBilhete: dadosBilhete.codigoBilhete
+    };
 
-          const retDados = {
-            idBilhete: dadosBilhete.idBilhete,
-            codigoBilhete: dadosBilhete.codigoBilhete
-          };
+    return retDados;
 
-
-          return retDados;
-
-        });
-      } else {
-        return false
-      }
-    });
+  });
 };
 
 
@@ -141,7 +94,7 @@ const getBilheteGerado = () => {
 };
 
 const getBilheteGeradoId = (idUsuarioAdmLiga) => {
-  
+
   return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
     " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
     " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
@@ -212,9 +165,49 @@ const putStatusBilhete = dadosBilhete => {
 };
 
 
+
+const delBilhete = (idBilhete) => {
+  return BilheteCompeticaoCartola.destroy({
+    where:
+    {
+      idBilhete: idBilhete,
+    }
+  })
+    .then(function (deletedRecord) {
+      if (deletedRecord >= 1) {
+
+        return StatusBilheteCompeticaoCartola.destroy({
+          where:
+          {
+            idBilhete: idBilhete,
+          }
+        })
+          .then(function (deletedRecord) {
+            if (deletedRecord >= 1) {
+              return true;
+            }
+            else {
+              return false;
+            }
+          }).catch(function (error) {
+            return false;
+          });
+
+      }
+      else {
+        return false;
+      }
+    }).catch(function (error) {
+      return false;
+    });
+
+};
+
+
 module.exports = {
   cadastrarBilhete,
   getBilheteGerado,
   putStatusBilhete,
-  getBilheteGeradoId
+  getBilheteGeradoId,
+  delBilhete
 };

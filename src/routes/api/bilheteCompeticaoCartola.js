@@ -11,6 +11,8 @@ Router.get('/listarBilheteGerado', controller.listarBilheteGerado);
 
 Router.put('/alterarStatusBilhete', autenticarRequisicao, controller.alterarStatusBilhete);
 
+Router.delete('/excluirBilhete/:idBilhete', controller.excluirBilhete);
+
 
 
 

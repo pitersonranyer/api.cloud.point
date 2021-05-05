@@ -22,15 +22,15 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
   };
 
 
-  return TimeBilheteCompeticaoCartola.findOne({
-    where:
-    {
-      idBilhete: dadosTimeBilhete.idBilhete,
-      time_id: dadosTimeBilhete.time_id
-    }
-  })
-    .then(psq1 => {
-      if (psq1 === null) {
+  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+    "FROM `bilheteCompeticaoCartola` " +
+    "INNER JOIN `timeBilheteCompeticaoCartola`  " +
+    "ON `bilheteCompeticaoCartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` " +
+    " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= ${dadosTimeBilhete.nrSequencialRodadaCartola} ` +
+    " AND `timeBilheteCompeticaoCartola`.`time_id` " + `= ${dadosTimeBilhete.time_id} `
+    , { type: sequelize.QueryTypes.SELECT }).then(function (psq1) {
+
+      if (!psq1.length) {
 
           // Salvar dados do Timebilhete
         const timeBilheteCompeticaoCartola = new TimeBilheteCompeticaoCartola({ ...dadosSomenteTimeBilhete });

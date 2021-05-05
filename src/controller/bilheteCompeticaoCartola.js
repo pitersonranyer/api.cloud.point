@@ -2,7 +2,8 @@ const {
   cadastrarBilhete,
   getBilheteGerado,
   putStatusBilhete,
-  getBilheteGeradoId
+  getBilheteGeradoId,
+  delBilhete
 } = require('../repository/bilheteCompeticaoCartola');
 
 
@@ -49,10 +50,26 @@ const alterarStatusBilhete = (req, res, next) => {
       });
 };
 
+
+const excluirBilhete = (req, res, next) => {
+  const idBilhete = req.params.idBilhete;
+  return delBilhete(idBilhete)
+    .then(bilhete => {
+      if (!bilhete) {
+        return res.status(404).end();
+      }
+      return res.status(200).end();
+    })
+    .catch(function (error) {
+      res.status(500).json(error);
+    });
+};
+
 module.exports = {
     cadastro,
     listarBilheteGerado,
     alterarStatusBilhete,
-    listarBilheteGeradoId
+    listarBilheteGeradoId,
+    excluirBilhete
 };
 
