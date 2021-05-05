@@ -8,5 +8,6 @@ Router.get('/listarTimeBilheteGerado/:nrContatoUsuario/:nrSequencialRodadaCartol
 Router.delete('/excluirTimeBilhete/:idBilhete/:time_id', controller.excluirTimeBilhete);
 Router.get('/listarTimesDaCompeticao/:nrSequencialRodadaCartola', controller.listarTimesDaCompeticao);
 Router.get('/consultaTimeCompeticaoCount/:nrSequencialRodadaCartola', controller.consultaTimeCompeticaoCount);
+Router.get('/consultarTimeBilhetePorCodigo/:codigoBilhete', controller.consultarTimeBilhetePorCodigo);
 
 module.exports = Router;

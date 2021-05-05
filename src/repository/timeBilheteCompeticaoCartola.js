@@ -179,7 +179,53 @@ const getTimeCompeticaoCount = (nrSequencialRodadaCartola) => {
 };
 
 
-
+const getTimeBilhetePorCodigo = (codigoBilhete) => {
+  return sequelize.query(" SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+  "      , `bilheteCompeticaoCartola`.`codigoBilhete` " +
+  "      , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+  "      , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+  "      , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+  "      , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
+  "      , `timeBilheteCompeticaoCartola`.`time_id` " +
+  "      , `timeBilheteCompeticaoCartola`.`assinante` " +
+  "      , `timeBilheteCompeticaoCartola`.`foto_perfil` "  +
+  "      , `timeBilheteCompeticaoCartola`.`nome` " +
+  "      , `timeBilheteCompeticaoCartola`.`nome_cartola` " +
+  "      , `timeBilheteCompeticaoCartola`.`slug` " +
+  "      , `timeBilheteCompeticaoCartola`.`url_escudo_png` " +
+  "      , `timeBilheteCompeticaoCartola`.`url_escudo_svg` " +
+  "      , `timeBilheteCompeticaoCartola`.`facebook_id` " +
+  "      , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
+  "      , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
+  "      , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
+  "      , `competicaoCartola`.`idUsuarioAdmLiga` " +
+  "      , `competicaoCartola`.`nomeLiga` " +
+  "      , `competicaoCartola`.`anoTemporada` " +
+  "      , `competicaoCartola`.`nrRodada` " +
+  "      , `competicaoCartola`.`dataFimInscricao` " +
+  "      , `competicaoCartola`.`horaFimInscricao` " +
+  "      , `competicaoCartola`.`valorCompeticao` " +
+  "      , `competicaoCartola`.`txAdm` " +
+  "      , `competicaoCartola`.`statusCompeticao` " +
+  "      , `competicaoCartola`.`tipoCompeticao` " +
+  "      , `competicaoCartola`.`linkGrupoWapp` " +
+  "      , `competicaoCartola`.`prioridadeConsulta` " +
+  "      FROM `bilheteCompeticaoCartola` " +
+  "        INNER JOIN `timeBilheteCompeticaoCartola` " +
+  "        ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete` " +
+  "        INNER JOIN `competicaoCartola` " +
+  "        ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+  "      WHERE `bilheteCompeticaoCartola`.`codigoBilhete` "  + `= "${codigoBilhete}" ` +
+  "      ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` "
+    , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
+      if (data === null) {
+        data = 0;
+        return false;
+      } else {
+        return data;
+      }
+    });
+};
 
 
 module.exports = {
@@ -187,5 +233,6 @@ module.exports = {
   getTimeBilheteGerado,
   delTimeBilhete,
   getTimesDaCompeticao,
-  getTimeCompeticaoCount
+  getTimeCompeticaoCount,
+  getTimeBilhetePorCodigo
 };

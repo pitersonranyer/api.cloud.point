@@ -3,23 +3,24 @@ const {
   getTimeBilheteGerado,
   delTimeBilhete,
   getTimesDaCompeticao,
-  getTimeCompeticaoCount
+  getTimeCompeticaoCount,
+  getTimeBilhetePorCodigo
 } = require('../repository/timeBilheteCompeticaoCartola');
 
 
 const cadastro = (req, res, next) => {
-    const dadosTimeBilhete = req.body;
+  const dadosTimeBilhete = req.body;
 
 
-    return cadastrarTimeBilhete(dadosTimeBilhete)
-        .then(dadosTimeBilhete => {
-            if (!dadosTimeBilhete) {
-                return res.status(409).end();
-            }
+  return cadastrarTimeBilhete(dadosTimeBilhete)
+    .then(dadosTimeBilhete => {
+      if (!dadosTimeBilhete) {
+        return res.status(409).end();
+      }
 
-            return res.status(200).end();
-        })
-        .catch(error => next(error));
+      return res.status(200).end();
+    })
+    .catch(error => next(error));
 };
 
 const listarTimeBilheteGerado = (req, res, next) => {
@@ -48,7 +49,7 @@ const excluirTimeBilhete = (req, res, next) => {
 
 
 const listarTimesDaCompeticao = (req, res, next) => {
-    const nrSequencialRodadaCartola = req.params.nrSequencialRodadaCartola;
+  const nrSequencialRodadaCartola = req.params.nrSequencialRodadaCartola;
   return getTimesDaCompeticao(nrSequencialRodadaCartola)
     .then(timeCompeticao => res.json(timeCompeticao))
     .catch(err => next(err));
@@ -59,17 +60,26 @@ const listarTimesDaCompeticao = (req, res, next) => {
 const consultaTimeCompeticaoCount = (req, res, next) => {
   const nrSequencialRodadaCartola = req.params.nrSequencialRodadaCartola;
   return getTimeCompeticaoCount(nrSequencialRodadaCartola)
-      .then(totalTime => res.json(totalTime))
-      .catch(err => next(err));
+    .then(totalTime => res.json(totalTime))
+    .catch(err => next(err));
+};
+
+
+const consultarTimeBilhetePorCodigo = (req, res, next) => {
+  const codigoBilhete = req.params.codigoBilhete;
+  return getTimeBilhetePorCodigo(codigoBilhete)
+    .then(timeBilhete => res.json(timeBilhete))
+    .catch(err => next(err));
 };
 
 
 
 module.exports = {
-    cadastro,
-    listarTimeBilheteGerado,
-    excluirTimeBilhete,
-    listarTimesDaCompeticao,
-    consultaTimeCompeticaoCount
+  cadastro,
+  listarTimeBilheteGerado,
+  excluirTimeBilhete,
+  listarTimesDaCompeticao,
+  consultaTimeCompeticaoCount,
+  consultarTimeBilhetePorCodigo
 };
 
