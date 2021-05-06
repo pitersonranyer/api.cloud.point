@@ -17,7 +17,7 @@ const cadastrarCompeticaoCartola = dadosCompeticaoCartola => {
     {
       idUsuarioAdmLiga: dadosCompeticaoCartola.idUsuarioAdmLiga,
       anoTemporada: dadosCompeticaoCartola.anoTemporada,
-      nrRodada: dadosCompeticaoCartola.nrRodada,
+      valorCompeticao: dadosCompeticaoCartola.valorCompeticao,
       tipoCompeticao: dadosCompeticaoCartola.tipoCompeticao
     }
   }).then(psq1 => {
