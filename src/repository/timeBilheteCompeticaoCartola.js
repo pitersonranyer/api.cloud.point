@@ -80,6 +80,7 @@ const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
     " , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
     " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
     " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
+    " , `timeBilheteCompeticaoCartola`.`colocacao` " +
     " FROM `bilheteCompeticaoCartola` " +
     " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
     " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
@@ -118,6 +119,7 @@ const getTimesDaCompeticao = ( nrSequencialRodadaCartola) => {
      " , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
      " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
      " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
+     " , `timeBilheteCompeticaoCartola`.`colocacao` " +
      " FROM `bilheteCompeticaoCartola` " +
      " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
      " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
@@ -198,6 +200,7 @@ const getTimeBilhetePorCodigo = (codigoBilhete) => {
   "      , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
   "      , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
   "      , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
+  "      , `timeBilheteCompeticaoCartola`.`colocacao` " +
   "      , `competicaoCartola`.`idUsuarioAdmLiga` " +
   "      , `competicaoCartola`.`nomeLiga` " +
   "      , `competicaoCartola`.`anoTemporada` " +
@@ -216,7 +219,7 @@ const getTimeBilhetePorCodigo = (codigoBilhete) => {
   "        INNER JOIN `competicaoCartola` " +
   "        ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
   "      WHERE `bilheteCompeticaoCartola`.`codigoBilhete` "  + `= "${codigoBilhete}" ` +
-  "      ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` "
+  "      ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` DESC "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {
         data = 0;

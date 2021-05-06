@@ -73,6 +73,11 @@ const TimeBilheteCompeticaoCartola = sequelize.define("timeBilheteCompeticaoCart
     type: Sequelize.SMALLINT
   },
 
+  colocacao: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+
   
   
 },

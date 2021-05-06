@@ -128,6 +128,10 @@ const getBilheteGeradoId = (idUsuarioAdmLiga) => {
 
 
 const putStatusBilhete = dadosBilhete => {
+
+  const dataPut = new Date();
+  const timesTampPut = new Date(dataPut.valueOf() - dataPut.getTimezoneOffset() * 60000);
+
   const idBilhete = dadosBilhete.idBilhete;
   const nrSequencialRodadaCartola = dadosBilhete.nrSequencialRodadaCartola;
   const statusAtualBilhete = dadosBilhete.statusAtualBilhete;
@@ -143,13 +147,19 @@ const putStatusBilhete = dadosBilhete => {
   ).then(function (updatedRecord) {
     if (updatedRecord) {
 
+      if (dadosBilhete.nomeUsuario === null){
+        dadosBilhete.nomeUsuario = 'Sistema';
+      }
+
       const dadosStatusBilhete = {
         idBilhete: dadosBilhete.idBilhete,
-        dataHoraAtualizacaoBilhete: timesTamp,
+        dataHoraAtualizacaoBilhete: timesTampPut,
         statusBilhete: dadosBilhete.statusAtualBilhete,
         respAtualizacaoBilhete: dadosBilhete.nomeUsuario,
         nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
       };
+
+      console.log(dadosStatusBilhete);
 
 
       //Gravar Status
