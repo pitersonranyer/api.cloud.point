@@ -32,7 +32,7 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
 
       if (!psq1.length) {
 
-          // Salvar dados do Timebilhete
+        // Salvar dados do Timebilhete
         const timeBilheteCompeticaoCartola = new TimeBilheteCompeticaoCartola({ ...dadosSomenteTimeBilhete });
         timeBilheteCompeticaoCartola.save();
 
@@ -41,28 +41,39 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
           nrContatoUsuario: dadosTimeBilhete.nrContatoUsuario,
           nomeUsuario: dadosTimeBilhete.nomeUsuario,
           time_id: dadosTimeBilhete.time_id,
-          
+
         };
 
-        //Gravar Historico
-        const historicoTimeUsuario = new HistoricoTimeUsuario({ ...dadosHistorico });
-        historicoTimeUsuario.save();
 
-
-        return true;
+        return HistoricoTimeUsuario.findOne({
+          where:
+          {
+            nrContatoUsuario: dadosHistorico.nrContatoUsuario,
+            time_id: dadosHistorico.time_id
+          }
+        })
+          .then(psq1 => {
+            if (psq1 === null) {
+              //Gravar Historico
+              const historicoTimeUsuario = new HistoricoTimeUsuario({ ...dadosHistorico });
+              historicoTimeUsuario.save();
+              return true;
+            }
+              return true;
+          });
 
 
       } else {
-          return false
+        return false
       }
-  });
+    });
 
 };
 
 
 const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
 
- return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
     " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
     " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
     " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
@@ -99,43 +110,43 @@ const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
 };
 
 
-const getTimesDaCompeticao = ( nrSequencialRodadaCartola) => {
+const getTimesDaCompeticao = (nrSequencialRodadaCartola) => {
 
   return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
-     " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
-     " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
-     " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
-     " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
-     " , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
-     " , `timeBilheteCompeticaoCartola`.`time_id` " +
-     " , `timeBilheteCompeticaoCartola`.`assinante` " +
-     " , `timeBilheteCompeticaoCartola`.`foto_perfil` " +
-     " , `timeBilheteCompeticaoCartola`.`nome` " +
-     " , `timeBilheteCompeticaoCartola`.`nome_cartola` " +
-     " , `timeBilheteCompeticaoCartola`.`slug` " +
-     " , `timeBilheteCompeticaoCartola`.`url_escudo_png` " +
-     " , `timeBilheteCompeticaoCartola`.`url_escudo_svg` " +
-     " , `timeBilheteCompeticaoCartola`.`facebook_id` " +
-     " , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
-     " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
-     " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
-     " , `timeBilheteCompeticaoCartola`.`colocacao` " +
-     " FROM `bilheteCompeticaoCartola` " +
-     " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
-     " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
-     " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
-     " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' " +
-     " ORDER BY `timeBilheteCompeticaoCartola`.`time_id` "
-     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
-       if (data === null) {
-         data = 0;
-         return false;
-       } else {
-         return data;
-       }
-     });
- };
- 
+    " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
+    " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    " , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
+    " , `timeBilheteCompeticaoCartola`.`time_id` " +
+    " , `timeBilheteCompeticaoCartola`.`assinante` " +
+    " , `timeBilheteCompeticaoCartola`.`foto_perfil` " +
+    " , `timeBilheteCompeticaoCartola`.`nome` " +
+    " , `timeBilheteCompeticaoCartola`.`nome_cartola` " +
+    " , `timeBilheteCompeticaoCartola`.`slug` " +
+    " , `timeBilheteCompeticaoCartola`.`url_escudo_png` " +
+    " , `timeBilheteCompeticaoCartola`.`url_escudo_svg` " +
+    " , `timeBilheteCompeticaoCartola`.`facebook_id` " +
+    " , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
+    " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
+    " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
+    " , `timeBilheteCompeticaoCartola`.`colocacao` " +
+    " FROM `bilheteCompeticaoCartola` " +
+    " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
+    " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
+    " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
+    " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' " +
+    " ORDER BY `timeBilheteCompeticaoCartola`.`time_id` "
+    , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
+      if (data === null) {
+        data = 0;
+        return false;
+      } else {
+        return data;
+      }
+    });
+};
+
 
 
 const delTimeBilhete = (idBilhete, time_id) => {
@@ -163,63 +174,63 @@ const delTimeBilhete = (idBilhete, time_id) => {
 // total de inscrintos na competicao
 const getTimeCompeticaoCount = (nrSequencialRodadaCartola) => {
 
-  return sequelize.query( "SELECT COUNT(*) as `count` " +
-            "FROM `bilheteCompeticaoCartola` "  +
-            "INNER JOIN `timeBilheteCompeticaoCartola`  " +
-            "ON `bilheteCompeticaoCartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` "  +
-            " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` + 
-            " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' "  
-     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
-       if (data === null) {
-         data = 0;
-         return false;
-       } else {
-         return data[0].count;
-       }
-     });
+  return sequelize.query("SELECT COUNT(*) as `count` " +
+    "FROM `bilheteCompeticaoCartola` " +
+    "INNER JOIN `timeBilheteCompeticaoCartola`  " +
+    "ON `bilheteCompeticaoCartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` " +
+    " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
+    " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' "
+    , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
+      if (data === null) {
+        data = 0;
+        return false;
+      } else {
+        return data[0].count;
+      }
+    });
 
 };
 
 
 const getTimeBilhetePorCodigo = (codigoBilhete) => {
   return sequelize.query(" SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
-  "      , `bilheteCompeticaoCartola`.`codigoBilhete` " +
-  "      , `bilheteCompeticaoCartola`.`nomeUsuario` " +
-  "      , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
-  "      , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
-  "      , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
-  "      , `timeBilheteCompeticaoCartola`.`time_id` " +
-  "      , `timeBilheteCompeticaoCartola`.`assinante` " +
-  "      , `timeBilheteCompeticaoCartola`.`foto_perfil` "  +
-  "      , `timeBilheteCompeticaoCartola`.`nome` " +
-  "      , `timeBilheteCompeticaoCartola`.`nome_cartola` " +
-  "      , `timeBilheteCompeticaoCartola`.`slug` " +
-  "      , `timeBilheteCompeticaoCartola`.`url_escudo_png` " +
-  "      , `timeBilheteCompeticaoCartola`.`url_escudo_svg` " +
-  "      , `timeBilheteCompeticaoCartola`.`facebook_id` " +
-  "      , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
-  "      , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
-  "      , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
-  "      , `timeBilheteCompeticaoCartola`.`colocacao` " +
-  "      , `competicaoCartola`.`idUsuarioAdmLiga` " +
-  "      , `competicaoCartola`.`nomeLiga` " +
-  "      , `competicaoCartola`.`anoTemporada` " +
-  "      , `competicaoCartola`.`nrRodada` " +
-  "      , `competicaoCartola`.`dataFimInscricao` " +
-  "      , `competicaoCartola`.`horaFimInscricao` " +
-  "      , `competicaoCartola`.`valorCompeticao` " +
-  "      , `competicaoCartola`.`txAdm` " +
-  "      , `competicaoCartola`.`statusCompeticao` " +
-  "      , `competicaoCartola`.`tipoCompeticao` " +
-  "      , `competicaoCartola`.`linkGrupoWapp` " +
-  "      , `competicaoCartola`.`prioridadeConsulta` " +
-  "      FROM `bilheteCompeticaoCartola` " +
-  "        INNER JOIN `timeBilheteCompeticaoCartola` " +
-  "        ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete` " +
-  "        INNER JOIN `competicaoCartola` " +
-  "        ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
-  "      WHERE `bilheteCompeticaoCartola`.`codigoBilhete` "  + `= "${codigoBilhete}" ` +
-  "      ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` DESC "
+    "      , `bilheteCompeticaoCartola`.`codigoBilhete` " +
+    "      , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+    "      , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+    "      , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    "      , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
+    "      , `timeBilheteCompeticaoCartola`.`time_id` " +
+    "      , `timeBilheteCompeticaoCartola`.`assinante` " +
+    "      , `timeBilheteCompeticaoCartola`.`foto_perfil` " +
+    "      , `timeBilheteCompeticaoCartola`.`nome` " +
+    "      , `timeBilheteCompeticaoCartola`.`nome_cartola` " +
+    "      , `timeBilheteCompeticaoCartola`.`slug` " +
+    "      , `timeBilheteCompeticaoCartola`.`url_escudo_png` " +
+    "      , `timeBilheteCompeticaoCartola`.`url_escudo_svg` " +
+    "      , `timeBilheteCompeticaoCartola`.`facebook_id` " +
+    "      , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
+    "      , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
+    "      , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
+    "      , `timeBilheteCompeticaoCartola`.`colocacao` " +
+    "      , `competicaoCartola`.`idUsuarioAdmLiga` " +
+    "      , `competicaoCartola`.`nomeLiga` " +
+    "      , `competicaoCartola`.`anoTemporada` " +
+    "      , `competicaoCartola`.`nrRodada` " +
+    "      , `competicaoCartola`.`dataFimInscricao` " +
+    "      , `competicaoCartola`.`horaFimInscricao` " +
+    "      , `competicaoCartola`.`valorCompeticao` " +
+    "      , `competicaoCartola`.`txAdm` " +
+    "      , `competicaoCartola`.`statusCompeticao` " +
+    "      , `competicaoCartola`.`tipoCompeticao` " +
+    "      , `competicaoCartola`.`linkGrupoWapp` " +
+    "      , `competicaoCartola`.`prioridadeConsulta` " +
+    "      FROM `bilheteCompeticaoCartola` " +
+    "        INNER JOIN `timeBilheteCompeticaoCartola` " +
+    "        ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete` " +
+    "        INNER JOIN `competicaoCartola` " +
+    "        ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    "      WHERE `bilheteCompeticaoCartola`.`codigoBilhete` " + `= "${codigoBilhete}" ` +
+    "      ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` DESC "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {
         data = 0;
