@@ -20,6 +20,7 @@ const cadastro = (req, res, next) => {
 };
 
 const listarCompeticaoCartolaAtivas = (req, res, next) => {
+  
   return getCompeticaoCartolaAtivas()
       .then(competicaoCartola => res.json(competicaoCartola))
       .catch(err => next(err));

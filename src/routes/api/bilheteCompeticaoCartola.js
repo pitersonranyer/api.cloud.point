@@ -9,7 +9,7 @@ Router.get('/listarBilheteGeradoId/:idUsuarioAdmLiga', autenticarRequisicao, con
 
 Router.get('/listarBilheteGerado', controller.listarBilheteGerado);
 
-Router.put('/alterarStatusBilhete', autenticarRequisicao, controller.alterarStatusBilhete);
+Router.put('/alterarStatusBilhete', controller.alterarStatusBilhete);
 
 Router.delete('/excluirBilhete/:idBilhete', controller.excluirBilhete);
 

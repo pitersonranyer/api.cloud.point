@@ -159,7 +159,7 @@ const putStatusBilhete = dadosBilhete => {
         nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
       };
 
-      console.log(dadosStatusBilhete);
+      
 
 
       //Gravar Status
