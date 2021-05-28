@@ -1,6 +1,6 @@
 const {
   cadastrarPontuacaoTimeRodada,
-} = require('../repository/PontuacaoTimeRodada');
+} = require('../repository/pontuacaoTimeRodada');
 
 const cadastro = (req, res, next) => {
     const dadosPontuacaoTimeRodada = req.body;
