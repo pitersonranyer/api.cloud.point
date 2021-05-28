@@ -4,7 +4,8 @@ const {
   delTimeBilhete,
   getTimesDaCompeticao,
   getTimeCompeticaoCount,
-  getTimeBilhetePorCodigo
+  getTimeBilhetePorCodigo,
+  putPontosTimeBilhete
 } = require('../repository/timeBilheteCompeticaoCartola');
 
 
@@ -72,6 +73,20 @@ const consultarTimeBilhetePorCodigo = (req, res, next) => {
     .catch(err => next(err));
 };
 
+const atualizarPontosTimeBilhete = (req, res, next) => {
+  const dadosTimeBilhete = req.body;
+  return putPontosTimeBilhete(dadosTimeBilhete)
+      .then(TimeBilhete => {
+          if (!TimeBilhete) {
+              return res.status(404).end();
+          }
+          return res.status(200).end();
+      })
+      .catch(function (error) {
+          res.status(500).json(error);
+      });
+};
+
 
 
 module.exports = {
@@ -80,6 +95,7 @@ module.exports = {
   excluirTimeBilhete,
   listarTimesDaCompeticao,
   consultaTimeCompeticaoCount,
-  consultarTimeBilhetePorCodigo
+  consultarTimeBilhetePorCodigo,
+  atualizarPontosTimeBilhete
 };
 

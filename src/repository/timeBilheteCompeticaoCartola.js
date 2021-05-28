@@ -59,7 +59,7 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
               historicoTimeUsuario.save();
               return true;
             }
-              return true;
+            return true;
           });
 
 
@@ -242,11 +242,47 @@ const getTimeBilhetePorCodigo = (codigoBilhete) => {
 };
 
 
+
+// Atualizar Pontos parciais da rodada
+const putPontosTimeBilhete = dadosTimeBilhete => {
+  const idBilhete = dadosTimeBilhete.idBilhete;
+  const time_id = dadosTimeBilhete.time_id;
+
+  const pontuacaoParcial = dadosTimeBilhete.pontuacaoParcial
+  const qtJogadoresPontuados = dadosTimeBilhete.qtJogadoresPontuados
+
+  pontuacaoParcial.toFixed(2);
+
+  return TimeBilheteCompeticaoCartola.update(
+
+    {
+      pontuacaoParcial: pontuacaoParcial,
+      qtJogadoresPontuados: qtJogadoresPontuados
+    },
+    {
+      where: {
+        idBilhete: idBilhete,
+        time_id: time_id
+      }
+    }
+
+  ).then(function (updatedRecord) {
+    if (updatedRecord) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  });
+};
+
+
 module.exports = {
   cadastrarTimeBilhete,
   getTimeBilheteGerado,
   delTimeBilhete,
   getTimesDaCompeticao,
   getTimeCompeticaoCount,
-  getTimeBilhetePorCodigo
+  getTimeBilhetePorCodigo,
+  putPontosTimeBilhete
 };

@@ -16,6 +16,7 @@ const competicaoCartolaRouter = require('./competicaoCartola');
 const bilheteCompeticaoCartolaRouter = require('./bilheteCompeticaoCartola');
 const timeBilheteCompeticaoCartolaRouter = require('./timeBilheteCompeticaoCartola');
 const historicoTimeUsuarioRouter = require('./historicoTimeUsuario')
+const pontuacaoTimeRodadaRouter = require('./pontuacaoTimeRodada')
 
 
 const endpoints = {
@@ -70,6 +71,10 @@ const endpoints = {
       caminho: '/historicoTimeUsuario'
     },
 
+    pontuacaoTimeRodada: {
+      caminho: '/pontuacaoTimeRodada'
+    },
+
 
 
     
@@ -93,6 +98,8 @@ Router.use('/competicaoCartola', competicaoCartolaRouter);
 Router.use('/bilheteCompeticaoCartola', bilheteCompeticaoCartolaRouter);
 Router.use('/timeBilheteCompeticaoCartola', timeBilheteCompeticaoCartolaRouter);
 Router.use('/historicoTimeUsuario', historicoTimeUsuarioRouter);
+
+Router.use('/pontuacaoTimeRodada', pontuacaoTimeRodadaRouter);
 
 
 

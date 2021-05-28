@@ -10,4 +10,6 @@ Router.get('/listarTimesDaCompeticao/:nrSequencialRodadaCartola', controller.lis
 Router.get('/consultaTimeCompeticaoCount/:nrSequencialRodadaCartola', controller.consultaTimeCompeticaoCount);
 Router.get('/consultarTimeBilhetePorCodigo/:codigoBilhete', controller.consultarTimeBilhetePorCodigo);
 
+Router.put('/atualizarPontosTimeBilhete',  controller.atualizarPontosTimeBilhete);
+
 module.exports = Router;
