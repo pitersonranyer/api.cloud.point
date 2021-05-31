@@ -136,12 +136,34 @@ const getTimesDaCompeticao = (nrSequencialRodadaCartola) => {
     " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
     " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
     " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' " +
-    " ORDER BY `timeBilheteCompeticaoCartola`.`time_id` "
+    " ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` DESC "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {
         data = 0;
         return false;
       } else {
+        
+        for (let i = 0; i < data.length; i++) {
+
+         const idBilhete = data[i].idBilhete
+         const time_id = data[i].time_id
+         const colocacao = i + 1;
+
+          TimeBilheteCompeticaoCartola.update(
+
+            {
+              colocacao: colocacao
+            },
+            {
+              where: {
+                idBilhete: idBilhete,
+                time_id: time_id
+              }
+            }
+        
+          )
+
+        }
         return data;
       }
     });
@@ -250,6 +272,7 @@ const putPontosTimeBilhete = dadosTimeBilhete => {
 
   const pontuacaoParcial = dadosTimeBilhete.pontuacaoParcial
   const qtJogadoresPontuados = dadosTimeBilhete.qtJogadoresPontuados
+  const pontuacaoTotalCompeticao = dadosTimeBilhete.pontuacaoTotalCompeticao
 
   pontuacaoParcial.toFixed(2);
 
@@ -257,7 +280,8 @@ const putPontosTimeBilhete = dadosTimeBilhete => {
 
     {
       pontuacaoParcial: pontuacaoParcial,
-      qtJogadoresPontuados: qtJogadoresPontuados
+      qtJogadoresPontuados: qtJogadoresPontuados,
+      pontuacaoTotalCompeticao: pontuacaoTotalCompeticao
     },
     {
       where: {
