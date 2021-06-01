@@ -4,7 +4,8 @@ const { getTimesCartola,
     postLoginCartola, 
     getTimeUsuarioLogado,
     getMercadoStatus,
-    getTimeInfoCartolaById } = require('../repository/cartolaAPI');
+    getTimeInfoCartolaById,
+    getBancodeReservas } = require('../repository/cartolaAPI');
 
 
  const loginCartola = (req, res, next) => {
@@ -48,9 +49,6 @@ const consultarTimeInfoCartolaById = (req, res, next) => {
         .catch(err => next(err));
 };
 
-
-
-
 const listarAtletasPontuados = (req, res, next) => {
     return getAtletasPontuados()
         .then(atletas => res.json(atletas))
@@ -64,6 +62,15 @@ const consultarMercadoStatus = (req, res, next) => {
 };
 
 
+const consultarBancoDeReservas = (req, res, next) => {
+  time_id = req.params.time_id;
+  nrRodada = req.params.nrRodada;
+  return getBancodeReservas(time_id, nrRodada)
+      .then(time => res.json(time))
+      .catch(err => next(err));
+};
+
+
 
 
 module.exports = {
@@ -73,5 +80,6 @@ module.exports = {
     loginCartola,
     buscarTimeUsuarioLogado,
     consultarMercadoStatus,
-    consultarTimeInfoCartolaById
+    consultarTimeInfoCartolaById,
+    consultarBancoDeReservas
 };

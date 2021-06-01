@@ -174,10 +174,35 @@ const getMercadoStatus = () => {
 }
 
 
+const getBancodeReservas = (time_id, nrRodada) => {
+
+  path = `/time/substituicoes/${time_id}/${nrRodada}`;
+  var url = `${BASE_URL}${path}`;
+
+  return unirest.get(url)
+      .header(
+          "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+          "Accept", "application/json, text/plain, */*",
+          "Referer", "https://cartolafc.globo.com/",
+          "Origin", "https://cartolafc.globo.com/",
+          "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+      )
+
+      .then(data => {
+          if (data === null) {
+              return false;
+          } else {
+              return data.body;
+          }
+      });
+}
+
+
 module.exports = { getTimesCartola, 
     getTimeCartola, 
     getAtletasPontuados, 
     postLoginCartola, 
     getTimeUsuarioLogado,
     getMercadoStatus,
-    getTimeInfoCartolaById };
+    getTimeInfoCartolaById,
+    getBancodeReservas };

@@ -66,7 +66,6 @@ const getCompeticaoCartolaAtivasId = (idUsuarioAdmLiga) => {
     " ,  `competicaoCartola`.`prioridadeConsulta` " +
     " FROM  `competicaoCartola` " +
     " WHERE `competicaoCartola`.`idUsuarioAdmLiga` " + `= "${idUsuarioAdmLiga}" ` +
-    " AND `competicaoCartola`.`statusCompeticao` <> 'Encerrada' " +
     " order by  `competicaoCartola`.`prioridadeConsulta` ASC "
     , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
       if (data === null) {

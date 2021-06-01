@@ -16,5 +16,7 @@ Router.get('/consultarTimeInfoCartolaById/:idTime',  controller.consultarTimeInf
 
 Router.get('/consultarMercadoStatus/', controller.consultarMercadoStatus);
 
+Router.get('/consultarBancoDeReservas/:time_id/:nrRodada',  controller.consultarBancoDeReservas);
+
 module.exports = Router;
 
