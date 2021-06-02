@@ -13,7 +13,12 @@ const PontuacaoTimeRodada = sequelize.define("pontuacaoTimeRodada", {
   nrRodada: {
     allowNull: false,
     primaryKey: true,
-    type: Sequelize.BIGINT
+    type: Sequelize.SMALLINT
+  },
+
+  mesRodada: {
+    allowNull: false,
+    type: Sequelize.SMALLINT
   },
 
  pontuacao: {

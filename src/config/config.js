@@ -5,8 +5,8 @@ module.exports = {
 // --> banco atual. UMBLER
       host: "mysql669.umbler.com",
       name: "pointdojogador-u",
-     dialect: "mysql",
-     user: "piterson",
+      dialect: "mysql",
+      user: "piterson",
       password: "sWXFuvbtpFA3V6i",
 
 
@@ -28,7 +28,7 @@ module.exports = {
 
 //      host: "localhost",
 //      port: 3306,
-//     name: "pointdojogador",
+//      name: "pointdojogador",
 //      dialect: "mysql",
 //      user: "root",
 //      password: "admin"

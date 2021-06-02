@@ -21,7 +21,8 @@ const cadastrarPontuacaoTimeRodada = dadosPontuacaoTimeRodada => {
         return PontuacaoTimeRodada.update(
 
           {
-            pontuacao: dadosPontuacaoTimeRodada.pontuacao
+            pontuacao: dadosPontuacaoTimeRodada.pontuacao,
+            mesRodada: dadosPontuacaoTimeRodada.mesRodada
           },
           {
             where: {

@@ -275,6 +275,7 @@ const putPontosTimeBilhete = dadosTimeBilhete => {
   const pontuacaoTotalCompeticao = dadosTimeBilhete.pontuacaoTotalCompeticao
 
   pontuacaoParcial.toFixed(2);
+  pontuacaoTotalCompeticao.toFixed(2);
 
   return TimeBilheteCompeticaoCartola.update(
 
