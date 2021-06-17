@@ -143,7 +143,22 @@ const getAtletasPontuados = () => {
             if (data === null) {
                 return false;
             } else {
-                return data.body;
+              const arrayAtletasPontuados = [];
+              Object.keys(data.body.atletas).forEach(atleta_id => {
+                const atleta = {
+                  atleta_id: atleta_id,
+                  apelido: data.body.atletas[atleta_id].apelido,
+                  pontuacao: data.body.atletas[atleta_id].pontuacao,
+                  scout: data.body.atletas[atleta_id].scout,
+                  foto: data.body.atletas[atleta_id].foto,
+                  posicao_id: data.body.atletas[atleta_id].posicao_id,
+                  clube_id: data.body.atletas[atleta_id].clube_id,
+                  entrou_em_campo: data.body.atletas[atleta_id].entrou_em_campo
+                };
+                arrayAtletasPontuados.push(atleta);
+                
+              });
+                return arrayAtletasPontuados;
             }
         });
 }
