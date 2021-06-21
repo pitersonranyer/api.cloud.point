@@ -207,6 +207,7 @@ const getBancodeReservas = (time_id, nrRodada) => {
           if (data === null) {
               return false;
           } else {
+         //   console.log(data.body[0].entrou.atleta_id)
               return data.body;
           }
       });

@@ -18,6 +18,8 @@ const timeBilheteCompeticaoCartolaRouter = require('./timeBilheteCompeticaoCarto
 const historicoTimeUsuarioRouter = require('./historicoTimeUsuario')
 const pontuacaoTimeRodadaRouter = require('./pontuacaoTimeRodada')
 
+const atualizarParciaisRouter = require('./atualizarParciais')
+
 
 const endpoints = {
   message: 'essa é a API da nossa rede social!',
@@ -75,6 +77,11 @@ const endpoints = {
       caminho: '/pontuacaoTimeRodada'
     },
 
+    atualizarParciais: {
+      caminho: '/atualizarParciais'
+    },
+
+    
 
 
     
@@ -100,6 +107,8 @@ Router.use('/timeBilheteCompeticaoCartola', timeBilheteCompeticaoCartolaRouter);
 Router.use('/historicoTimeUsuario', historicoTimeUsuarioRouter);
 
 Router.use('/pontuacaoTimeRodada', pontuacaoTimeRodadaRouter);
+
+Router.use('/atualizarParciais', atualizarParciaisRouter);
 
 
 
