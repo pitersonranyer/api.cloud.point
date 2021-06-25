@@ -77,8 +77,75 @@ const getCompeticaoCartolaAtivasId = (idUsuarioAdmLiga) => {
     });
 };
 
+const getCompeticaoCartolaAtivas = async () => {
 
-const getCompeticaoCartolaAtivas = () => {
+  dadosCompeticao = await sequelize.query("SELECT `competicaoCartola`.`nrSequencialRodadaCartola` " +
+    " ,  `competicaoCartola`.`idUsuarioAdmLiga` " +
+    " ,  `competicaoCartola`.`nomeLiga` " +
+    " ,  `competicaoCartola`.`anoTemporada` " +
+    " ,  `competicaoCartola`.`nrRodada` " +
+    " ,  `competicaoCartola`.`dataFimInscricao` " +
+    " ,  `competicaoCartola`.`horaFimInscricao` " +
+    " ,  `competicaoCartola`.`valorCompeticao` " +
+    " ,  `competicaoCartola`.`txAdm` " +
+    " ,  `competicaoCartola`.`statusCompeticao` " +
+    " ,  `competicaoCartola`.`tipoCompeticao` " +
+    " ,  `competicaoCartola`.`linkGrupoWapp` " +
+    " ,  `competicaoCartola`.`prioridadeConsulta` " +
+    " FROM  `competicaoCartola` " +
+    " WHERE `competicaoCartola`.`statusCompeticao` <> 'Encerrada' " +
+    " order by  `competicaoCartola`.`prioridadeConsulta` ASC "
+    , {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+  nrSequenciais = dadosCompeticao.map((comp) => comp.nrSequencialRodadaCartola);
+
+  if (nrSequenciais.length > 0) {
+
+    totalParticipantes = 0;
+    premiacaoTotal = 0;
+    premiacaoPercentual = 0;
+    premiacaoFinal = 0;
+    premiacaoFinalFormat = '';
+
+    for (let i = 0; i < nrSequenciais.length; i++) {
+
+      totalTimes = await sequelize.query("SELECT COUNT(*) as `count` " +
+        "FROM `bilheteCompeticaoCartola` " +
+        "INNER JOIN `timeBilheteCompeticaoCartola`  " +
+        "ON `bilheteCompeticaoCartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` " +
+        " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequenciais[i]}" ` +
+        " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' "
+        , {
+          type: sequelize.QueryTypes.SELECT
+        });
+
+      dadosCompeticao[i].totalParticipantes = totalTimes[0].count;
+
+      premiacaoTotal = dadosCompeticao[i].totalParticipantes * dadosCompeticao[i].valorCompeticao;
+      premiacaoPercentual = (premiacaoTotal * dadosCompeticao[i].txAdm) / 100;
+      premiacaoFinal = premiacaoTotal - premiacaoPercentual;
+
+      dadosCompeticao[i].premiacaoFinalFormat = premiacaoFinal.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+      dadosCompeticao[i].dataFim = dadosCompeticao[i].dataFimInscricao.substring(0, 5);
+      dadosCompeticao[i].horaFim = dadosCompeticao[i].horaFimInscricao.substring(0, 5);
+
+    }
+
+
+  } else {
+    return false
+  }
+
+ 
+  return dadosCompeticao;
+
+
+
+}
+
+const getCompeticaoCartolaAtivasOld = () => {
   return sequelize.query("SELECT `competicaoCartola`.`nrSequencialRodadaCartola` " +
     " ,  `competicaoCartola`.`idUsuarioAdmLiga` " +
     " ,  `competicaoCartola`.`nomeLiga` " +
