@@ -9,7 +9,6 @@ const {
 
 const cadastro = (req, res, next) => {
     const dadosBilhete = req.body;
-
     return cadastrarBilhete(dadosBilhete)
         .then(bilhete => {
             if (!bilhete) {

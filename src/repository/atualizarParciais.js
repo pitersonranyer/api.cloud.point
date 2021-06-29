@@ -98,7 +98,7 @@ const putParciais = (nrSequencialRodadaCartola) => {
                     if (atletasTime === null) {
                       return false;
                     } else {
-                  //    console.log('passo 3');
+                      //    console.log('passo 3');
                       var capitao_id = atletasTime.body.capitao_id;
                       var totPontos = 0;
                       var pontuacaoParcial = 0;
@@ -159,7 +159,7 @@ const putParciais = (nrSequencialRodadaCartola) => {
                                   if (arraySubstituicao[c].entrou) {
 
                                     if (Number(arraySubstituicao[b].saiu.posicao_id) === Number(arraySubstituicao[c].entrou.posicao_id)) {
-                                    //  console.log('entrou', arraySubstituicao[c].entrou.apelido)
+                                      //  console.log('entrou', arraySubstituicao[c].entrou.apelido)
 
                                       for (let d = 0; d < arrayAtletasPontuados.length; d++) {
                                         if (Number(arraySubstituicao[c].entrou.atleta_id) === Number(arrayAtletasPontuados[d].atleta_id)) {
@@ -167,9 +167,9 @@ const putParciais = (nrSequencialRodadaCartola) => {
                                           qtdEntrouEmCampo = qtdEntrouEmCampo + 1;
 
                                           if (Number(capitao_id) === Number(arraySubstituicao[b].saiu.atleta_id)) {
-                                      //      console.log('novo capital =>', arraySubstituicao[c].entrou.apelido);
+                                            //      console.log('novo capital =>', arraySubstituicao[c].entrou.apelido);
                                             pontuacaoParcialReserva = pontuacaoParcialReserva + arrayAtletasPontuados[d].pontuacao * 2;
-                                        //    console.log(arrayAtletasPontuados[d].pontuacao * 2);
+                                            //    console.log(arrayAtletasPontuados[d].pontuacao * 2);
                                             //capitao_id = arraySubstituicao[c].entrou.atleta_id
 
                                           } else {
@@ -184,8 +184,8 @@ const putParciais = (nrSequencialRodadaCartola) => {
                               }
                             }
                           }
-                          if (qtdEntrouEmCampo > 12){
-                            qtdEntrouEmCampo = 12 ;
+                          if (qtdEntrouEmCampo > 12) {
+                            qtdEntrouEmCampo = 12;
                           }
                           totPontos = totPontos + pontuacaoParcialReserva
                           putPontosTimeBilhete(timeBilhete[i].idBilhete, timeBilhete[i].time_id, totPontos, qtdEntrouEmCampo, timeBilhete[i].pontosCampeonato);
@@ -197,7 +197,7 @@ const putParciais = (nrSequencialRodadaCartola) => {
           });
       }
 
-      
+
 
     });
 
@@ -206,12 +206,7 @@ const putParciais = (nrSequencialRodadaCartola) => {
 }
 
 const putPontosTimeBilhete = (idBilhete, time_id, pontuacaoParcial, qtJogadoresPontuados, pontuacaoTotalCompeticao) => {
-  // const idBilhetePut = idBilhete;
-  // const time_id = time_id;
-
-  // const pontuacaoParcial = pontuacaoParcial
-  // const qtJogadoresPontuados = qtJogadoresPontuados
-  // const pontuacaoTotalCompeticao = pontuacaoTotalCompeticao
+  
 
   pontuacaoParcial.toFixed(2);
   pontuacaoTotalCompeticao.toFixed(2);
@@ -241,6 +236,243 @@ const putPontosTimeBilhete = (idBilhete, time_id, pontuacaoParcial, qtJogadoresP
 }
 
 
+
+const putAtualizarParciais = async (nrSequencialRodadaCartola) => {
+
+
+  timeBilhete = await sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+    " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
+    " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
+    " , `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    " , `bilheteCompeticaoCartola`.`statusAtualBilhete` " +
+    " , `timeBilheteCompeticaoCartola`.`time_id` " +
+    " , `timeBilheteCompeticaoCartola`.`assinante` " +
+    " , `timeBilheteCompeticaoCartola`.`foto_perfil` " +
+    " , `timeBilheteCompeticaoCartola`.`nome` " +
+    " , `timeBilheteCompeticaoCartola`.`nome_cartola` " +
+    " , `timeBilheteCompeticaoCartola`.`slug` " +
+    " , `timeBilheteCompeticaoCartola`.`url_escudo_png` " +
+    " , `timeBilheteCompeticaoCartola`.`url_escudo_svg` " +
+    " , `timeBilheteCompeticaoCartola`.`facebook_id` " +
+    " , `timeBilheteCompeticaoCartola`.`pontuacaoParcial` " +
+    " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
+    " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
+    " , `timeBilheteCompeticaoCartola`.`colocacao` " +
+    " , `competicaoCartola`.`nrRodada` " +
+    " FROM `bilheteCompeticaoCartola` " +
+    " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
+    " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
+    " INNER JOIN `competicaoCartola` " +
+    " ON `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` = `competicaoCartola`.`nrSequencialRodadaCartola`  " +
+    " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
+    " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' " +
+    " ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` DESC "
+
+    , {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+  if (timeBilhete.length > 0) {
+
+    const pontuados = await recuperarAtletasPontuados();
+
+    for (let i = 0; i < timeBilhete.length; i++) {
+  
+      const atletasTime = await recuperJogadoresPorTime(timeBilhete[i].time_id);
+      tratarPontuacaoAtletas(atletasTime, timeBilhete[i].time_id, timeBilhete[i].nrRodada,
+       timeBilhete[i].idBilhete, timeBilhete[i].pontosCampeonato, pontuados )
+
+    }
+
+    return true
+
+  } else {
+    return false
+  }
+
+
+
+}
+
+
+
+const recuperarAtletasPontuados = async () => {
+
+  path = `/atletas/pontuados`;
+  var url = `${BASE_URL}${path}`;
+  // var arrayAtletasPontuados = [];
+
+
+  dadosAtletas = await unirest.get(url)
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
+
+
+
+  if (dadosAtletas.body) {
+
+    const arrayAtletasPontuados = [];
+    Object.keys(dadosAtletas.body.atletas).forEach(atleta_id => {
+      const atleta = {
+        atleta_id: atleta_id,
+        apelido: dadosAtletas.body.atletas[atleta_id].apelido,
+        pontuacao: dadosAtletas.body.atletas[atleta_id].pontuacao,
+        scout: dadosAtletas.body.atletas[atleta_id].scout,
+        foto: dadosAtletas.body.atletas[atleta_id].foto,
+        posicao_id: dadosAtletas.body.atletas[atleta_id].posicao_id,
+        clube_id: dadosAtletas.body.atletas[atleta_id].clube_id,
+        entrou_em_campo: dadosAtletas.body.atletas[atleta_id].entrou_em_campo
+      };
+
+      arrayAtletasPontuados.push(atleta);
+
+
+    });
+
+    return arrayAtletasPontuados;
+
+  }
+
+}
+
+const recuperJogadoresPorTime = async (timeID) => {
+
+  path = `/time/id/${timeID}`;
+  var url = `${BASE_URL}${path}`;
+
+  dadosTimes = await unirest.get(url)
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
+
+  return dadosTimes.body;
+
+
+}
+
+const recuperBancoReservas = async (timeID, nrRodada) => {
+
+  path = `/time/substituicoes/${timeID}/${nrRodada}`;
+  var url = `${BASE_URL}${path}`;
+
+  substituicao = await unirest.get(url)
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
+
+  if (substituicao) {
+    return substituicao.body;
+  }
+
+}
+
+
+const tratarPontuacaoAtletas = async (atletasTime, time_id, nrRodada, idBilhete, pontosCampeonato, pontuados) => {
+
+  arrayAtletasPontuados = pontuados; 
+  var capitao_id = atletasTime.capitao_id;
+  var totPontos = 0;
+  var pontuacaoParcial = 0;
+  var pontuacaoParcialReserva = 0;
+  var qtdEntrouEmCampo = 0
+
+  if (atletasTime.pontos_campeonato === null) {
+    pontosCampeonato = 0
+  } else {
+    pontosCampeonato = atletasTime.pontos_campeonato;
+  }
+
+  for (let x = 0; x < atletasTime.atletas.length; x++) {
+    for (let z = 0; z < arrayAtletasPontuados.length; z++) {
+      if (Number(atletasTime.atletas[x].atleta_id) === Number(arrayAtletasPontuados[z].atleta_id)) {
+        // Dobrar pontuação do capitão
+        if (Number(capitao_id) === Number(atletasTime.atletas[x].atleta_id)) {
+          pontuacaoParcial = arrayAtletasPontuados[z].pontuacao * 2;
+        } else {
+          pontuacaoParcial = arrayAtletasPontuados[z].pontuacao;
+        }
+
+        totPontos += pontuacaoParcial;
+
+        if (arrayAtletasPontuados[z].entrou_em_campo) {
+          qtdEntrouEmCampo = qtdEntrouEmCampo + 1;
+        }
+
+      }
+    }
+  }
+
+
+  const substituicao = await recuperBancoReservas(time_id, nrRodada);
+
+  if (substituicao) {
+
+    let arraySubstituicao = [] = substituicao;
+
+    for (let b = 0; b < arraySubstituicao.length; b++) {
+      if (arraySubstituicao[b].saiu) {
+
+        for (let c = 0; c < arraySubstituicao.length; c++) {
+          if (arraySubstituicao[c].entrou) {
+
+            if (Number(arraySubstituicao[b].saiu.posicao_id) === Number(arraySubstituicao[c].entrou.posicao_id)) {
+              //  console.log('entrou', arraySubstituicao[c].entrou.apelido)
+
+              for (let d = 0; d < arrayAtletasPontuados.length; d++) {
+                if (Number(arraySubstituicao[c].entrou.atleta_id) === Number(arrayAtletasPontuados[d].atleta_id)) {
+
+                  qtdEntrouEmCampo = qtdEntrouEmCampo + 1;
+
+                  if (Number(capitao_id) === Number(arraySubstituicao[b].saiu.atleta_id)) {
+                    //      console.log('novo capital =>', arraySubstituicao[c].entrou.apelido);
+                    pontuacaoParcialReserva = pontuacaoParcialReserva + arrayAtletasPontuados[d].pontuacao * 2;
+                    //    console.log(arrayAtletasPontuados[d].pontuacao * 2);
+                    //capitao_id = arraySubstituicao[c].entrou.atleta_id
+
+                  } else {
+                    pontuacaoParcialReserva = pontuacaoParcialReserva + arrayAtletasPontuados[d].pontuacao;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+
+  }
+
+
+  if (qtdEntrouEmCampo > 12){
+    qtdEntrouEmCampo = 12 ;
+  }
+  totPontos = totPontos + pontuacaoParcialReserva
+  putPontosTimeBilhete(idBilhete, time_id, totPontos, qtdEntrouEmCampo, pontosCampeonato);
+
+}
+
+
+
+
+
+
+
 module.exports = {
-  putParciais
+  putParciais,
+  putAtualizarParciais
 };

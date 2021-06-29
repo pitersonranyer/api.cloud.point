@@ -1,7 +1,5 @@
 const BilheteCompeticaoCartola = require('../model/bilheteCompeticaoCartola');
 const StatusBilheteCompeticaoCartola = require('../model/statusBilheteCompeticaoCartola');
-const TimeBilheteCompeticaoCartola = require('../model/timeBilheteCompeticaoCartola');
-const HistoricoTimeUsuario = require('../model/historicoTimeUsuario');
 const sequelize = require('../database/database');
 const { Op } = require("sequelize");
 
@@ -9,56 +7,78 @@ let data = new Date();
 let timesTamp = new Date(data.valueOf() - data.getTimezoneOffset() * 60000);
 let anoAtual = data.getFullYear();
 
-const cadastrarBilhete = dadosBilhete => {
+const cadastrarBilhete = async dadosBilhete => {
 
-  return BilheteCompeticaoCartola.max('idBilhete').then(max => {
+  timeBilhete =  await sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+    "FROM `bilheteCompeticaoCartola` " +
+    "INNER JOIN `timeBilheteCompeticaoCartola`  " +
+    "ON `bilheteCompeticaoCartola`.`idBilhete` = `timeBilheteCompeticaoCartola`.`idBilhete` " +
+    " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= ${dadosBilhete.nrSequencialRodadaCartola} ` +
+    " AND `timeBilheteCompeticaoCartola`.`time_id` " + `= ${dadosBilhete.time_id} `
 
-    if (Number.isNaN(max)) {
-      let numbersAsString = `${anoAtual}${'00000'}`;
-      max = numbersAsString;
-      const numMax = max + 1;
-      dadosBilhete.idBilhete = numMax;
-    } else {
-      const numMax = max + 1;
-      dadosBilhete.idBilhete = numMax;
-    }
-
-
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (var i = 0; i < 6; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    let codigoBilhete = "pJ" + anoAtual + text;
-    dadosBilhete.codigoBilhete = codigoBilhete;
+    , {
+      type: sequelize.QueryTypes.SELECT
+    });
 
 
-    //Gravar bilhete
-    dadosBilhete.statusAtualBilhete = 'Gerado';
-    const bilheteCompeticaoCartola = new BilheteCompeticaoCartola({ ...dadosBilhete });
-    bilheteCompeticaoCartola.save();
 
-    const dadosStatusBilhete = {
-      idBilhete: dadosBilhete.idBilhete,
-      dataHoraAtualizacaoBilhete: timesTamp,
-      statusBilhete: 'Gerado',
-      respAtualizacaoBilhete: dadosBilhete.nomeUsuario,
-      nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
-    };
+  if (timeBilhete.length > 0) {
+    return false
+  } else {
 
-    //Gravar Status
-    const statusBilheteCompeticaoCartola = new StatusBilheteCompeticaoCartola({ ...dadosStatusBilhete });
-    statusBilheteCompeticaoCartola.save();
 
-    const retDados = {
-      idBilhete: dadosBilhete.idBilhete,
-      codigoBilhete: dadosBilhete.codigoBilhete
-    };
 
-    return retDados;
+    return BilheteCompeticaoCartola.max('idBilhete').then(max => {
 
-  });
+      if (Number.isNaN(max)) {
+        let numbersAsString = `${anoAtual}${'00000'}`;
+        max = numbersAsString;
+        const numMax = max + 1;
+        dadosBilhete.idBilhete = numMax;
+      } else {
+        const numMax = max + 1;
+        dadosBilhete.idBilhete = numMax;
+      }
+
+
+      let text = "";
+      let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+      for (var i = 0; i < 6; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      let codigoBilhete = "pJ" + anoAtual + text;
+      dadosBilhete.codigoBilhete = codigoBilhete;
+
+
+      //Gravar bilhete
+      dadosBilhete.statusAtualBilhete = 'Gerado';
+      const bilheteCompeticaoCartola = new BilheteCompeticaoCartola({ ...dadosBilhete });
+      bilheteCompeticaoCartola.save();
+
+      const dadosStatusBilhete = {
+        idBilhete: dadosBilhete.idBilhete,
+        dataHoraAtualizacaoBilhete: timesTamp,
+        statusBilhete: 'Gerado',
+        respAtualizacaoBilhete: dadosBilhete.nomeUsuario,
+        nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
+      };
+
+      //Gravar Status
+      const statusBilheteCompeticaoCartola = new StatusBilheteCompeticaoCartola({ ...dadosStatusBilhete });
+      statusBilheteCompeticaoCartola.save();
+
+      const retDados = {
+        idBilhete: dadosBilhete.idBilhete,
+        codigoBilhete: dadosBilhete.codigoBilhete
+      };
+
+      return retDados;
+
+    });
+
+  }
+
 };
 
 
@@ -147,7 +167,7 @@ const putStatusBilhete = dadosBilhete => {
   ).then(function (updatedRecord) {
     if (updatedRecord) {
 
-      if (dadosBilhete.nomeUsuario === null){
+      if (dadosBilhete.nomeUsuario === null) {
         dadosBilhete.nomeUsuario = 'Sistema';
       }
 
@@ -159,7 +179,7 @@ const putStatusBilhete = dadosBilhete => {
         nrSequencialRodadaCartola: dadosBilhete.nrSequencialRodadaCartola
       };
 
-      
+
 
 
       //Gravar Status

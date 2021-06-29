@@ -30,6 +30,7 @@ const cadastrarTimeBilhete = dadosTimeBilhete => {
     " AND `timeBilheteCompeticaoCartola`.`time_id` " + `= ${dadosTimeBilhete.time_id} `
     , { type: sequelize.QueryTypes.SELECT }).then(function (psq1) {
 
+
       if (!psq1.length) {
 
         // Salvar dados do Timebilhete
