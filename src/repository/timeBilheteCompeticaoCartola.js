@@ -111,9 +111,9 @@ const getTimeBilheteGerado = (nrContatoUsuario, nrSequencialRodadaCartola) => {
 };
 
 
-const getTimesDaCompeticao = (nrSequencialRodadaCartola) => {
+const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
 
-  return sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
+  result = await sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
     " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
     " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
     " , `bilheteCompeticaoCartola`.`nrContatoUsuario` " +
@@ -132,42 +132,98 @@ const getTimesDaCompeticao = (nrSequencialRodadaCartola) => {
     " , `timeBilheteCompeticaoCartola`.`pontuacaoTotalCompeticao` " +
     " , `timeBilheteCompeticaoCartola`.`qtJogadoresPontuados` " +
     " , `timeBilheteCompeticaoCartola`.`colocacao` " +
+    " , `competicaoCartola`.`idUsuarioAdmLiga` " +
+    " , `competicaoCartola`.`nomeLiga` " +
+    " , `competicaoCartola`.`anoTemporada` " +
+    " , `competicaoCartola`.`nrRodada` " +
+    " , `competicaoCartola`.`dataFimInscricao` " +
+    " , `competicaoCartola`.`horaFimInscricao` " +
+    " , `competicaoCartola`.`valorCompeticao` " +
+    " , `competicaoCartola`.`txAdm` " +
+    " , `competicaoCartola`.`statusCompeticao` " +
+    " , `competicaoCartola`.`tipoCompeticao` " +
+    " , `competicaoCartola`.`linkGrupoWapp` " +
+    " , `competicaoCartola`.`prioridadeConsulta` " +
     " FROM `bilheteCompeticaoCartola` " +
-    " LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
-    " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
+    "   LEFT OUTER JOIN `timeBilheteCompeticaoCartola` " +
+    "   ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete`  " +
+    "   INNER JOIN `competicaoCartola` " +
+    "   ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
     " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " + `= "${nrSequencialRodadaCartola}" ` +
     " AND `bilheteCompeticaoCartola`.`statusAtualBilhete` = 'Pago' " +
     " ORDER BY `timeBilheteCompeticaoCartola`.`pontuacaoParcial` DESC "
-    , { type: sequelize.QueryTypes.SELECT }).then(function (data) {
-      if (data === null) {
-        data = 0;
-        return false;
-      } else {
-        
-        for (let i = 0; i < data.length; i++) {
 
-         const idBilhete = data[i].idBilhete
-         const time_id = data[i].time_id
-         const colocacao = i + 1;
-
-          TimeBilheteCompeticaoCartola.update(
-
-            {
-              colocacao: colocacao
-            },
-            {
-              where: {
-                idBilhete: idBilhete,
-                time_id: time_id
-              }
-            }
-        
-          )
-
-        }
-        return data;
-      }
+    , {
+      type: sequelize.QueryTypes.SELECT
     });
+
+  if (result.length > 0) {
+
+    for (let i = 0; i < result.length; i++) {
+
+
+      if (result[i].tipoCompeticao === 'TIRO CURTO') {
+        premiacaoTotal = result.length * result[i].valorCompeticao;
+        premiacaoPercentualLista = 0;
+        premiacaoFinalLista = 0;
+        result[i].premiacaoFinalFormatLista = 0;
+        if (i === 0) {
+          premiacaoPercentualLista = (premiacaoTotal * 50) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+        }
+        if (i === 1) {
+          premiacaoPercentualLista = (premiacaoTotal * 25) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+        }
+        if (i === 2) {
+          premiacaoPercentualLista = (premiacaoTotal * 10) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+        }
+        if (i === 3) {
+          premiacaoPercentualLista = (premiacaoTotal * 5) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+        }
+        if (i === 4) {
+          result[i].premiacaoFinalFormatLista = '10,00';
+        }
+        if (i === 5) {
+          result[i].premiacaoFinalFormatLista = '10,00';
+        }
+        if (i === 6) {
+          result[i].premiacaoFinalFormatLista = '10,00';
+        }
+      }else{
+        result[i].premiacaoFinalFormatLista = 0;
+      }
+
+
+      var idBilhete = result[i].idBilhete
+      var time_id = result[i].time_id
+      var colocacao = i + 1;
+
+      TimeBilheteCompeticaoCartola.update(
+
+        {
+          colocacao: colocacao
+        },
+        {
+          where: {
+            idBilhete: idBilhete,
+            time_id: time_id
+          }
+        }
+
+      )
+
+    }
+   
+    return result;
+  }
+
 };
 
 
