@@ -168,12 +168,12 @@ const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
         premiacaoFinalLista = 0;
         result[i].premiacaoFinalFormatLista = 0;
         if (i === 0) {
-          premiacaoPercentualLista = (premiacaoTotal * 50) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 45) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 1) {
-          premiacaoPercentualLista = (premiacaoTotal * 25) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 20) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
@@ -183,21 +183,28 @@ const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 3) {
-          premiacaoPercentualLista = (premiacaoTotal * 5) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 8) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 4) {
-          result[i].premiacaoFinalFormatLista = '10,00';
+          premiacaoPercentualLista = (premiacaoTotal * 4) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 5) {
-          result[i].premiacaoFinalFormatLista = '10,00';
+          premiacaoPercentualLista = (premiacaoTotal * 2) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 6) {
-          result[i].premiacaoFinalFormatLista = '10,00';
+          premiacaoPercentualLista = (premiacaoTotal * 1) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
       }else{
         result[i].premiacaoFinalFormatLista = 0;
+        result[i].totalAnual = pontuacaoTotalCompeticao
       }
 
 
