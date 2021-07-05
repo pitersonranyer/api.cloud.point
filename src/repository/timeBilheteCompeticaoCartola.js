@@ -202,9 +202,6 @@ const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
-      }else{
-        result[i].premiacaoFinalFormatLista = 0;
-        result[i].totalAnual = pontuacaoTotalCompeticao
       }
 
 
