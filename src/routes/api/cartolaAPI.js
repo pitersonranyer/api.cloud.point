@@ -18,5 +18,10 @@ Router.get('/consultarMercadoStatus/', controller.consultarMercadoStatus);
 
 Router.get('/consultarBancoDeReservas/:time_id/:nrRodada',  controller.consultarBancoDeReservas);
 
+Router.get('/consultarPartidas/:nrRodada',  controller.consultarPartidas);
+
+Router.get('/consultarParciaisAtletasRodadaFechada/:time_id',  controller.consultarParciaisAtletasRodadaFechada);
+
+
 module.exports = Router;
 

@@ -5,6 +5,8 @@ const { getTimesCartola,
   getTimeUsuarioLogado,
   getMercadoStatus,
   getTimeInfoCartolaById,
+  getPartidas,
+  getParciaisAtletasRodadaFechada,
   getBancodeReservas } = require('../repository/cartolaAPI');
 
 
@@ -51,7 +53,7 @@ const consultarTimeInfoCartolaById = (req, res, next) => {
 
 const listarAtletasPontuados = (req, res, next) => {
   return getAtletasPontuados()
-  .then(atletas => res.json(atletas))
+    .then(atletas => res.json(atletas))
     .catch(err => next(err));
 };
 
@@ -76,6 +78,22 @@ const consultarBancoDeReservas = (req, res, next) => {
     .catch(err => next(err));
 };
 
+const consultarPartidas = async (req, res, next) => {
+  nrRodada = req.params.nrRodada;
+  return getPartidas(nrRodada)
+    .then(time => res.json(time))
+    .catch(err => next(err));
+};
+
+const consultarParciaisAtletasRodadaFechada = async (req, res, next) => {
+  time_id = req.params.time_id;
+ return getParciaisAtletasRodadaFechada(time_id)
+    .then(atletas => res.json(atletas))
+    .catch(err => next(err));
+};
+
+
+
 
 
 
@@ -87,5 +105,7 @@ module.exports = {
   buscarTimeUsuarioLogado,
   consultarMercadoStatus,
   consultarTimeInfoCartolaById,
-  consultarBancoDeReservas
+  consultarBancoDeReservas,
+  consultarPartidas,
+  consultarParciaisAtletasRodadaFechada
 };

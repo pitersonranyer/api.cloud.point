@@ -7,9 +7,19 @@ const {
 } = require('../repository/bilheteCompeticaoCartola');
 
 
+const {
+  cadastrarBilheteTeste
+} = require('../repository/gerarBilhetePorIds');
+
+
 const cadastro = (req, res, next) => {
+
+  console.log('chegou')
     const dadosBilhete = req.body;
-    return cadastrarBilhete(dadosBilhete)
+
+    return cadastrarBilheteTeste(dadosBilhete)
+
+   // return cadastrarBilhete(dadosBilhete)
         .then(bilhete => {
             if (!bilhete) {
                 return res.status(409).end();
