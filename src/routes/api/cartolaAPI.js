@@ -20,7 +20,11 @@ Router.get('/consultarBancoDeReservas/:time_id/:nrRodada',  controller.consultar
 
 Router.get('/consultarPartidas/:nrRodada',  controller.consultarPartidas);
 
-Router.get('/consultarParciaisAtletasRodadaFechada/:time_id',  controller.consultarParciaisAtletasRodadaFechada);
+Router.get('/consultarParciaisAtletasMercadoAberto/:time_id',  controller.consultarParciaisAtletasMercadoAberto);
+
+Router.get('/consultarParciaisAtletasReservasMercadoAberto/:time_id',  controller.consultarParciaisAtletasReservasMercadoAberto);
+
+
 
 
 module.exports = Router;

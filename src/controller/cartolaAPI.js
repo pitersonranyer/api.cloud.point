@@ -6,7 +6,8 @@ const { getTimesCartola,
   getMercadoStatus,
   getTimeInfoCartolaById,
   getPartidas,
-  getParciaisAtletasRodadaFechada,
+  getParciaisAtletasMercadoAberto,
+  getParciaisAtletasReservasMercadoAberto,
   getBancodeReservas } = require('../repository/cartolaAPI');
 
 
@@ -85,12 +86,22 @@ const consultarPartidas = async (req, res, next) => {
     .catch(err => next(err));
 };
 
-const consultarParciaisAtletasRodadaFechada = async (req, res, next) => {
+const consultarParciaisAtletasMercadoAberto = async (req, res, next) => {
   time_id = req.params.time_id;
- return getParciaisAtletasRodadaFechada(time_id)
+ return getParciaisAtletasMercadoAberto(time_id)
     .then(atletas => res.json(atletas))
     .catch(err => next(err));
 };
+
+const consultarParciaisAtletasReservasMercadoAberto = async (req, res, next) => {
+  time_id = req.params.time_id;
+ return getParciaisAtletasReservasMercadoAberto(time_id)
+    .then(atletas => res.json(atletas))
+    .catch(err => next(err));
+};
+
+
+
 
 
 
@@ -107,5 +118,6 @@ module.exports = {
   consultarTimeInfoCartolaById,
   consultarBancoDeReservas,
   consultarPartidas,
-  consultarParciaisAtletasRodadaFechada
+  consultarParciaisAtletasMercadoAberto,
+  consultarParciaisAtletasReservasMercadoAberto
 };
