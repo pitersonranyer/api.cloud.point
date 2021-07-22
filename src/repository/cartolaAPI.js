@@ -290,6 +290,8 @@ const getPartidas = async (nrRodada) => {
 
 const getParciaisAtletasMercadoAberto = async (time_id) => {
 
+  console.log('chegou', time_id);
+
   path = `/time/id/${time_id}`;
   //path = `/time/id/${time_id}/12`;
   var url = `${BASE_URL}${path}`;
@@ -310,10 +312,13 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
       "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
     )
 
+    console.log('passo 1');
   if (resultJson.body) {
 
 
     let idx = 0
+
+    console.log('passo 2');
 
     Object.keys(resultJson.body.atletas).forEach(atleta_id => {
 
@@ -328,13 +333,14 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
         entrou_em_campo: resultJson.body.atletas[atleta_id].entrou_em_campo
       };
 
+      console.log('passo 3');
       atletasArray.push(atleta);
       atletasArray[atleta_id].scout = [];
       scoutJogadorTempPositivo = [];
       scoutJogadorTempNegativo = [];
       scoutJogadorTemp = [];
 
-
+      console.log('passo 4');
       Object.keys(resultJson.body.atletas[atleta_id].scout).forEach(id => {
 
         if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
@@ -376,13 +382,14 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
       });
 
+      console.log('passo 5');
       atletasArray[atleta_id].scoutPositivo = scoutJogadorTempPositivo.toString();
       atletasArray[atleta_id].scoutNegativo = scoutJogadorTempNegativo.toString();
       atletasArray[atleta_id].scout = scoutJogadorTemp.toString();
 
     });
 
-
+    console.log('passo 6');
     Object.keys(resultJson.body.clubes).forEach(id => {
       const clubes = {
         id: id,
@@ -395,7 +402,7 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
     });
 
-
+    console.log('passo 7');
     // Juntar array de clubes com array de atletas
     for (let i = 0; i < atletasArray.length; i++) {
 
@@ -457,6 +464,8 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
 
     }
+
+    console.log('passo 8');
 
     atletasArray.sort((a, b) => a['posicao_id'] - b['posicao_id']);
 
