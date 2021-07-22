@@ -100,6 +100,11 @@ const consultarParciaisAtletasReservasMercadoAberto = async (req, res, next) => 
     .catch(err => next(err));
 };
 
+
+
+
+
+
 module.exports = {
   listarTimesCartola,
   consultarTimeCartola,

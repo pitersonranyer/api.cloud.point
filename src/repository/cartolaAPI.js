@@ -632,6 +632,12 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
   }
 }
 
+
+
+
+
+
+
 module.exports = {
   getTimesCartola,
   getTimeCartola,
