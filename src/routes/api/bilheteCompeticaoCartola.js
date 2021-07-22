@@ -5,6 +5,8 @@ const controller = require('../../controller/bilheteCompeticaoCartola');
 
 Router.post('/',  controller.cadastro);
 
+Router.post('/cadastroPorId',  controller.cadastroPorId);
+
 Router.get('/listarBilheteGeradoId/:idUsuarioAdmLiga', autenticarRequisicao, controller.listarBilheteGeradoId);
 
 Router.get('/listarBilheteGerado', controller.listarBilheteGerado);

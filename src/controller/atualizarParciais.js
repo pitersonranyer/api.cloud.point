@@ -16,8 +16,6 @@ const atualizarParciais = async (req, res, next) => {
 const listarScoutAtletas = async (req, res, next) => {
   const atleta_id = req.params.atleta_id;
 
-  console.log('chjegou')
-
   return getScoutAtletas(atleta_id)
 
     .then(atu => res.json(atu))

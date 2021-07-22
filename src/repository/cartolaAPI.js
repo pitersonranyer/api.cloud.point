@@ -1,4 +1,3 @@
-
 var unirest = require("unirest");
 
 const BASE_URL = 'https://api.cartolafc.globo.com';
@@ -164,14 +163,12 @@ const getAtletasPontuados = () => {
     });
 }
 
-const getMercadoStatus = () => {
+const getMercadoStatus = async () => {
 
   path = `/mercado/status`;
   var url = `${BASE_URL}${path}`;
 
-
-
-  return unirest.get(url)
+  mercado = await unirest.get(url)
     .header(
       "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
       "Accept", "application/json, text/plain, */*",
@@ -180,15 +177,12 @@ const getMercadoStatus = () => {
       "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
     )
 
-    .then(data => {
-      if (data === null) {
-        return false;
-      } else {
-        return data.body;
-      }
-    });
+  if (mercado === null) {
+    return false;
+  } else {
+    return mercado.body;
+  }
 }
-
 
 const getBancodeReservas = (time_id, nrRodada) => {
 
@@ -248,8 +242,16 @@ const getPartidas = async (nrRodada) => {
 
     });
 
+
+
     // Juntar array de times com array de partidas
     for (let i = 0; i < partidasArray.length; i++) {
+      // partidasArray[i].partida_data.toDate('dd/mm/yyyy hh:ii:ss')
+      partidasArray[i].horaPartida = partidasArray[i].partida_data.substring(11, 16);
+      var partidaMM = partidasArray[i].partida_data.substring(5, 7);
+      var partidaDD = partidasArray[i].partida_data.substring(8, 10);
+      partidasArray[i].dataPartida = partidaDD + '/' + partidaMM;
+
       for (let x = 0; x < clubesArray.length; x++) {
 
         // Recuperar link do escudo 30x30
@@ -266,10 +268,10 @@ const getPartidas = async (nrRodada) => {
 
 
         if (Number(partidasArray[i].clube_casa_id) === Number(clubesArray[x].id)) {
-          partidasArray[i].nomeMandate = clubesArray[x].nome;
-          partidasArray[i].abreviacaoMandate = clubesArray[x].abreviacao;
-          partidasArray[i].escudosMandate = escudoTime[x].link //clubesArray[x].escudos;
-          partidasArray[i].nome_fantasiaMandate = clubesArray[x].nome_fantasia;
+          partidasArray[i].nomeMandante = clubesArray[x].nome;
+          partidasArray[i].abreviacaoMandante = clubesArray[x].abreviacao;
+          partidasArray[i].escudosMandante = escudoTime[x].link //clubesArray[x].escudos;
+          partidasArray[i].nome_fantasiaMandante = clubesArray[x].nome_fantasia;
         }
         if (Number(partidasArray[i].clube_visitante_id) === Number(clubesArray[x].id)) {
           partidasArray[i].nomeVisitante = clubesArray[x].nome;
@@ -288,8 +290,8 @@ const getPartidas = async (nrRodada) => {
 
 const getParciaisAtletasMercadoAberto = async (time_id) => {
 
-  // path = `/time/id/${time_id}`;
-  path = `/time/id/${time_id}/12`;
+  path = `/time/id/${time_id}`;
+  //path = `/time/id/${time_id}/12`;
   var url = `${BASE_URL}${path}`;
 
   escudoTime = [];
@@ -318,7 +320,8 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
       const atleta = {
         atleta_id: resultJson.body.atletas[atleta_id].atleta_id,
         apelido: resultJson.body.atletas[atleta_id].apelido,
-        pontuacao: resultJson.body.atletas[atleta_id].pontuacao,
+        pontuacao: resultJson.body.atletas[atleta_id].pontos_num,
+        variacao_num: resultJson.body.atletas[atleta_id].variacao_num,
         foto: resultJson.body.atletas[atleta_id].foto,
         posicao_id: resultJson.body.atletas[atleta_id].posicao_id,
         clube_id: resultJson.body.atletas[atleta_id].clube_id,
@@ -327,17 +330,20 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
       atletasArray.push(atleta);
       atletasArray[atleta_id].scout = [];
+      scoutJogadorTempPositivo = [];
+      scoutJogadorTempNegativo = [];
       scoutJogadorTemp = [];
 
 
       Object.keys(resultJson.body.atletas[atleta_id].scout).forEach(id => {
 
-        if (resultJson.body.atletas[atleta_id].scout[id] === 1){
+        if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
           resultJson.body.atletas[atleta_id].scout[id] = '';
         }
-    
+
 
         const objScout = {
+          scoutId: id,
           result: resultJson.body.atletas[atleta_id].scout[id] + id,
           atleta: atletasArray[atleta_id].atleta_id
 
@@ -347,12 +353,31 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
         if (scoutJogador[idx].atleta === atletasArray[atleta_id].atleta_id) {
           scoutJogadorTemp.push(scoutJogador[idx].result);
+
+          if (scoutJogador[idx].scoutId === 'G'
+            || scoutJogador[idx].scoutId === 'A'
+            || scoutJogador[idx].scoutId === 'FT'
+            || scoutJogador[idx].scoutId === 'FD'
+            || scoutJogador[idx].scoutId === 'FF'
+            || scoutJogador[idx].scoutId === 'FS'
+            || scoutJogador[idx].scoutId === 'PS'
+            || scoutJogador[idx].scoutId === 'DP'
+            || scoutJogador[idx].scoutId === 'SG'
+            || scoutJogador[idx].scoutId === 'DE'
+            || scoutJogador[idx].scoutId === 'DS') {
+            scoutJogadorTempPositivo.push(scoutJogador[idx].result);
+          } else {
+            scoutJogadorTempNegativo.push(scoutJogador[idx].result);
+          }
+
         }
 
         idx = idx + 1
 
       });
 
+      atletasArray[atleta_id].scoutPositivo = scoutJogadorTempPositivo.toString();
+      atletasArray[atleta_id].scoutNegativo = scoutJogadorTempNegativo.toString();
       atletasArray[atleta_id].scout = scoutJogadorTemp.toString();
 
     });
@@ -375,6 +400,14 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
     for (let i = 0; i < atletasArray.length; i++) {
 
       atletasArray[i].foto = atletasArray[i].foto.replace('FORMATO', '140x140');
+
+      if (resultJson.body.capitao_id === atletasArray[i].atleta_id) {
+        atletasArray[i].capitao = true;
+        atletasArray[i].pontuacao = atletasArray[i].pontuacao * 2;
+
+      } else {
+        atletasArray[i].capitao = false;
+      }
 
 
       //clubes
@@ -435,8 +468,8 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
 const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
-  // path = `/time/id/${time_id}`;
-  path = `/time/id/${time_id}/12`;
+   path = `/time/id/${time_id}`;
+  // path = `/time/id/${time_id}/12`;
   var url = `${BASE_URL}${path}`;
 
   escudoTime = [];
@@ -444,7 +477,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
   clubesArray = [];
   atletasArray = [];
   posicoesArray = [];
-  
+
 
 
   // consultarTimeCartola
@@ -463,7 +496,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
     Object.keys(resultJson.body.reservas).forEach(atleta_id => {
 
       const atleta = {
-        
+
         atleta_id: resultJson.body.reservas[atleta_id].atleta_id,
         apelido: resultJson.body.reservas[atleta_id].apelido,
         pontuacao: resultJson.body.reservas[atleta_id].pontos_num,
@@ -476,31 +509,50 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
       atletasArray.push(atleta);
       atletasArray[atleta_id].scout = [];
       scoutJogadorTemp = [];
+      scoutJogadorTempPositivo = [];
+      scoutJogadorTempNegativo = [];
 
 
       Object.keys(resultJson.body.reservas[atleta_id].scout).forEach(id => {
 
-        if (resultJson.body.reservas[atleta_id].scout[id] === 1){
+        if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
           resultJson.body.reservas[atleta_id].scout[id] = '';
         }
-    
+
 
         const objScout = {
+          scoutId: id,
           result: resultJson.body.reservas[atleta_id].scout[id] + id,
           atleta: atletasArray[atleta_id].atleta_id
-
         };
 
         scoutJogador.push(objScout);
 
         if (scoutJogador[idx].atleta === atletasArray[atleta_id].atleta_id) {
           scoutJogadorTemp.push(scoutJogador[idx].result);
+          if (scoutJogador[idx].scoutId === 'G'
+            || scoutJogador[idx].scoutId === 'A'
+            || scoutJogador[idx].scoutId === 'FT'
+            || scoutJogador[idx].scoutId === 'FD'
+            || scoutJogador[idx].scoutId === 'FF'
+            || scoutJogador[idx].scoutId === 'FS'
+            || scoutJogador[idx].scoutId === 'PS'
+            || scoutJogador[idx].scoutId === 'DP'
+            || scoutJogador[idx].scoutId === 'SG'
+            || scoutJogador[idx].scoutId === 'DE'
+            || scoutJogador[idx].scoutId === 'DS') {
+            scoutJogadorTempPositivo.push(scoutJogador[idx].result);
+          } else {
+            scoutJogadorTempNegativo.push(scoutJogador[idx].result);
+          }
         }
 
         idx = idx + 1
 
       });
 
+      atletasArray[atleta_id].scoutPositivo = scoutJogadorTempPositivo.toString();
+      atletasArray[atleta_id].scoutNegativo = scoutJogadorTempNegativo.toString();
       atletasArray[atleta_id].scout = scoutJogadorTemp.toString();
 
     });
@@ -579,10 +631,6 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
     return atletasArray;
   }
 }
-
-
-
-
 
 module.exports = {
   getTimesCartola,

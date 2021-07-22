@@ -64,7 +64,7 @@ const listarAtletasPontuadosOrig = (req, res, next) => {
     .catch(err => next(err));
 };
 
-const consultarMercadoStatus = (req, res, next) => {
+const consultarMercadoStatus = async (req, res, next) => {
   return getMercadoStatus()
     .then(status => res.json(status))
     .catch(err => next(err));
@@ -99,14 +99,6 @@ const consultarParciaisAtletasReservasMercadoAberto = async (req, res, next) => 
     .then(atletas => res.json(atletas))
     .catch(err => next(err));
 };
-
-
-
-
-
-
-
-
 
 module.exports = {
   listarTimesCartola,

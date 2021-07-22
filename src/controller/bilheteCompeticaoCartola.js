@@ -3,23 +3,14 @@ const {
   getBilheteGerado,
   putStatusBilhete,
   getBilheteGeradoId,
-  delBilhete
+  delBilhete,
+  cadastrarBilhetePorIds
 } = require('../repository/bilheteCompeticaoCartola');
 
 
-const {
-  cadastrarBilheteTeste
-} = require('../repository/gerarBilhetePorIds');
-
-
-const cadastro = (req, res, next) => {
-
-  console.log('chegou')
+const cadastro = async (req, res, next) => {
     const dadosBilhete = req.body;
-
-    return cadastrarBilheteTeste(dadosBilhete)
-
-   // return cadastrarBilhete(dadosBilhete)
+    return cadastrarBilhete(dadosBilhete)
         .then(bilhete => {
             if (!bilhete) {
                 return res.status(409).end();
@@ -28,6 +19,20 @@ const cadastro = (req, res, next) => {
             return res.json(bilhete);
         })
         .catch(error => next(error));
+};
+
+
+const cadastroPorId = async (req, res, next) => {
+  const dadosBilhete = req.body;
+  return cadastrarBilhetePorIds(dadosBilhete)
+      .then(bilhete => {
+          if (!bilhete) {
+              return res.status(409).end();
+          }
+
+          return res.json(bilhete);
+      })
+      .catch(error => next(error));
 };
 
 
@@ -79,6 +84,6 @@ module.exports = {
     listarBilheteGerado,
     alterarStatusBilhete,
     listarBilheteGeradoId,
-    excluirBilhete
+    excluirBilhete,
+    cadastroPorId
 };
-

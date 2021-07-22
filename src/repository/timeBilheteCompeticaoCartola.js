@@ -166,7 +166,7 @@ const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
         premiacaoTotal = result.length * result[i].valorCompeticao;
         premiacaoPercentualLista = 0;
         premiacaoFinalLista = 0;
-        result[i].premiacaoFinalFormatLista = 0;
+        result[i].premiacaoFinalFormatLista = '';
         if (i === 0) {
           premiacaoPercentualLista = (premiacaoTotal * 45) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
@@ -226,6 +226,8 @@ const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
     }
    
     return result;
+  }else{
+    return result = [];
   }
 
 };
