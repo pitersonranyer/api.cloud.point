@@ -2,6 +2,7 @@ var unirest = require("unirest");
 var fs = require("fs");
 const TimeBilheteCompeticaoCartola = require('../model/timeBilheteCompeticaoCartola');
 const Scout = require('../model/scout');
+const Atletas = require('../model/atletas');
 
 const sequelize = require('../database/database');
 
@@ -47,8 +48,14 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola) => {
 
     const pontuados = await recuperarAtletasPontuados();
 
-    //Deleta scout para regravar novamente
+    /* Deleta atletas para gravar novamente */
+    await atualizarAtletasPontuados(pontuados);
+
+    /* Deleta scout para gravar novamente */
     await atualizarScoutJogadores(pontuados);
+
+    /* Atualizar tabela atletas  */
+    await atualizarTabelaAtletas(pontuados, timeBilhete[0].nrRodada);
 
 
     for (let i = 0; i < timeBilhete.length; i++) {
@@ -88,6 +95,7 @@ const atualizarScoutJogadores = async (pontuados) => {
       Object.keys(pontuados[ix].scout).forEach(id => {
 
         const objScout = {
+          result: pontuados[ix].scout[id] + id,
           atleta_id: pontuados[ix].atleta_id,
           apelido: pontuados[ix].apelido,
           sigla_id: id,
@@ -115,16 +123,44 @@ const atualizarScoutJogadores = async (pontuados) => {
           scoutJogador[idx].tipo = 'N';
         }
 
-        // > Gravar tabela de scout 
+        /* Gravar tabela de scout  */
         gravarScoutJogador(scoutJogador[idx]);
-
 
         idx = idx + 1
 
       });
 
     }
+
+
   }
+
+}
+
+
+const atualizarAtletasPontuados = async (pontuados) => {
+
+  Atletas.destroy({
+    where: {
+      nrRodada: timeBilhete[0].nrRodada
+    }
+  });
+
+
+  for (let ix = 0; ix < pontuados.length; ix++) {
+    // Gravar tabela de atletas 
+    gravarAtletas(pontuados[ix]);
+  }
+}
+
+const gravarAtletas = async (objAtletas) => {
+  objAtletas.nrRodada = timeBilhete[0].nrRodada;
+  objAtletas.scoutPositivo = '';
+  objAtletas.scoutNegativo = '';
+
+  //Gravar atletas
+  const atletas = new Atletas({ ...objAtletas });
+  atletas.save();
 
 }
 
@@ -163,6 +199,9 @@ const recuperarAtletasPontuados = async () => {
         scout: dadosAtletas.body.atletas[atleta_id].scout,
 
       };
+
+      atleta.foto = atleta.foto.replace('FORMATO', '140x140');
+
 
       arrayAtletasPontuados.push(atleta);
 
@@ -343,13 +382,99 @@ const gravarScoutJogador = async (objScout) => {
 }
 
 
+const atualizarTabelaAtletas = async (pontuados, nrRodada) => {
 
-const getScoutAtletas = async (atleta_id) => {
+
+
+  for (let a = 0; a < pontuados.length; a++) {
+
+    scoutJogadorTempPositivo = [];
+    scoutJogadorTempNegativo = [];
+
+
+    scoutAtleta = await sequelize.query(" select `scout`.`sigla_id`, concat(`scout`.`qtde`, `scout`.`sigla_id`) as `result`  " +
+      "      FROM `scout` " +
+      "      WHERE `scout`.`atleta_id` " + `= "${pontuados[a].atleta_id}" ` +
+      "      AND `scout`.`nrRodada` " + `= "${nrRodada}" `
+      , {
+        type: sequelize.QueryTypes.SELECT
+      });
+
+
+    if (scoutAtleta.length > 0) {
+
+      for (i = 0; i < scoutAtleta.length; i++) {
+
+        if (scoutAtleta[i].sigla_id === 'G'
+          || scoutAtleta[i].sigla_id === 'A'
+          || scoutAtleta[i].sigla_id === 'FT'
+          || scoutAtleta[i].sigla_id === 'FD'
+          || scoutAtleta[i].sigla_id === 'FF'
+          || scoutAtleta[i].sigla_id === 'FS'
+          || scoutAtleta[i].sigla_id === 'PS'
+          || scoutAtleta[i].sigla_id === 'DP'
+          || scoutAtleta[i].sigla_id === 'SG'
+          || scoutAtleta[i].sigla_id === 'DE'
+          || scoutAtleta[i].sigla_id === 'DS') {
+
+          scoutJogadorTempPositivo.push(scoutAtleta[i].result);
+
+        } else {
+
+          scoutJogadorTempNegativo.push(scoutAtleta[i].result);
+
+        }
+
+      }
+
+      var scoutPos = scoutJogadorTempPositivo.toString();
+      var scoutNeg = scoutJogadorTempNegativo.toString();
+
+      Atletas.update(
+
+        {
+          scoutPositivo: scoutPos,
+          scoutNegativo: scoutNeg
+        },
+        {
+          where: {
+            nrRodada: nrRodada,
+            atleta_id: pontuados[a].atleta_id
+          }
+        }
+
+      )
+
+    }
+
+  }
+}
+
+
+const getScoutAtletas = async (atleta_id, nrRodada) => {
+
+
+  atletas = await sequelize.query("SELECT `atletas`.`nrRodada` " +
+    " , `atletas`.`atleta_id` " +
+    " , `atletas`.`apelido` " +
+    " , `atletas`.`foto` " +
+    " , `atletas`.`pontuacao` " +
+    " , `atletas`.`posicao_id` " +
+    " , `atletas`.`clube_id` " +
+    " , `atletas`.`entrou_em_campo` " +
+    "      FROM `atletas` " +
+    "      WHERE `atletas`.`atleta_id` " + `= "${atleta_id}" ` +
+    "      AND `atletas`.`nrRodada` " + `= "${nrRodada}" `
+    , {
+      type: sequelize.QueryTypes.SELECT
+    });
+
 
 
   scoutAtleta = await sequelize.query(" select concat(`scout`.`qtde`, `scout`.`sigla_id`) as `result`  " +
     "      FROM `scout` " +
-    "      WHERE `scout`.`atleta_id` " + `= "${atleta_id}" `
+    "      WHERE `scout`.`atleta_id` " + `= "${atleta_id}" ` +
+    "      AND `scout`.`nrRodada` " + `= "${nrRodada}" `
     , {
       type: sequelize.QueryTypes.SELECT
     });
@@ -358,13 +483,18 @@ const getScoutAtletas = async (atleta_id) => {
 
     var scoutAtletaResult = scoutAtleta[0].result;
     for (i = 1; i < scoutAtleta.length; i++) {
-      scoutAtleta[i].result = scoutAtletaResult + ',' + scoutAtleta[i].result 
-      scoutAtletaResult = scoutAtleta[i].result ;
+      scoutAtleta[i].result = scoutAtletaResult + ',' + scoutAtleta[i].result
+      scoutAtletaResult = scoutAtleta[i].result;
     }
 
-    return scoutAtletaResult;
+    //  return scoutAtletaResult;
 
   }
+
+
+  atletas[0].scout = scoutAtletaResult
+
+  return atletas;
 
 
 };

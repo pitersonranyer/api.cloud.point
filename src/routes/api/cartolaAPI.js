@@ -24,5 +24,10 @@ Router.get('/consultarParciaisAtletasMercadoAberto/:time_id',  controller.consul
 
 Router.get('/consultarParciaisAtletasReservasMercadoAberto/:time_id',  controller.consultarParciaisAtletasReservasMercadoAberto);
 
+Router.get('/consultarParciaisAtletasMercadoFechado/:time_id',  controller.consultarParciaisAtletasMercadoFechado);
+
+Router.get('/consultarParciaisAtletasReservasMercadoFechado/:time_id',  controller.consultarParciaisAtletasReservasMercadoFechado);
+
+
 
 module.exports = Router;
