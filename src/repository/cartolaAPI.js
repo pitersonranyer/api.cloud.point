@@ -667,6 +667,13 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
 
       const atleta = {
         atleta_id: resultJson.body.atletas[atleta_id].atleta_id,
+        apelido: resultJson.body.atletas[atleta_id].apelido,
+        pontuacao: resultJson.body.atletas[atleta_id].pontos_num,
+        variacao_num: resultJson.body.atletas[atleta_id].variacao_num,
+        foto: resultJson.body.atletas[atleta_id].foto,
+        posicao_id: resultJson.body.atletas[atleta_id].posicao_id,
+        clube_id: resultJson.body.atletas[atleta_id].clube_id,
+        entrou_em_campo: resultJson.body.atletas[atleta_id].entrou_em_campo
       };
 
 
