@@ -492,7 +492,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
       "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
     )
 
-  if (resultJson.body) {
+    if (resultJson.body.reservas != undefined) {
 
     let idx = 0
     Object.keys(resultJson.body.reservas).forEach(atleta_id => {
@@ -631,6 +631,8 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
 
     return atletasArray;
+  }else{
+    return [];
   }
 }
 
@@ -790,7 +792,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
       "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
     )
 
-  if (resultJson.body) {
+  if (resultJson.body.reservas != undefined) {
 
     let rodadaAtual = resultJson.body.time.rodada_time_id;
 
@@ -895,6 +897,8 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
 
 
     return atletasArray;
+  }else {
+    return [];
   }
 }
 
