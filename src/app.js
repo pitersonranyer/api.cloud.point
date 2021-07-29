@@ -43,8 +43,8 @@ app.use((error, request, response, next) => {
 
 
 sequelize.sync({ force: false }).then(() => {
-  const port = process.env.PORT || 3000;
-
+  // const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 8080;
   app.set("port", port);
 
   const server = http.createServer(app);
