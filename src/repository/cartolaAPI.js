@@ -247,7 +247,6 @@ const getPartidas = async (nrRodada) => {
 
     // Juntar array de times com array de partidas
     for (let i = 0; i < partidasArray.length; i++) {
-      // partidasArray[i].partida_data.toDate('dd/mm/yyyy hh:ii:ss')
       partidasArray[i].horaPartida = partidasArray[i].partida_data.substring(11, 16);
       var partidaMM = partidasArray[i].partida_data.substring(5, 7);
       var partidaDD = partidasArray[i].partida_data.substring(8, 10);
@@ -266,18 +265,38 @@ const getPartidas = async (nrRodada) => {
           }
         });
 
+        /* Tratar status da partida */
+        if (partidasArray[i].status_transmissao_tr === 'CRIADA') {
+          partidasArray[i].status_transmissao_tr = 'À iniciar';
+        } else {
+          if (partidasArray[i].status_transmissao_tr === 'ENCERRADA') {
+            partidasArray[i].status_transmissao_tr = 'Encerrada'
+          } else {
+            if (partidasArray[i].status_transmissao_tr === 'EM_ANDAMENTO') {
+              if (partidasArray[i].periodo_tr === 'INTERVALO') {
+                partidasArray[i].status_transmissao_tr = 'Intervalo';
+              } else {
+                if (partidasArray[i].periodo_tr === 'PRE_JOGO') {
+                  partidasArray[i].status_transmissao_tr = 'À iniciar';
+                } else {
+                  partidasArray[i].status_transmissao_tr = 'Em andamento';
+                }
+              }
+            }
+          }
+        }
 
 
         if (Number(partidasArray[i].clube_casa_id) === Number(clubesArray[x].id)) {
           partidasArray[i].nomeMandante = clubesArray[x].nome;
           partidasArray[i].abreviacaoMandante = clubesArray[x].abreviacao;
-          partidasArray[i].escudosMandante = escudoTime[x].link //clubesArray[x].escudos;
+          partidasArray[i].escudosMandante = escudoTime[x].link /* clubesArray[x].escudos */;
           partidasArray[i].nome_fantasiaMandante = clubesArray[x].nome_fantasia;
         }
         if (Number(partidasArray[i].clube_visitante_id) === Number(clubesArray[x].id)) {
           partidasArray[i].nomeVisitante = clubesArray[x].nome;
           partidasArray[i].abreviacaoVisitante = clubesArray[x].abreviacao;
-          partidasArray[i].escudosVisitante = escudoTime[x].link //clubesArray[x].escudos;
+          partidasArray[i].escudosVisitante = escudoTime[x].link /* clubesArray[x].escudos */;
           partidasArray[i].nome_fantasiaVisitante = clubesArray[x].nome_fantasia;
 
         }
@@ -492,7 +511,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
       "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
     )
 
-    if (resultJson.body.reservas != undefined) {
+  if (resultJson.body.reservas != undefined) {
 
     let idx = 0
     Object.keys(resultJson.body.reservas).forEach(atleta_id => {
@@ -631,7 +650,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
 
     return atletasArray;
-  }else{
+  } else {
     return [];
   }
 }
@@ -897,7 +916,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
 
 
     return atletasArray;
-  }else {
+  } else {
     return [];
   }
 }

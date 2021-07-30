@@ -344,7 +344,12 @@ const cadastrarBilhetePorIds = async dadosBilhete => {
       }
 
     } else {
-      return false
+      if (index === 0){
+        return false;
+      }else{
+        return true;
+      }
+      
     }
 
   }
