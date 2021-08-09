@@ -57,7 +57,7 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => 
     
 
     /* Deleta atletas para gravar novamente */
-    console.log('entrouuuuuuuu 1');
+    console.log('entrouuuuuuuu 1 ..');
     await atualizarAtletasPontuados(pontuados);
     console.log('saiuuuuuuuuuu 1');
 
