@@ -14,9 +14,6 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => 
 
   rodada_atualWork = rodada_atual;
 
-  console.log('chegouuuuuuuuuuuuuuuu', nrSequencialRodadaCartola , rodada_atualWork);
-
-
   timeBilhete = await sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
     " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
     " , `bilheteCompeticaoCartola`.`nomeUsuario` " +
@@ -57,19 +54,13 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => 
     
 
     /* Deleta atletas para gravar novamente */
-    console.log('entrouuuuuuuu 1 p');
     await atualizarAtletasPontuados(pontuados);
-    console.log('saiuuuuuuuuuu 1');
 
     /* Deleta scout para gravar novamente */
-    console.log('entrouuuuuuuu 2');
     await atualizarScoutJogadores(pontuados);
-    console.log('saiuuuuuuuuuu 2');
 
     /* Atualizar tabela atletas  */
-    console.log('saiuuuuuuuuuu 3');
     await atualizarTabelaAtletas(pontuados);
-    console.log('saiuuuuuuuuuu 3');
 
 
     for (let i = 0; i < timeBilhete.length; i++) {
@@ -93,7 +84,6 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => 
 
 const atualizarScoutJogadores = async (pontuados) => {
 
-  console.log('atualizarScoutJogadores', rodada_atualWork);
 
   Scout.destroy({
     where: {
@@ -155,7 +145,6 @@ const atualizarScoutJogadores = async (pontuados) => {
 
 
 const atualizarAtletasPontuados = async (pontuados) => {
-  console.log('rodada_atualWork => ', rodada_atualWork);
 
   Atletas.destroy({
     where: {
@@ -163,7 +152,6 @@ const atualizarAtletasPontuados = async (pontuados) => {
     }
   });
 
-  console.log('pontuados.length', pontuados.length)
   for (let ix = 0; ix < pontuados.length; ix++) {
     // Gravar tabela de atletas 
     gravarAtletas(pontuados[ix]);
@@ -400,8 +388,6 @@ const gravarScoutJogador = async (objScout) => {
 
 
 const atualizarTabelaAtletas = async (pontuados) => {
-
-console.log('atualizarTabelaAtletas', rodada_atualWork);
 
   for (let a = 0; a < pontuados.length; a++) {
 
