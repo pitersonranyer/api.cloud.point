@@ -951,6 +951,7 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     atletasArray[ind].scoutNegativo = atletas[0].scoutNegativo;
     atletasArray[ind].pontuacao = atletas[0].pontuacao;
     atletasArray[ind].entrou_em_campo = atletas[0].entrou_em_campo;
+    atletasArray[ind].variacao_num = 0;
 
   }
 }
