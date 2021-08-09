@@ -3,11 +3,11 @@ module.exports = {
     database: {
 
 // --> banco atual. UMBLER
-      host: "mysql669.umbler.com",
-      name: "pointdojogador-u",
-      dialect: "mysql",
-      user: "piterson",
-     password: "sWXFuvbtpFA3V6i",
+    host: "mysql669.umbler.com",
+    name: "pointdojogador-u",
+    dialect: "mysql",
+    user: "piterson",
+    password: "sWXFuvbtpFA3V6i",
 
 // --> UOL HOST
 // host: "pointdojogador.mysql.uhserver.com",
