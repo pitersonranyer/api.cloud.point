@@ -40,7 +40,7 @@ module.exports = {
 
 //      host: "localhost",
 //      port: 3306,
-//      name: "pointdojogador",
+//     name: "pointdojogador",
 //      dialect: "mysql",
 //      user: "root",
 //      password: "admin"

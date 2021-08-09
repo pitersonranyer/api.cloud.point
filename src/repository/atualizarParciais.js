@@ -8,7 +8,13 @@ const sequelize = require('../database/database');
 
 const BASE_URL = 'https://api.cartolafc.globo.com';
 
-const putAtualizarParciais = async (nrSequencialRodadaCartola) => {
+var rodada_atualWork = 0;
+
+const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => {
+
+  rodada_atualWork = rodada_atual;
+
+  console.log('chegouuuuuuuuuuuuuuuu', nrSequencialRodadaCartola , rodada_atualWork);
 
 
   timeBilhete = await sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
@@ -46,22 +52,30 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola) => {
 
   if (timeBilhete.length > 0) {
 
+    
     const pontuados = await recuperarAtletasPontuados();
+    
 
     /* Deleta atletas para gravar novamente */
+    console.log('entrouuuuuuuu 1');
     await atualizarAtletasPontuados(pontuados);
+    console.log('saiuuuuuuuuuu 1');
 
     /* Deleta scout para gravar novamente */
+    console.log('entrouuuuuuuu 2');
     await atualizarScoutJogadores(pontuados);
+    console.log('saiuuuuuuuuuu 2');
 
     /* Atualizar tabela atletas  */
-    await atualizarTabelaAtletas(pontuados, timeBilhete[0].nrRodada);
+    console.log('saiuuuuuuuuuu 3');
+    await atualizarTabelaAtletas(pontuados);
+    console.log('saiuuuuuuuuuu 3');
 
 
     for (let i = 0; i < timeBilhete.length; i++) {
 
       const atletasTime = await recuperJogadoresPorTime(timeBilhete[i].time_id);
-      tratarPontuacaoAtletas(atletasTime, timeBilhete[i].time_id, timeBilhete[i].nrRodada,
+      tratarPontuacaoAtletas(atletasTime, timeBilhete[i].time_id, rodada_atualWork,
         timeBilhete[i].idBilhete, timeBilhete[i].pontosCampeonato, pontuados)
 
     }
@@ -79,9 +93,11 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola) => {
 
 const atualizarScoutJogadores = async (pontuados) => {
 
+  console.log('atualizarScoutJogadores', rodada_atualWork);
+
   Scout.destroy({
     where: {
-      nrRodada: timeBilhete[0].nrRodada
+      nrRodada: rodada_atualWork
     }
   });
 
@@ -101,7 +117,7 @@ const atualizarScoutJogadores = async (pontuados) => {
           sigla_id: id,
           qtde: pontuados[ix].scout[id],
           tipo: 'X',
-          nrRodada: timeBilhete[0].nrRodada
+          nrRodada: rodada_atualWork
         };
 
         scoutJogador.push(objScout);
@@ -139,14 +155,15 @@ const atualizarScoutJogadores = async (pontuados) => {
 
 
 const atualizarAtletasPontuados = async (pontuados) => {
+  console.log('rodada_atualWork => ', rodada_atualWork);
 
   Atletas.destroy({
     where: {
-      nrRodada: timeBilhete[0].nrRodada
+      nrRodada: rodada_atualWork
     }
   });
 
-
+  console.log('pontuados.length', pontuados.length)
   for (let ix = 0; ix < pontuados.length; ix++) {
     // Gravar tabela de atletas 
     gravarAtletas(pontuados[ix]);
@@ -154,7 +171,7 @@ const atualizarAtletasPontuados = async (pontuados) => {
 }
 
 const gravarAtletas = async (objAtletas) => {
-  objAtletas.nrRodada = timeBilhete[0].nrRodada;
+  objAtletas.nrRodada = rodada_atualWork;
   objAtletas.scoutPositivo = '';
   objAtletas.scoutNegativo = '';
 
@@ -382,9 +399,9 @@ const gravarScoutJogador = async (objScout) => {
 }
 
 
-const atualizarTabelaAtletas = async (pontuados, nrRodada) => {
+const atualizarTabelaAtletas = async (pontuados) => {
 
-
+console.log('atualizarTabelaAtletas', rodada_atualWork);
 
   for (let a = 0; a < pontuados.length; a++) {
 
@@ -395,7 +412,7 @@ const atualizarTabelaAtletas = async (pontuados, nrRodada) => {
     scoutAtleta = await sequelize.query(" select `scout`.`sigla_id`, concat(`scout`.`qtde`, `scout`.`sigla_id`) as `result`  " +
       "      FROM `scout` " +
       "      WHERE `scout`.`atleta_id` " + `= "${pontuados[a].atleta_id}" ` +
-      "      AND `scout`.`nrRodada` " + `= "${nrRodada}" `
+      "      AND `scout`.`nrRodada` " + `= "${rodada_atualWork}" `
       , {
         type: sequelize.QueryTypes.SELECT
       });
@@ -438,7 +455,7 @@ const atualizarTabelaAtletas = async (pontuados, nrRodada) => {
         },
         {
           where: {
-            nrRodada: nrRodada,
+            nrRodada: rodada_atualWork,
             atleta_id: pontuados[a].atleta_id
           }
         }

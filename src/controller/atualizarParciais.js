@@ -6,8 +6,9 @@ const {
 
 const atualizarParciais = async (req, res, next) => {
   const nrSequencialRodadaCartola = req.params.nrSequencialRodadaCartola;
-//  return putParciais(nrSequencialRodadaCartola)
-  return putAtualizarParciais(nrSequencialRodadaCartola)
+  const rodada_atual = req.params.rodada_atual
+
+  return putAtualizarParciais(nrSequencialRodadaCartola, rodada_atual)
 
     .then(atu => res.json(atu))
     .catch(err => next(err));
