@@ -66,8 +66,8 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => 
     for (let i = 0; i < timeBilhete.length; i++) {
 
       const atletasTime = await recuperJogadoresPorTime(timeBilhete[i].time_id);
-      tratarPontuacaoAtletas(atletasTime, timeBilhete[i].time_id, rodada_atualWork,
-        timeBilhete[i].idBilhete, timeBilhete[i].pontosCampeonato, pontuados)
+
+      tratarPontuacaoAtletas(atletasTime, timeBilhete[i].time_id, timeBilhete[i].idBilhete, timeBilhete[i].pontosCampeonato, pontuados)
 
     }
 
@@ -238,9 +238,9 @@ const recuperJogadoresPorTime = async (timeID) => {
 
 }
 
-const recuperBancoReservas = async (timeID, nrRodada) => {
+const recuperBancoReservas = async (timeID) => {
 
-  path = `/time/substituicoes/${timeID}/${nrRodada}`;
+  path = `/time/substituicoes/${timeID}/${rodada_atualWork}`;
   var url = `${BASE_URL}${path}`;
 
   substituicao = await unirest.get(url)
@@ -259,7 +259,7 @@ const recuperBancoReservas = async (timeID, nrRodada) => {
 }
 
 
-const tratarPontuacaoAtletas = async (atletasTime, time_id, nrRodada, idBilhete, pontosCampeonato, pontuados) => {
+const tratarPontuacaoAtletas = async (atletasTime, time_id, idBilhete, pontosCampeonato, pontuados) => {
 
   arrayAtletasPontuados = pontuados;
   var capitao_id = atletasTime.capitao_id;
@@ -297,7 +297,7 @@ const tratarPontuacaoAtletas = async (atletasTime, time_id, nrRodada, idBilhete,
   }
 
 
-  const substituicao = await recuperBancoReservas(time_id, nrRodada);
+  const substituicao = await recuperBancoReservas(time_id);
 
   if (substituicao) {
 
