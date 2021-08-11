@@ -345,7 +345,13 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
         foto: resultJson.body.atletas[atleta_id].foto,
         posicao_id: resultJson.body.atletas[atleta_id].posicao_id,
         clube_id: resultJson.body.atletas[atleta_id].clube_id,
-        entrou_em_campo: resultJson.body.atletas[atleta_id].entrou_em_campo
+        entrou_em_campo: resultJson.body.atletas[atleta_id].entrou_em_campo,
+        qtdeGols: 0,
+        qtdeAssistencia: 0,
+        qtdeCartaoAmarelo: 0,
+        qtdeCartaoVermelho: 0,
+        qtdeGolContra: 0,
+
       };
 
       atletasArray.push(atleta);
@@ -356,9 +362,9 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
       Object.keys(resultJson.body.atletas[atleta_id].scout).forEach(id => {
 
-        if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
-          resultJson.body.atletas[atleta_id].scout[id] = '';
-        }
+      //  if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
+      //    resultJson.body.atletas[atleta_id].scout[id] = '';
+      //  }
 
 
         const objScout = {
@@ -385,8 +391,23 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
             || scoutJogador[idx].scoutId === 'DE'
             || scoutJogador[idx].scoutId === 'DS') {
             scoutJogadorTempPositivo.push(scoutJogador[idx].result);
+            if (scoutJogador[idx].scoutId === 'G'){
+              atletasArray[atleta_id].qtdeGols = resultJson.body.atletas[atleta_id].scout[id];
+            }
+            if (scoutJogador[idx].scoutId === 'A'){
+              atletasArray[atleta_id].qtdeAssistencia = resultJson.body.atletas[atleta_id].scout[id];
+            }
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
+            if (scoutJogador[idx].scoutId === 'CA'){
+              atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.atletas[atleta_id].scout[id];
+            }
+            if (scoutJogador[idx].scoutId === 'CV'){
+              atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.atletas[atleta_id].scout[id];
+            }
+            if (scoutJogador[idx].scoutId === 'GC'){
+              atletasArray[atleta_id].qtdeGolContra = resultJson.body.atletas[atleta_id].scout[id];
+            }
           }
 
         }
@@ -525,6 +546,11 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
         foto: resultJson.body.reservas[atleta_id].foto,
         posicao_id: resultJson.body.reservas[atleta_id].posicao_id,
         clube_id: resultJson.body.reservas[atleta_id].clube_id,
+        qtdeGols: 0,
+        qtdeAssistencia: 0,
+        qtdeCartaoAmarelo: 0,
+        qtdeCartaoVermelho: 0,
+        qtdeGolContra: 0,
       };
 
       atletasArray.push(atleta);
@@ -536,9 +562,9 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
       Object.keys(resultJson.body.reservas[atleta_id].scout).forEach(id => {
 
-        if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
-          resultJson.body.reservas[atleta_id].scout[id] = '';
-        }
+      //  if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
+      //    resultJson.body.reservas[atleta_id].scout[id] = '';
+      //  }
 
 
         const objScout = {
@@ -563,8 +589,23 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
             || scoutJogador[idx].scoutId === 'DE'
             || scoutJogador[idx].scoutId === 'DS') {
             scoutJogadorTempPositivo.push(scoutJogador[idx].result);
+            if (scoutJogador[idx].scoutId === 'G'){
+              atletasArray[atleta_id].qtdeGols = resultJson.body.reservas[atleta_id].scout[id];
+            }
+            if (scoutJogador[idx].scoutId === 'A'){
+              atletasArray[atleta_id].qtdeAssistencia = resultJson.body.reservas[atleta_id].scout[id];
+            }
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
+            if (scoutJogador[idx].scoutId === 'CA'){
+              atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.reservas[atleta_id].scout[id];
+            }
+            if (scoutJogador[idx].scoutId === 'CV'){
+              atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.reservas[atleta_id].scout[id];
+            }
+            if (scoutJogador[idx].scoutId === 'GC'){
+              atletasArray[atleta_id].qtdeGolContra = resultJson.body.reservas[atleta_id].scout[id];
+            }
           }
         }
 
