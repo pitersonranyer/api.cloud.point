@@ -351,6 +351,7 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
         qtdeCartaoAmarelo: 0,
         qtdeCartaoVermelho: 0,
         qtdeGolContra: 0,
+        saldoGol: false
 
       };
 
@@ -397,6 +398,10 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
             if (scoutJogador[idx].scoutId === 'A'){
               atletasArray[atleta_id].qtdeAssistencia = resultJson.body.atletas[atleta_id].scout[id];
             }
+            if (scoutJogador[idx].scoutId === 'SG'){
+              atletasArray[atleta_id].saldoGol = true;
+            }
+
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
             if (scoutJogador[idx].scoutId === 'CA'){
@@ -551,6 +556,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
         qtdeCartaoAmarelo: 0,
         qtdeCartaoVermelho: 0,
         qtdeGolContra: 0,
+        saldoGol: false
       };
 
       atletasArray.push(atleta);
@@ -594,6 +600,9 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
             }
             if (scoutJogador[idx].scoutId === 'A'){
               atletasArray[atleta_id].qtdeAssistencia = resultJson.body.reservas[atleta_id].scout[id];
+            }
+            if (scoutJogador[idx].scoutId === 'SG'){
+              atletasArray[atleta_id].saldoGol = true;
             }
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
