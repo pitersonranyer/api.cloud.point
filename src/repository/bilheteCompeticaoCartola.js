@@ -193,8 +193,6 @@ const cadastrarBilhete = async dadosBilhete => {
 
     }
 
-
-
   }
 
 };
@@ -203,6 +201,8 @@ const cadastrarBilhete = async dadosBilhete => {
 const cadastrarBilhetePorIds = async dadosBilhete => {
 
   index = 0;
+  gerouBilhete = false;
+
 
   for (let i = 0; i < dadosBilhete.length; i++) {
     index = i;
@@ -235,11 +235,9 @@ const cadastrarBilhetePorIds = async dadosBilhete => {
           type: sequelize.QueryTypes.SELECT
         });
 
-      if (timeBilhete.length > 0) {
-        return false
-      } else {
+      if (timeBilhete.length === 0) {
 
-        if (index === 0) { // gerar numero solicitação na primeira passagem
+        if (!gerouBilhete) { // tentar gerar bilhete em qualquer posição do array  
 
           if (dadosBilhete[index].idBilhete === 0) { // gerar apenas quando nao for informado.
 
@@ -276,6 +274,7 @@ const cadastrarBilhetePorIds = async dadosBilhete => {
           //Gravar bilhete
           const bilheteCompeticaoCartola = new BilheteCompeticaoCartola({ ...dadosBilhete[index] });
           bilheteCompeticaoCartola.save();
+          gerouBilhete = true;
 
           retDados.idBilhete = dadosBilhete[index].idBilhete;
           retDados.codigoBilhete = dadosBilhete[index].codigoBilhete;
@@ -343,13 +342,6 @@ const cadastrarBilhetePorIds = async dadosBilhete => {
 
       }
 
-    } else {
-      if (index === 0){
-        return false;
-      }else{
-        return true;
-      }
-      
     }
 
   }
