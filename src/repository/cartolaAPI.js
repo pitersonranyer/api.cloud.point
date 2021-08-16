@@ -984,6 +984,12 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     " , `atletas`.`entrou_em_campo` " +
     " , `atletas`.`scoutPositivo` " +
     " , `atletas`.`scoutNegativo` " +
+    " , `atletas`.`qtdeGols` " +
+    " , `atletas`.`qtdeAssistencia` " +
+    " , `atletas`.`qtdeCartaoAmarelo` " +
+    " , `atletas`.`qtdeCartaoVermelho` " +
+    " , `atletas`.`qtdeGolContra` " +
+    " , `atletas`.`saldoGol` " +
     "      FROM `atletas` " +
     "      WHERE `atletas`.`atleta_id` " + `= "${atleta_id}" ` +
     "      AND `atletas`.`nrRodada` " + `= "${nrRodada}" `
