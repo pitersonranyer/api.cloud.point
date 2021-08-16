@@ -1008,12 +1008,12 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     atletasArray[ind].pontuacao = atletas[0].pontuacao;
     atletasArray[ind].entrou_em_campo = atletas[0].entrou_em_campo;
     atletasArray[ind].variacao_num = 0;
-    atletasArray[ind].qtdeGols = 0;
-    atletasArray[ind].qtdeAssistencia = 0;
-    atletasArray[ind].qtdeCartaoAmarelo = 0;
-    atletasArray[ind].qtdeCartaoVermelho = 0;
-    atletasArray[ind].qtdeGolContra = 0;
-    atletasArray[ind].saldoGol = 0;
+    atletasArray[ind].qtdeGols = atletas[0].qtdeGols;
+    atletasArray[ind].qtdeAssistencia =  atletas[0].qtdeAssistencia;
+    atletasArray[ind].qtdeCartaoAmarelo =  atletas[0].qtdeCartaoAmarelo;
+    atletasArray[ind].qtdeCartaoVermelho =  atletas[0].qtdeCartaoVermelho;
+    atletasArray[ind].qtdeGolContra =  atletas[0].qtdeGolContra;
+    atletasArray[ind].saldoGol =  atletas[0].saldoGol;
 
   }
 }
