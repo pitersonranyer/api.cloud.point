@@ -48,6 +48,33 @@ const Atletas = sequelize.define("atletas", {
     type: Sequelize.STRING(255)
   },
 
+
+  qtdeGols: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  qtdeAssistencia: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  qtdeCartaoAmarelo: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  qtdeCartaoVermelho: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  qtdeGolContra: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  saldoGol: {
+    defaultValue: false,
+    type: Sequelize.BOOLEAN
+  },
+
+
 },
 
   {

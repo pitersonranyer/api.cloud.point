@@ -49,9 +49,9 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => 
 
   if (timeBilhete.length > 0) {
 
-    
+
     const pontuados = await recuperarAtletasPontuados();
-    
+
 
     /* Deleta atletas para gravar novamente */
     await atualizarAtletasPontuados(pontuados);
@@ -162,6 +162,12 @@ const gravarAtletas = async (objAtletas) => {
   objAtletas.nrRodada = rodada_atualWork;
   objAtletas.scoutPositivo = '';
   objAtletas.scoutNegativo = '';
+  objAtletas.qtdeGols = 0;
+  objAtletas.qtdeAssistencia = 0;
+  objAtletas.qtdeCartaoAmarelo = 0;
+  objAtletas.qtdeCartaoVermelho = 0;
+  objAtletas.qtdeGolContra = 0;
+  objAtletas.saldoGol = false;
 
   //Gravar atletas
   const atletas = new Atletas({ ...objAtletas });
@@ -389,13 +395,24 @@ const gravarScoutJogador = async (objScout) => {
 
 const atualizarTabelaAtletas = async (pontuados) => {
 
+
+
   for (let a = 0; a < pontuados.length; a++) {
+
+    const scoutDetalhe = {
+      qtdeGols: 0,
+      qtdeAssistencia: 0,
+      qtdeCartaoAmarelo: 0,
+      qtdeCartaoVermelho: 0,
+      qtdeGolContra: 0,
+      saldoGol: false
+    }
 
     scoutJogadorTempPositivo = [];
     scoutJogadorTempNegativo = [];
 
 
-    scoutAtleta = await sequelize.query(" select `scout`.`sigla_id`, concat(`scout`.`qtde`, `scout`.`sigla_id`) as `result`  " +
+    scoutAtleta = await sequelize.query(" select `scout`.`sigla_id`, `scout`.`qtde`, concat(`scout`.`qtde`, `scout`.`sigla_id`) as `result`  " +
       "      FROM `scout` " +
       "      WHERE `scout`.`atleta_id` " + `= "${pontuados[a].atleta_id}" ` +
       "      AND `scout`.`nrRodada` " + `= "${rodada_atualWork}" `
@@ -422,9 +439,27 @@ const atualizarTabelaAtletas = async (pontuados) => {
 
           scoutJogadorTempPositivo.push(scoutAtleta[i].result);
 
-        } else {
+          if (scoutAtleta[i].sigla_id === 'G') {
+            scoutDetalhe.qtdeGols = scoutDetalhe.qtdeGols + scoutAtleta[i].qtde;
+          }
+          if (scoutAtleta[i].sigla_id === 'A') {
+            scoutDetalhe.qtdeAssistencia = scoutDetalhe.qtdeAssistencia + scoutAtleta[i].qtde;
+          }
+          if (scoutAtleta[i].sigla_id === 'SG') {
+            scoutDetalhe.saldoGol = true;
+          }
 
+        } else {
           scoutJogadorTempNegativo.push(scoutAtleta[i].result);
+          if (scoutAtleta[i].sigla_id === 'CA') {
+            scoutDetalhe.qtdeCartaoAmarelo = scoutDetalhe.qtdeCartaoAmarelo + scoutAtleta[i].qtde;
+          }
+          if (scoutAtleta[i].sigla_id === 'CV') {
+            scoutDetalhe.qtdeCartaoVermelho = scoutDetalhe.qtdeCartaoVermelho + scoutAtleta[i].qtde;
+          }
+          if (scoutAtleta[i].sigla_id === 'GC') {
+            scoutDetalhe.qtdeGolContra = scoutDetalhe.qtdeGolContra + scoutAtleta[i].qtde;
+          }
 
         }
 
@@ -433,11 +468,19 @@ const atualizarTabelaAtletas = async (pontuados) => {
       var scoutPos = scoutJogadorTempPositivo.toString();
       var scoutNeg = scoutJogadorTempNegativo.toString();
 
+
+
       Atletas.update(
 
         {
           scoutPositivo: scoutPos,
-          scoutNegativo: scoutNeg
+          scoutNegativo: scoutNeg,
+          qtdeGols: scoutDetalhe.qtdeGols,
+          qtdeAssistencia: scoutDetalhe.qtdeAssistencia,
+          qtdeCartaoAmarelo: scoutDetalhe.qtdeCartaoAmarelo,
+          qtdeCartaoVermelho: scoutDetalhe.qtdeCartaoVermelho,
+          qtdeGolContra: scoutDetalhe.qtdeGolContra,
+          saldoGol: scoutDetalhe.saldoGol,
         },
         {
           where: {
