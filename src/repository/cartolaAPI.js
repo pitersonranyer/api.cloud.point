@@ -345,7 +345,6 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
         foto: resultJson.body.atletas[atleta_id].foto,
         posicao_id: resultJson.body.atletas[atleta_id].posicao_id,
         clube_id: resultJson.body.atletas[atleta_id].clube_id,
-        entrou_em_campo: resultJson.body.atletas[atleta_id].entrou_em_campo,
         qtdeGols: 0,
         qtdeAssistencia: 0,
         qtdeCartaoAmarelo: 0,
@@ -363,9 +362,9 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
       Object.keys(resultJson.body.atletas[atleta_id].scout).forEach(id => {
 
-      //  if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
-      //    resultJson.body.atletas[atleta_id].scout[id] = '';
-      //  }
+        //  if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
+        //    resultJson.body.atletas[atleta_id].scout[id] = '';
+        //  }
 
 
         const objScout = {
@@ -392,25 +391,25 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
             || scoutJogador[idx].scoutId === 'DE'
             || scoutJogador[idx].scoutId === 'DS') {
             scoutJogadorTempPositivo.push(scoutJogador[idx].result);
-            if (scoutJogador[idx].scoutId === 'G'){
+            if (scoutJogador[idx].scoutId === 'G') {
               atletasArray[atleta_id].qtdeGols = resultJson.body.atletas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'A'){
+            if (scoutJogador[idx].scoutId === 'A') {
               atletasArray[atleta_id].qtdeAssistencia = resultJson.body.atletas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'SG'){
+            if (scoutJogador[idx].scoutId === 'SG') {
               atletasArray[atleta_id].saldoGol = true;
             }
 
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
-            if (scoutJogador[idx].scoutId === 'CA'){
+            if (scoutJogador[idx].scoutId === 'CA') {
               atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.atletas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'CV'){
+            if (scoutJogador[idx].scoutId === 'CV') {
               atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.atletas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'GC'){
+            if (scoutJogador[idx].scoutId === 'GC') {
               atletasArray[atleta_id].qtdeGolContra = resultJson.body.atletas[atleta_id].scout[id];
             }
           }
@@ -444,6 +443,12 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
     // Juntar array de clubes com array de atletas
     for (let i = 0; i < atletasArray.length; i++) {
+
+      if (atletasArray[i].variacao_num === 0 && atletasArray[i].pontuacao === 0) {
+        atletasArray[i].entrou_em_campo = false;
+      } else {
+        atletasArray[i].entrou_em_campo = true;
+      }
 
       atletasArray[i].foto = atletasArray[i].foto.replace('FORMATO', '140x140');
 
@@ -568,9 +573,9 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
       Object.keys(resultJson.body.reservas[atleta_id].scout).forEach(id => {
 
-      //  if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
-      //    resultJson.body.reservas[atleta_id].scout[id] = '';
-      //  }
+        //  if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
+        //    resultJson.body.reservas[atleta_id].scout[id] = '';
+        //  }
 
 
         const objScout = {
@@ -595,24 +600,24 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
             || scoutJogador[idx].scoutId === 'DE'
             || scoutJogador[idx].scoutId === 'DS') {
             scoutJogadorTempPositivo.push(scoutJogador[idx].result);
-            if (scoutJogador[idx].scoutId === 'G'){
+            if (scoutJogador[idx].scoutId === 'G') {
               atletasArray[atleta_id].qtdeGols = resultJson.body.reservas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'A'){
+            if (scoutJogador[idx].scoutId === 'A') {
               atletasArray[atleta_id].qtdeAssistencia = resultJson.body.reservas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'SG'){
+            if (scoutJogador[idx].scoutId === 'SG') {
               atletasArray[atleta_id].saldoGol = true;
             }
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
-            if (scoutJogador[idx].scoutId === 'CA'){
+            if (scoutJogador[idx].scoutId === 'CA') {
               atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.reservas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'CV'){
+            if (scoutJogador[idx].scoutId === 'CV') {
               atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.reservas[atleta_id].scout[id];
             }
-            if (scoutJogador[idx].scoutId === 'GC'){
+            if (scoutJogador[idx].scoutId === 'GC') {
               atletasArray[atleta_id].qtdeGolContra = resultJson.body.reservas[atleta_id].scout[id];
             }
           }
@@ -646,6 +651,12 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
     for (let i = 0; i < atletasArray.length; i++) {
 
       atletasArray[i].foto = atletasArray[i].foto.replace('FORMATO', '140x140');
+
+      if (atletasArray[i].variacao_num === 0 && atletasArray[i].pontuacao === 0) {
+        atletasArray[i].entrou_em_campo = false;
+      } else {
+        atletasArray[i].entrou_em_campo = true;
+      }
 
 
       //clubes
@@ -1009,11 +1020,11 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     atletasArray[ind].entrou_em_campo = atletas[0].entrou_em_campo;
     atletasArray[ind].variacao_num = 0;
     atletasArray[ind].qtdeGols = atletas[0].qtdeGols;
-    atletasArray[ind].qtdeAssistencia =  atletas[0].qtdeAssistencia;
-    atletasArray[ind].qtdeCartaoAmarelo =  atletas[0].qtdeCartaoAmarelo;
-    atletasArray[ind].qtdeCartaoVermelho =  atletas[0].qtdeCartaoVermelho;
-    atletasArray[ind].qtdeGolContra =  atletas[0].qtdeGolContra;
-    atletasArray[ind].saldoGol =  atletas[0].saldoGol;
+    atletasArray[ind].qtdeAssistencia = atletas[0].qtdeAssistencia;
+    atletasArray[ind].qtdeCartaoAmarelo = atletas[0].qtdeCartaoAmarelo;
+    atletasArray[ind].qtdeCartaoVermelho = atletas[0].qtdeCartaoVermelho;
+    atletasArray[ind].qtdeGolContra = atletas[0].qtdeGolContra;
+    atletasArray[ind].saldoGol = atletas[0].saldoGol;
 
   }
 }
