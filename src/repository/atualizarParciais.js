@@ -13,6 +13,7 @@ var rodada_atualWork = 0;
 const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => {
 
   rodada_atualWork = rodada_atual;
+  partidas = [];
 
   timeBilhete = await sequelize.query("SELECT `bilheteCompeticaoCartola`.`idBilhete` " +
     " , `bilheteCompeticaoCartola`.`codigoBilhete` " +
@@ -49,9 +50,15 @@ const putAtualizarParciais = async (nrSequencialRodadaCartola, rodada_atual) => 
 
   if (timeBilhete.length > 0) {
 
-
+    /* Recuperar lista de atletas pontuados */
     const pontuados = await recuperarAtletasPontuados();
 
+    /* apenas testes em desenv 
+       const pontuados = await recuperarAtletasPontuadosTeste();
+    */
+
+    /* Recuperar resultados e situação de jogos no momento */
+    partidas = await recuperarSituacaoPartidas();
 
     /* Deleta atletas para gravar novamente */
     await atualizarAtletasPontuados(pontuados);
@@ -176,6 +183,103 @@ const gravarAtletas = async (objAtletas) => {
 }
 
 
+const recuperarSituacaoPartidas = async () => {
+
+  path = `/partidas/${rodada_atualWork}`;
+  var url = `${BASE_URL}${path}`;
+  clubesArray = [];
+  partidasArray = [];
+  escudoTime = [];
+
+  // consultarTimeCartola
+  resultJson = await unirest.get(url)
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
+
+  if (resultJson.body) {
+
+    partidasArray = resultJson.body.partidas;
+
+    Object.keys(resultJson.body.clubes).forEach(id => {
+      const clubes = {
+        id: id,
+        nome: resultJson.body.clubes[id].nome,
+        abreviacao: resultJson.body.clubes[id].abreviacao,
+        escudos: resultJson.body.clubes[id].escudos,
+        nome_fantasia: resultJson.body.clubes[id].nome_fantasia
+      };
+      clubesArray.push(clubes);
+
+    });
+
+    // Juntar array de times com array de partidas
+    for (let i = 0; i < partidasArray.length; i++) {
+      partidasArray[i].horaPartida = partidasArray[i].partida_data.substring(11, 16);
+      var partidaMM = partidasArray[i].partida_data.substring(5, 7);
+      var partidaDD = partidasArray[i].partida_data.substring(8, 10);
+      partidasArray[i].dataPartida = partidaDD + '/' + partidaMM;
+
+      for (let x = 0; x < clubesArray.length; x++) {
+
+        // Recuperar link do escudo 30x30
+        Object.keys(clubesArray[x].escudos).forEach(id => {
+          const brasao = {
+            id: id,
+            link: clubesArray[x].escudos[id]
+          };
+          if (id === '30x30') {
+            escudoTime.push(brasao);
+          }
+        });
+
+        /* Tratar status da partida */
+        if (partidasArray[i].status_transmissao_tr === 'CRIADA') {
+          partidasArray[i].status_transmissao_tr = 'À iniciar';
+        } else {
+          if (partidasArray[i].status_transmissao_tr === 'ENCERRADA') {
+            partidasArray[i].status_transmissao_tr = 'Encerrada'
+          } else {
+            if (partidasArray[i].status_transmissao_tr === 'EM_ANDAMENTO') {
+              if (partidasArray[i].periodo_tr === 'INTERVALO') {
+                partidasArray[i].status_transmissao_tr = 'Intervalo';
+              } else {
+                if (partidasArray[i].periodo_tr === 'PRE_JOGO') {
+                  partidasArray[i].status_transmissao_tr = 'À iniciar';
+                } else {
+                  partidasArray[i].status_transmissao_tr = 'Em andamento';
+                }
+              }
+            }
+          }
+        }
+
+
+        if (Number(partidasArray[i].clube_casa_id) === Number(clubesArray[x].id)) {
+          partidasArray[i].nomeMandante = clubesArray[x].nome;
+          partidasArray[i].abreviacaoMandante = clubesArray[x].abreviacao;
+          partidasArray[i].escudosMandante = escudoTime[x].link /* clubesArray[x].escudos */;
+          partidasArray[i].nome_fantasiaMandante = clubesArray[x].nome_fantasia;
+        }
+        if (Number(partidasArray[i].clube_visitante_id) === Number(clubesArray[x].id)) {
+          partidasArray[i].nomeVisitante = clubesArray[x].nome;
+          partidasArray[i].abreviacaoVisitante = clubesArray[x].abreviacao;
+          partidasArray[i].escudosVisitante = escudoTime[x].link /* clubesArray[x].escudos */;
+          partidasArray[i].nome_fantasiaVisitante = clubesArray[x].nome_fantasia;
+
+        }
+      }
+    }
+    return partidasArray;
+  }
+
+}
+
+
 const recuperarAtletasPontuados = async () => {
 
   path = `/atletas/pontuados`;
@@ -244,6 +348,49 @@ const recuperJogadoresPorTime = async (timeID) => {
 
 }
 
+
+const recuperarAtletasPontuadosTeste = async () => {
+
+  arrayAtletasPontuados = [];
+  scoutJogador = [];
+
+  data = fs.readFileSync('./src/model/pontuados.json', 'utf8');
+
+  const dadosAtletas = JSON.parse(data);
+
+
+
+  if (dadosAtletas) {
+
+    Object.keys(dadosAtletas.atletas).forEach(atleta_id => {
+      const atleta = {
+        atleta_id: atleta_id,
+        apelido: dadosAtletas.atletas[atleta_id].apelido,
+        pontuacao: dadosAtletas.atletas[atleta_id].pontuacao,
+        foto: dadosAtletas.atletas[atleta_id].foto,
+        posicao_id: dadosAtletas.atletas[atleta_id].posicao_id,
+        clube_id: dadosAtletas.atletas[atleta_id].clube_id,
+        entrou_em_campo: dadosAtletas.atletas[atleta_id].entrou_em_campo,
+        scout: dadosAtletas.atletas[atleta_id].scout,
+
+      };
+
+      atleta.foto = atleta.foto.replace('FORMATO', '140x140');
+
+
+      arrayAtletasPontuados.push(atleta);
+
+
+    });
+
+    return arrayAtletasPontuados;
+
+  }
+
+}
+
+
+
 const recuperBancoReservas = async (timeID) => {
 
   path = `/time/substituicoes/${timeID}/${rodada_atualWork}`;
@@ -263,6 +410,9 @@ const recuperBancoReservas = async (timeID) => {
   }
 
 }
+
+
+
 
 
 const tratarPontuacaoAtletas = async (atletasTime, time_id, idBilhete, pontosCampeonato, pontuados) => {
@@ -408,6 +558,16 @@ const atualizarTabelaAtletas = async (pontuados) => {
       saldoGol: false
     }
 
+    const partidaAtleta = {
+      clube_casa_id: null,
+      placar_oficial_mandante: null,
+      abreviacaoMandante: null,
+      clube_visitante_id: null,
+      placar_oficial_visitante: null,
+      abreviacaoVisitante: null,
+      status_transmissao_tr: null
+    }
+
     scoutJogadorTempPositivo = [];
     scoutJogadorTempNegativo = [];
 
@@ -469,7 +629,6 @@ const atualizarTabelaAtletas = async (pontuados) => {
       var scoutNeg = scoutJogadorTempNegativo.toString();
 
 
-
       Atletas.update(
 
         {
@@ -493,6 +652,40 @@ const atualizarTabelaAtletas = async (pontuados) => {
 
     }
 
+
+    /* Recuprar jogos por atleta  */
+    for (ix = 0; ix < partidas.length; ix++) {
+      if (partidas[ix].clube_casa_id === pontuados[a].clube_id || partidas[ix].clube_visitante_id === pontuados[a].clube_id) {
+        /* Mandante */
+        partidaAtleta.placar_oficial_mandante = partidas[ix].placar_oficial_mandante;
+        partidaAtleta.abreviacaoMandante = partidas[ix].abreviacaoMandante;
+        partidaAtleta.clube_casa_id = partidas[ix].clube_casa_id;
+        /* Visitante */
+        partidaAtleta.placar_oficial_visitante = partidas[ix].placar_oficial_visitante;
+        partidaAtleta.abreviacaoVisitante = partidas[ix].abreviacaoVisitante;
+        partidaAtleta.clube_visitante_id = partidas[ix].clube_visitante_id;
+        /* Situação da partida */
+        partidaAtleta.status_transmissao_tr = partidas[ix].status_transmissao_tr
+      }
+    }
+
+    Atletas.update(
+      {
+        clube_casa_id: partidaAtleta.clube_casa_id,
+        placar_oficial_mandante: partidaAtleta.placar_oficial_mandante,
+        abreviacaoMandante: partidaAtleta.abreviacaoMandante,
+        clube_visitante_id: partidaAtleta.clube_visitante_id,
+        placar_oficial_visitante: partidaAtleta.placar_oficial_visitante,
+        abreviacaoVisitante: partidaAtleta.abreviacaoVisitante,
+        status_transmissao_tr: partidaAtleta.status_transmissao_tr,
+      },
+      {
+        where: {
+          nrRodada: rodada_atualWork,
+          atleta_id: pontuados[a].atleta_id
+        }
+      }
+    )
   }
 }
 

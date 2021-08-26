@@ -1025,7 +1025,10 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     atletasArray[ind].qtdeCartaoVermelho = atletas[0].qtdeCartaoVermelho;
     atletasArray[ind].qtdeGolContra = atletas[0].qtdeGolContra;
     atletasArray[ind].saldoGol = atletas[0].saldoGol;
+    atletasArray[ind].pontuou = true;
 
+  }else{
+    atletasArray[ind].pontuou = false;
   }
 }
 

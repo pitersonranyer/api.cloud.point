@@ -73,6 +73,34 @@ const Atletas = sequelize.define("atletas", {
     defaultValue: false,
     type: Sequelize.BOOLEAN
   },
+  clube_casa_id: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  placar_oficial_mandante: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  abreviacaoMandante: {
+    allowNull: true,
+    type: Sequelize.STRING(3)
+  },
+  clube_visitante_id: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  placar_oficial_visitante: {
+    allowNull: true,
+    type: Sequelize.SMALLINT
+  },
+  abreviacaoVisitante: {
+    allowNull: true,
+    type: Sequelize.STRING(3)
+  },
+  status_transmissao_tr: {
+    allowNull: true,
+    type: Sequelize.STRING(30)
+  },
 
 
 },
