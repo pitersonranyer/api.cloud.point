@@ -1046,7 +1046,6 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) =>
     atletasArray[ind].status_transmissao_tr = null;
     atletasArray[ind].entrou_em_campo = false;
 
-
     atletaBanco = await sequelize.query("SELECT COUNT(*) as `count`" +
       "FROM `atletas` " +
       " WHERE `atletas`.`nrRodada` " + `=  "${nrRodada}" ` +
@@ -1056,7 +1055,8 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) =>
         type: sequelize.QueryTypes.SELECT
       });
 
-    if (atletaBanco[0].count === 0) {
+      /* atleta não pontuou porém seu time já jogou ou está jogando */
+    if (atletaBanco[0].count > 0) {
       
       atletasArray[ind].atleta_ficou_no_banco = true;
 
