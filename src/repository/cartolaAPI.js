@@ -1001,6 +1001,13 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     " , `atletas`.`qtdeCartaoVermelho` " +
     " , `atletas`.`qtdeGolContra` " +
     " , `atletas`.`saldoGol` " +
+    " , `atletas`.`clube_casa_id` " +
+    " , `atletas`.`placar_oficial_mandante` " +
+    " , `atletas`.`abreviacaoMandante` " +
+    " , `atletas`.`clube_visitante_id` " +
+    " , `atletas`.`placar_oficial_visitante` " +
+    " , `atletas`.`abreviacaoVisitante` " +
+    " , `atletas`.`status_transmissao_tr` " +
     "      FROM `atletas` " +
     "      WHERE `atletas`.`atleta_id` " + `= "${atleta_id}" ` +
     "      AND `atletas`.`nrRodada` " + `= "${nrRodada}" `
@@ -1026,6 +1033,13 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     atletasArray[ind].qtdeGolContra = atletas[0].qtdeGolContra;
     atletasArray[ind].saldoGol = atletas[0].saldoGol;
     atletasArray[ind].pontuou = true;
+    atletasArray[ind].clube_casa_id = atletas[0].clube_casa_id;
+    atletasArray[ind].placar_oficial_mandante = atletas[0].placar_oficial_mandante;
+    atletasArray[ind].abreviacaoMandante = atletas[0].abreviacaoMandante;
+    atletasArray[ind].clube_visitante_id = atletas[0].clube_visitante_id;
+    atletasArray[ind].placar_oficial_visitante = atletas[0].placar_oficial_visitante;
+    atletasArray[ind].abreviacaoVisitante = atletas[0].abreviacaoVisitante;
+    atletasArray[ind].status_transmissao_tr = atletas[0].status_transmissao_tr;
 
   }else{
     atletasArray[ind].pontuou = false;
