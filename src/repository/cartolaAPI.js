@@ -1049,8 +1049,8 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) =>
 
     atletaBanco = await sequelize.query("SELECT COUNT(*) as `count`" +
       "FROM `atletas` " +
-      " WHERE `atletas`.`nrRodada` " + `= '${nrRodada}' ` +
-      " AND   `atletas`.`clube_id` " + `= ${parm_clube_id} ` +
+      " WHERE `atletas`.`nrRodada` " + `=  "${nrRodada}" ` +
+      " AND   `atletas`.`clube_id` " + `= "${parm_clube_id}" ` +
       " AND   `atletas`.`placar_oficial_mandante` is not null "
       , {
         type: sequelize.QueryTypes.SELECT
