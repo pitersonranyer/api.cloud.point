@@ -1043,6 +1043,7 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
 
   }else{
     atletasArray[ind].pontuou = false;
+    atletasArray[ind].status_transmissao_tr = null;
   }
 }
 
