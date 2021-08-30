@@ -765,7 +765,7 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
 
     for (let i = 0; i < atletasArray.length; i++) {
 
-      await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i);
+      await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
 
     }
 
@@ -895,7 +895,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
 
     for (let i = 0; i < atletasArray.length; i++) {
 
-      await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i);
+      await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
 
     }
 
@@ -983,7 +983,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
 }
 
 
-const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
+const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) => {
 
   atletas = await sequelize.query("SELECT `atletas`.`nrRodada` " +
     " , `atletas`.`atleta_id` " +
@@ -1032,7 +1032,6 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     atletasArray[ind].qtdeCartaoVermelho = atletas[0].qtdeCartaoVermelho;
     atletasArray[ind].qtdeGolContra = atletas[0].qtdeGolContra;
     atletasArray[ind].saldoGol = atletas[0].saldoGol;
-    atletasArray[ind].pontuou = true;
     atletasArray[ind].clube_casa_id = atletas[0].clube_casa_id;
     atletasArray[ind].placar_oficial_mandante = atletas[0].placar_oficial_mandante;
     atletasArray[ind].abreviacaoMandante = atletas[0].abreviacaoMandante;
@@ -1040,10 +1039,33 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind) => {
     atletasArray[ind].placar_oficial_visitante = atletas[0].placar_oficial_visitante;
     atletasArray[ind].abreviacaoVisitante = atletas[0].abreviacaoVisitante;
     atletasArray[ind].status_transmissao_tr = atletas[0].status_transmissao_tr;
+    atletasArray[ind].atleta_ficou_no_banco = false;
 
-  }else{
-    atletasArray[ind].pontuou = false;
+  } else {
+
     atletasArray[ind].status_transmissao_tr = null;
+    atletasArray[ind].entrou_em_campo = false;
+
+
+    atletaBanco = await sequelize.query("SELECT COUNT(*) as `count`" +
+      "FROM `atletas` " +
+      " WHERE `atletas`.`nrRodada` " + `= '${nrRodada}' ` +
+      " AND   `atletas`.`clube_id` " + `= ${parm_clube_id} ` +
+      " AND   `atletas`.`placar_oficial_mandante` is not null "
+      , {
+        type: sequelize.QueryTypes.SELECT
+      });
+
+    if (atletaBanco[0].count === 0) {
+      
+      atletasArray[ind].atleta_ficou_no_banco = true;
+
+    }
+
+
+
+
+
   }
 }
 
