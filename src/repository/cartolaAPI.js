@@ -386,12 +386,8 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
       scoutJogadorTempPositivo = [];
       scoutJogadorTempNegativo = [];
       scoutJogadorTemp = [];
-// PITERSON
-      for (let i = 0; i < atletasArray.length; i++) {
 
-        await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
-  
-      }
+
 
       Object.keys(resultJson.body.atletas[atleta_id].scout).forEach(id => {
 
@@ -456,6 +452,11 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
       atletasArray[atleta_id].scout = scoutJogadorTemp.toString();
 
     });
+
+    /* MercadoAberto titular */
+    for (let i = 0; i < atletasArray.length; i++) {
+      await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
+    }
 
 
     Object.keys(resultJson.body.clubes).forEach(id => {
@@ -576,7 +577,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
     let idx = 0;
     let rodadaAtual = resultJson.body.time.rodada_time_id;
-    
+
     Object.keys(resultJson.body.reservas).forEach(atleta_id => {
 
       const atleta = {
@@ -602,11 +603,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
       scoutJogadorTempPositivo = [];
       scoutJogadorTempNegativo = [];
 
-      for (let i = 0; i < atletasArray.length; i++) {
 
-        await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
-  
-      }
 
       Object.keys(resultJson.body.reservas[atleta_id].scout).forEach(id => {
 
@@ -669,6 +666,11 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
       atletasArray[atleta_id].scout = scoutJogadorTemp.toString();
 
     });
+
+    /* MercadoAberto Reservas*/
+    for (let i = 0; i < atletasArray.length; i++) {
+      await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
+    }
 
 
     Object.keys(resultJson.body.clubes).forEach(id => {
@@ -800,6 +802,7 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
 
     });
 
+    /* MercadoFechado titular */
     for (let i = 0; i < atletasArray.length; i++) {
 
       await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
@@ -930,6 +933,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
 
     });
 
+    /* MercadoFechado reservas */
     for (let i = 0; i < atletasArray.length; i++) {
 
       await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
@@ -1092,9 +1096,9 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) =>
         type: sequelize.QueryTypes.SELECT
       });
 
-      /* atleta não pontuou porém seu time já jogou ou está jogando */
+    /* atleta não pontuou porém seu time já jogou ou está jogando */
     if (atletaBanco[0].count > 0) {
-      
+
       atletasArray[ind].atleta_ficou_no_banco = true;
 
     }
