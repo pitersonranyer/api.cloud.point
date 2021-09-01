@@ -29,10 +29,36 @@ const postLoginCartola = (login) => {
     });
 }
 
-const getTimeUsuarioLogado = (glbId) => {
+const getTimeUsuarioLogadoOld = (glbId) => {
 
   path = `/auth/time/info`;
   var url = `${BASE_URL}${path}`;
+
+  return unirest.get(url)
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
+    .header("X-GLB-Token", glbId)
+
+    .then(data => {
+      if (data === null) {
+        return false;
+      } else {
+        return data.body;
+      }
+    });
+}
+
+const getTimeUsuarioLogado = (glbId) => {
+
+  path = `/auth/mercado/atleta/50427/pontuacao`;
+  var url = `${BASE_URL}${path}`;
+
+  console.log(url);
 
   return unirest.get(url)
     .header(
@@ -333,7 +359,8 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
   if (resultJson.body) {
 
 
-    let idx = 0
+    let idx = 0;
+    let rodadaAtual = resultJson.body.time.rodada_time_id;
 
     Object.keys(resultJson.body.atletas).forEach(atleta_id => {
 
@@ -359,12 +386,15 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
       scoutJogadorTempPositivo = [];
       scoutJogadorTempNegativo = [];
       scoutJogadorTemp = [];
+// PITERSON
+      for (let i = 0; i < atletasArray.length; i++) {
+
+        await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
+  
+      }
 
       Object.keys(resultJson.body.atletas[atleta_id].scout).forEach(id => {
 
-        //  if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
-        //    resultJson.body.atletas[atleta_id].scout[id] = '';
-        //  }
 
 
         const objScout = {
@@ -544,7 +574,9 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
   if (resultJson.body.reservas != undefined) {
 
-    let idx = 0
+    let idx = 0;
+    let rodadaAtual = resultJson.body.time.rodada_time_id;
+    
     Object.keys(resultJson.body.reservas).forEach(atleta_id => {
 
       const atleta = {
@@ -570,6 +602,11 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
       scoutJogadorTempPositivo = [];
       scoutJogadorTempNegativo = [];
 
+      for (let i = 0; i < atletasArray.length; i++) {
+
+        await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
+  
+      }
 
       Object.keys(resultJson.body.reservas[atleta_id].scout).forEach(id => {
 
