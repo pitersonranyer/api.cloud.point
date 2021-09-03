@@ -58,8 +58,6 @@ const getTimeUsuarioLogado = (glbId) => {
   path = `/auth/mercado/atleta/50427/pontuacao`;
   var url = `${BASE_URL}${path}`;
 
-  console.log(url);
-
   return unirest.get(url)
     .header(
       "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
@@ -360,7 +358,7 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
 
     let idx = 0;
-    let rodadaAtual = resultJson.body.time.rodada_time_id;
+    let rodadaAtual = resultJson.body.rodada_atual;
 
     Object.keys(resultJson.body.atletas).forEach(atleta_id => {
 
@@ -576,7 +574,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
   if (resultJson.body.reservas != undefined) {
 
     let idx = 0;
-    let rodadaAtual = resultJson.body.time.rodada_time_id;
+    let rodadaAtual = resultJson.body.rodada_atual;
 
     Object.keys(resultJson.body.reservas).forEach(atleta_id => {
 
