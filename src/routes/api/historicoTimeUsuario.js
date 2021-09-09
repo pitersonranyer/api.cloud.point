@@ -9,5 +9,7 @@ Router.get('/listarTimesUsuario/:nrContatoUsuario', controller.listarTimesUsuari
 
 Router.delete('/excluirTimeUsuario/:time_id', controller.excluirTimeUsuario);
 
+Router.get('/listarTimesUsuarioMobile/:nrContatoUsuario', controller.listarTimesUsuarioMobile);
+
 
 module.exports = Router;

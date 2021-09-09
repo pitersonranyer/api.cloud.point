@@ -1,7 +1,8 @@
 const {
   cadastrarHistoricoTimeUsuario,
   getTimesUsuario,
-  delHistoricoTimeUsuario
+  delHistoricoTimeUsuario,
+  getTimesUsuarioMobile
 } = require('../repository/historicoTimeUsuario');
 
 
@@ -41,9 +42,18 @@ const excluirTimeUsuario = (req, res, next) => {
     });
 };
 
+
+const listarTimesUsuarioMobile = async (req, res, next) => {
+  const nrContatoUsuario = req.params.nrContatoUsuario;
+  return getTimesUsuarioMobile(nrContatoUsuario)
+    .then(timesUsuario => res.json(timesUsuario))
+    .catch(err => next(err));
+};
+
 module.exports = {
   cadastro,
   listarTimesUsuario,
-  excluirTimeUsuario
+  excluirTimeUsuario,
+  listarTimesUsuarioMobile
 };
 
