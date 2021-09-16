@@ -1102,6 +1102,8 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) =>
     atletasArray[ind].foto = atletas[0].foto;
     atletasArray[ind].posicao_id = atletas[0].posicao_id;
     atletasArray[ind].clube_id = atletas[0].clube_id;
+    atletas[0].scoutPositivo = atletas[0].scoutPositivo.replace('1', '');
+    atletas[0].scoutNegativo = atletas[0].scoutNegativo.replace('1', '');
     atletasArray[ind].scoutPositivo = atletas[0].scoutPositivo;
     atletasArray[ind].scoutNegativo = atletas[0].scoutNegativo;
     atletasArray[ind].pontuacao = atletas[0].pontuacao;
