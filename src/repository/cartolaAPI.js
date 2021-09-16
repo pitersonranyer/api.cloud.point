@@ -389,7 +389,9 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
       Object.keys(resultJson.body.atletas[atleta_id].scout).forEach(id => {
 
-
+        if (resultJson.body.atletas[atleta_id].scout[id] === 1) {
+          resultJson.body.atletas[atleta_id].scout[id] = '';
+        }
 
         const objScout = {
           scoutId: id,
@@ -416,10 +418,18 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
             || scoutJogador[idx].scoutId === 'DS') {
             scoutJogadorTempPositivo.push(scoutJogador[idx].result);
             if (scoutJogador[idx].scoutId === 'G') {
-              atletasArray[atleta_id].qtdeGols = resultJson.body.atletas[atleta_id].scout[id];
+              if (resultJson.body.atletas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeGols = 1;
+              } else {
+                atletasArray[atleta_id].qtdeGols = resultJson.body.atletas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'A') {
-              atletasArray[atleta_id].qtdeAssistencia = resultJson.body.atletas[atleta_id].scout[id];
+              if (resultJson.body.atletas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeAssistencia = 1;
+              } else {
+                atletasArray[atleta_id].qtdeAssistencia = resultJson.body.atletas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'SG') {
               atletasArray[atleta_id].saldoGol = true;
@@ -428,13 +438,25 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
             if (scoutJogador[idx].scoutId === 'CA') {
-              atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.atletas[atleta_id].scout[id];
+              if (resultJson.body.atletas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeCartaoAmarelo = 1;
+              } else {
+                atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.atletas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'CV') {
-              atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.atletas[atleta_id].scout[id];
+              if (resultJson.body.atletas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeCartaoVermelho = 1;
+              } else {
+                atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.atletas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'GC') {
-              atletasArray[atleta_id].qtdeGolContra = resultJson.body.atletas[atleta_id].scout[id];
+              if (resultJson.body.atletas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeGolContra = 1;
+              } else {
+                atletasArray[atleta_id].qtdeGolContra = resultJson.body.atletas[atleta_id].scout[id];
+              }
             }
           }
 
@@ -605,9 +627,9 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
       Object.keys(resultJson.body.reservas[atleta_id].scout).forEach(id => {
 
-        //  if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
-        //    resultJson.body.reservas[atleta_id].scout[id] = '';
-        //  }
+          if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
+            resultJson.body.reservas[atleta_id].scout[id] = '';
+          }
 
 
         const objScout = {
@@ -633,10 +655,18 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
             || scoutJogador[idx].scoutId === 'DS') {
             scoutJogadorTempPositivo.push(scoutJogador[idx].result);
             if (scoutJogador[idx].scoutId === 'G') {
-              atletasArray[atleta_id].qtdeGols = resultJson.body.reservas[atleta_id].scout[id];
+              if (resultJson.body.reservas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeGols = 1;
+              }else{
+                atletasArray[atleta_id].qtdeGols = resultJson.body.reservas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'A') {
-              atletasArray[atleta_id].qtdeAssistencia = resultJson.body.reservas[atleta_id].scout[id];
+              if (resultJson.body.reservas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeAssistencia = 1;
+              }else{
+                atletasArray[atleta_id].qtdeAssistencia = resultJson.body.reservas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'SG') {
               atletasArray[atleta_id].saldoGol = true;
@@ -644,13 +674,25 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
           } else {
             scoutJogadorTempNegativo.push(scoutJogador[idx].result);
             if (scoutJogador[idx].scoutId === 'CA') {
-              atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.reservas[atleta_id].scout[id];
+              if (resultJson.body.reservas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeCartaoAmarelo = 1;
+              }else{
+                atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.reservas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'CV') {
-              atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.reservas[atleta_id].scout[id];
+              if (resultJson.body.reservas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeCartaoVermelho = 1;
+              }else{
+                atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.reservas[atleta_id].scout[id];
+              }
             }
             if (scoutJogador[idx].scoutId === 'GC') {
-              atletasArray[atleta_id].qtdeGolContra = resultJson.body.reservas[atleta_id].scout[id];
+              if (resultJson.body.reservas[atleta_id].scout[id] === '') {
+                atletasArray[atleta_id].qtdeGolContra = 1;
+              }else{
+                atletasArray[atleta_id].qtdeGolContra = resultJson.body.reservas[atleta_id].scout[id];
+              }
             }
           }
         }
@@ -1095,15 +1137,8 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) =>
 
     /* atleta não pontuou porém seu time já jogou ou está jogando */
     if (atletaBanco[0].count > 0) {
-
       atletasArray[ind].atleta_ficou_no_banco = true;
-
     }
-
-
-
-
-
   }
 }
 
