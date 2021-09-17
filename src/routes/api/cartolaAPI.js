@@ -28,6 +28,6 @@ Router.get('/consultarParciaisAtletasMercadoFechado/:time_id',  controller.consu
 
 Router.get('/consultarParciaisAtletasReservasMercadoFechado/:time_id',  controller.consultarParciaisAtletasReservasMercadoFechado);
 
-
+Router.get('/recuperarPontuacaoAtletasRodada/:nrRodada',  controller.recuperarPontuacaoAtletasRodada);
 
 module.exports = Router;

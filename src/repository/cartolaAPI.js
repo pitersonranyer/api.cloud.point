@@ -627,9 +627,9 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
       Object.keys(resultJson.body.reservas[atleta_id].scout).forEach(id => {
 
-          if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
-            resultJson.body.reservas[atleta_id].scout[id] = '';
-          }
+        if (resultJson.body.reservas[atleta_id].scout[id] === 1) {
+          resultJson.body.reservas[atleta_id].scout[id] = '';
+        }
 
 
         const objScout = {
@@ -657,14 +657,14 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
             if (scoutJogador[idx].scoutId === 'G') {
               if (resultJson.body.reservas[atleta_id].scout[id] === '') {
                 atletasArray[atleta_id].qtdeGols = 1;
-              }else{
+              } else {
                 atletasArray[atleta_id].qtdeGols = resultJson.body.reservas[atleta_id].scout[id];
               }
             }
             if (scoutJogador[idx].scoutId === 'A') {
               if (resultJson.body.reservas[atleta_id].scout[id] === '') {
                 atletasArray[atleta_id].qtdeAssistencia = 1;
-              }else{
+              } else {
                 atletasArray[atleta_id].qtdeAssistencia = resultJson.body.reservas[atleta_id].scout[id];
               }
             }
@@ -676,21 +676,21 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
             if (scoutJogador[idx].scoutId === 'CA') {
               if (resultJson.body.reservas[atleta_id].scout[id] === '') {
                 atletasArray[atleta_id].qtdeCartaoAmarelo = 1;
-              }else{
+              } else {
                 atletasArray[atleta_id].qtdeCartaoAmarelo = resultJson.body.reservas[atleta_id].scout[id];
               }
             }
             if (scoutJogador[idx].scoutId === 'CV') {
               if (resultJson.body.reservas[atleta_id].scout[id] === '') {
                 atletasArray[atleta_id].qtdeCartaoVermelho = 1;
-              }else{
+              } else {
                 atletasArray[atleta_id].qtdeCartaoVermelho = resultJson.body.reservas[atleta_id].scout[id];
               }
             }
             if (scoutJogador[idx].scoutId === 'GC') {
               if (resultJson.body.reservas[atleta_id].scout[id] === '') {
                 atletasArray[atleta_id].qtdeGolContra = 1;
-              }else{
+              } else {
                 atletasArray[atleta_id].qtdeGolContra = resultJson.body.reservas[atleta_id].scout[id];
               }
             }
@@ -1143,6 +1143,51 @@ const recuperarDadosAtletas = async (atleta_id, nrRodada, ind, parm_clube_id) =>
 }
 
 
+const getPontuacaoAtletasRodada = async (nrRodada) => {
+
+
+  atletas = await sequelize.query("SELECT `atletas`.`nrRodada` " +
+    " , `atletas`.`atleta_id` " +
+    " , `atletas`.`apelido` " +
+    " , `atletas`.`foto` " +
+    " , `atletas`.`pontuacao` " +
+    " , `atletas`.`posicao_id` " +
+    " , `atletas`.`clube_id` " +
+    " , `atletas`.`entrou_em_campo` " +
+    " , `atletas`.`scoutPositivo` " +
+    " , `atletas`.`scoutNegativo` " +
+    " , `atletas`.`qtdeGols` " +
+    " , `atletas`.`qtdeAssistencia` " +
+    " , `atletas`.`qtdeCartaoAmarelo` " +
+    " , `atletas`.`qtdeCartaoVermelho` " +
+    " , `atletas`.`qtdeGolContra` " +
+    " , `atletas`.`saldoGol` " +
+    " , `atletas`.`clube_casa_id` " +
+    " , `atletas`.`placar_oficial_mandante` " +
+    " , `atletas`.`abreviacaoMandante` " +
+    " , `atletas`.`clube_visitante_id` " +
+    " , `atletas`.`placar_oficial_visitante` " +
+    " , `atletas`.`abreviacaoVisitante` " +
+    " , `atletas`.`status_transmissao_tr` " +
+    "      FROM `atletas` " +
+    "      WHERE `atletas`.`nrRodada` " + `= "${nrRodada}" ` +
+    " ORDER BY `atletas`.`pontuacao` DESC "
+    , {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+  if (atletas.length > 0) {
+
+    for (let ind = 0; ind < atletas.length; ind++) {
+      atletas[ind].scoutPositivo = atletas[ind].scoutPositivo.replace(/1/gi, '');
+      atletas[ind].scoutNegativo = atletas[ind].scoutNegativo.replace(/1/gi, '');
+      atletas[ind].atleta_ficou_no_banco = false;
+    }
+  }
+  return atletas;
+}
+
+
 module.exports = {
   getTimesCartola,
   getTimeCartola,
@@ -1156,5 +1201,6 @@ module.exports = {
   getParciaisAtletasMercadoAberto,
   getParciaisAtletasReservasMercadoAberto,
   getParciaisAtletasMercadoFechado,
-  getParciaisAtletasReservasMercadoFechado
+  getParciaisAtletasReservasMercadoFechado,
+  getPontuacaoAtletasRodada
 };
