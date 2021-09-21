@@ -344,6 +344,18 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
   atletasArray = [];
   posicoesArray = [];
 
+
+  // Recuperar posicoes
+  resultPosicoes = await unirest.get('https://api.cartolafc.globo.com/posicoes')
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
+
+
   // consultarTimeCartola
   resultJson = await unirest.get(url)
     .header(
@@ -474,12 +486,15 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
     });
 
     /* MercadoAberto titular */
+
     for (let i = 0; i < atletasArray.length; i++) {
       await recuperarDadosAtletas(atletasArray[i].atleta_id, rodadaAtual, i, atletasArray[i].clube_id);
     }
 
 
-    Object.keys(resultJson.body.clubes).forEach(id => {
+
+
+    /* Object.keys(resultJson.body.clubes).forEach(id => {
       const clubes = {
         id: id,
         nome: resultJson.body.clubes[id].nome,
@@ -489,7 +504,7 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
       };
       clubesArray.push(clubes);
 
-    });
+    }); */
 
 
     // Juntar array de clubes com array de atletas
@@ -513,7 +528,7 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
 
 
       //clubes
-      for (let x = 0; x < clubesArray.length; x++) {
+      /* for (let x = 0; x < clubesArray.length; x++) {
 
         // Recuperar link do escudo 30x30
         Object.keys(clubesArray[x].escudos).forEach(id => {
@@ -535,15 +550,15 @@ const getParciaisAtletasMercadoAberto = async (time_id) => {
         }
 
       }
-
+ */
 
       // recuperar posição atleta
       var ind = 0;
-      Object.keys(resultJson.body.posicoes).forEach((id) => {
+      Object.keys(resultPosicoes.body).forEach((id) => {
         const pos = {
           id: id,
-          nome: resultJson.body.posicoes[id].nome,
-          abreviacao: resultJson.body.posicoes[id].abreviacao,
+          nome: resultPosicoes.body[id].nome,
+          abreviacao: resultPosicoes.body[id].abreviacao,
         };
         posicoesArray.push(pos);
 
@@ -581,6 +596,15 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
   atletasArray = [];
   posicoesArray = [];
 
+  // Recuperar posicoes
+  resultPosicoes = await unirest.get('https://api.cartolafc.globo.com/posicoes')
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
 
 
   // consultarTimeCartola
@@ -713,7 +737,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
     }
 
 
-    Object.keys(resultJson.body.clubes).forEach(id => {
+    /* Object.keys(resultJson.body.clubes).forEach(id => {
       const clubes = {
         id: id,
         nome: resultJson.body.clubes[id].nome,
@@ -723,7 +747,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
       };
       clubesArray.push(clubes);
 
-    });
+    }); */
 
 
     // Juntar array de clubes com array de atletas
@@ -739,7 +763,7 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
 
 
       //clubes
-      for (let x = 0; x < clubesArray.length; x++) {
+      /* for (let x = 0; x < clubesArray.length; x++) {
 
         // Recuperar link do escudo 30x30
         Object.keys(clubesArray[x].escudos).forEach(id => {
@@ -760,16 +784,16 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
           atletasArray[i].nome_fantasia = clubesArray[x].nome_fantasia;
         }
 
-      }
+      } */
 
 
       // recuperar posição atleta
       var ind = 0;
-      Object.keys(resultJson.body.posicoes).forEach((id) => {
+      Object.keys(resultPosicoes.body).forEach((id) => {
         const pos = {
           id: id,
-          nome: resultJson.body.posicoes[id].nome,
-          abreviacao: resultJson.body.posicoes[id].abreviacao,
+          nome: resultPosicoes.body[id].nome,
+          abreviacao: resultPosicoes.body[id].abreviacao,
         };
         posicoesArray.push(pos);
 
@@ -782,7 +806,6 @@ const getParciaisAtletasReservasMercadoAberto = async (time_id) => {
         ind++;
 
       });
-
 
     }
 
@@ -808,6 +831,16 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
   clubesArray = [];
   atletasArray = [];
   posicoesArray = [];
+
+  // Recuperar posicoes
+  resultPosicoes = await unirest.get('https://api.cartolafc.globo.com/posicoes')
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
 
   // consultarTimeCartola
   resultJson = await unirest.get(url)
@@ -849,7 +882,7 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
 
     }
 
-    Object.keys(resultJson.body.clubes).forEach(id => {
+    /* Object.keys(resultJson.body.clubes).forEach(id => {
       const clubes = {
         id: id,
         nome: resultJson.body.clubes[id].nome,
@@ -859,7 +892,7 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
       };
       clubesArray.push(clubes);
 
-    });
+    }); */
 
 
     // Juntar array de clubes com array de atletas
@@ -875,7 +908,7 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
 
 
       //clubes
-      for (let x = 0; x < clubesArray.length; x++) {
+      /* for (let x = 0; x < clubesArray.length; x++) {
 
         // Recuperar link do escudo 30x30
         Object.keys(clubesArray[x].escudos).forEach(id => {
@@ -896,16 +929,16 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
           atletasArray[i].nome_fantasia = clubesArray[x].nome_fantasia;
         }
 
-      }
+      } */
 
 
       // recuperar posição atleta
       var ind = 0;
-      Object.keys(resultJson.body.posicoes).forEach((id) => {
+      Object.keys(resultPosicoes.body).forEach((id) => {
         const pos = {
           id: id,
-          nome: resultJson.body.posicoes[id].nome,
-          abreviacao: resultJson.body.posicoes[id].abreviacao,
+          nome: resultPosicoes.body[id].nome,
+          abreviacao: resultPosicoes.body[id].abreviacao,
         };
         posicoesArray.push(pos);
 
@@ -918,7 +951,6 @@ const getParciaisAtletasMercadoFechado = async (time_id) => {
         ind++;
 
       });
-
 
     }
 
@@ -941,6 +973,16 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
   clubesArray = [];
   atletasArray = [];
   posicoesArray = [];
+
+  // Recuperar posicoes
+  resultPosicoes = await unirest.get('https://api.cartolafc.globo.com/posicoes')
+    .header(
+      "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "Accept", "application/json, text/plain, */*",
+      "Referer", "https://cartolafc.globo.com/",
+      "Origin", "https://cartolafc.globo.com/",
+      "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+    )
 
   // consultarTimeCartola
   resultJson = await unirest.get(url)
@@ -980,7 +1022,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
 
     }
 
-    Object.keys(resultJson.body.clubes).forEach(id => {
+    /* Object.keys(resultJson.body.clubes).forEach(id => {
       const clubes = {
         id: id,
         nome: resultJson.body.clubes[id].nome,
@@ -991,7 +1033,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
       clubesArray.push(clubes);
 
     });
-
+ */
 
     // Juntar array de clubes com array de atletas
     for (let i = 0; i < atletasArray.length; i++) {
@@ -1006,7 +1048,7 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
 
 
       //clubes
-      for (let x = 0; x < clubesArray.length; x++) {
+      /* for (let x = 0; x < clubesArray.length; x++) {
 
         // Recuperar link do escudo 30x30
         Object.keys(clubesArray[x].escudos).forEach(id => {
@@ -1027,16 +1069,16 @@ const getParciaisAtletasReservasMercadoFechado = async (time_id) => {
           atletasArray[i].nome_fantasia = clubesArray[x].nome_fantasia;
         }
 
-      }
+      } */
 
 
       // recuperar posição atleta
       var ind = 0;
-      Object.keys(resultJson.body.posicoes).forEach((id) => {
+      Object.keys(resultPosicoes.body).forEach((id) => {
         const pos = {
           id: id,
-          nome: resultJson.body.posicoes[id].nome,
-          abreviacao: resultJson.body.posicoes[id].abreviacao,
+          nome: resultPosicoes.body[id].nome,
+          abreviacao: resultPosicoes.body[id].abreviacao,
         };
         posicoesArray.push(pos);
 
