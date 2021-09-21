@@ -11,7 +11,9 @@ const { getTimesCartola,
   getParciaisAtletasMercadoFechado,
   getParciaisAtletasReservasMercadoFechado,
   getBancodeReservas,
-  getPontuacaoAtletasRodada } = require('../repository/cartolaAPI');
+  getPontuacaoAtletasRodada,
+  getPontuacaoTimesSegundoTurno
+ } = require('../repository/cartolaAPI');
 
 
 const loginCartola = (req, res, next) => {
@@ -125,6 +127,13 @@ const recuperarPontuacaoAtletasRodada =  async (req, res, next) => {
     .catch(err => next(err));
 };
 
+const listarPontuacaoTimesSegundoTurno =  async (req, res, next) => {
+  
+  return getPontuacaoTimesSegundoTurno()
+    .then(times => res.json(times))
+    .catch(err => next(err));
+};
+
 
 module.exports = {
   listarTimesCartola,
@@ -140,5 +149,6 @@ module.exports = {
   consultarParciaisAtletasReservasMercadoAberto,
   consultarParciaisAtletasMercadoFechado,
   consultarParciaisAtletasReservasMercadoFechado,
-  recuperarPontuacaoAtletasRodada
+  recuperarPontuacaoAtletasRodada,
+  listarPontuacaoTimesSegundoTurno
 };

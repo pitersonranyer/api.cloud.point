@@ -1268,6 +1268,62 @@ const getPontuacaoAtletasRodada = async (nrRodada) => {
   return atletas;
 }
 
+const getPontuacaoTimesSegundoTurno = async () => {
+
+
+  times = await sequelize.query("SELECT `timeBilheteCompeticaoCartola`.`time_id` " +
+    " , sum(`pontuacaoTimeRodada`.`pontuacao`) as `soma` " +
+
+    " FROM `bilheteCompeticaoCartola` " +
+    " INNER JOIN `timeBilheteCompeticaoCartola` " +
+    " ON `timeBilheteCompeticaoCartola`.`idBilhete` = `bilheteCompeticaoCartola`.`idBilhete` " +
+    " INNER JOIN `competicaoCartola`  " +
+    " ON `competicaoCartola`.`nrSequencialRodadaCartola` = `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` " +
+    " INNER JOIN `pontuacaoTimeRodada` " +
+    " ON `pontuacaoTimeRodada`.`time_id` = `timeBilheteCompeticaoCartola`.`time_id` " +
+    " WHERE `bilheteCompeticaoCartola`.`nrSequencialRodadaCartola` = 4 " +
+    " AND   `pontuacaoTimeRodada`.`nrRodada` >= 20 " +
+    " AND   `pontuacaoTimeRodada`.`nrRodada` <= 38 " +
+    " group by `timeBilheteCompeticaoCartola`.`time_id`" +
+    " ORDER BY `soma` DESC "
+    , {
+      type: sequelize.QueryTypes.SELECT
+    });
+
+  if (times.length > 0) {
+
+    for (let i = 0; i < times.length; i++) {
+
+      var path = `/time/id/${times[i].time_id}`;
+      var url = `${BASE_URL}${path}`;
+
+      // consultarTimeCartola
+      dadosTime = await unirest.get(url)
+        .header(
+          "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+          "Accept", "application/json, text/plain, */*",
+          "Referer", "https://cartolafc.globo.com/",
+          "Origin", "https://cartolafc.globo.com/",
+          "Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.6,en;q=0.4,es;q=0.2"
+        )
+
+        if (dadosTime.body) {
+          times[i].time_id = dadosTime.body.time.time_id;
+          times[i].assinante = dadosTime.body.time.assinante;
+          times[i].foto_perfil = dadosTime.body.time.foto_perfil;
+          times[i].nome = dadosTime.body.time.nome;
+          times[i].nome_cartola = dadosTime.body.time.nome_cartola;
+          times[i].slug = dadosTime.body.time.slug;
+          times[i].url_escudo_png = dadosTime.body.time.url_escudo_png;
+          times[i].url_escudo_svg = dadosTime.body.time.url_escudo_svg;
+          times[i].facebook_id = dadosTime.body.time.facebook_id;
+        }
+
+    }
+  }
+  return times;
+}
+
 
 module.exports = {
   getTimesCartola,
@@ -1283,5 +1339,6 @@ module.exports = {
   getParciaisAtletasReservasMercadoAberto,
   getParciaisAtletasMercadoFechado,
   getParciaisAtletasReservasMercadoFechado,
-  getPontuacaoAtletasRodada
+  getPontuacaoAtletasRodada,
+  getPontuacaoTimesSegundoTurno
 };
