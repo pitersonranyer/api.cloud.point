@@ -168,22 +168,22 @@ const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
         premiacaoFinalLista = 0;
         result[i].premiacaoFinalFormatLista = '';
         if (i === 0) {
-          premiacaoPercentualLista = (premiacaoTotal * 45) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 50) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 1) {
-          premiacaoPercentualLista = (premiacaoTotal * 20) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 15) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 2) {
-          premiacaoPercentualLista = (premiacaoTotal * 10) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 7) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 3) {
-          premiacaoPercentualLista = (premiacaoTotal * 8) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 6) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
@@ -193,15 +193,46 @@ const getTimesDaCompeticao = async (nrSequencialRodadaCartola) => {
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 5) {
-          premiacaoPercentualLista = (premiacaoTotal * 2) / 100;
+          premiacaoPercentualLista = (premiacaoTotal * 3) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
         if (i === 6) {
+          premiacaoPercentualLista = (premiacaoTotal * 2) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+        }
+        if (i === 7) {
+          premiacaoPercentualLista = (premiacaoTotal * 1.5) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+        }
+        if (i === 8) {
           premiacaoPercentualLista = (premiacaoTotal * 1) / 100;
           premiacaoFinalLista = premiacaoPercentualLista;
           result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         }
+        if (i === 9) {
+          premiacaoPercentualLista = (premiacaoTotal * 0.5) / 100;
+          premiacaoFinalLista = premiacaoPercentualLista;
+          result[i].premiacaoFinalFormatLista = premiacaoFinalLista.toLocaleString('pt-br', { minimumFractionDigits: 2 });
+        }
+        if (i === 10) {
+          result[i].premiacaoFinalFormatLista = 'FREE';
+        }
+        if (i === 11) {
+          result[i].premiacaoFinalFormatLista = 'FREE';
+        }
+        if (i === 12) {
+          result[i].premiacaoFinalFormatLista = 'FREE';
+        }
+        if (i === 13) {
+          result[i].premiacaoFinalFormatLista = 'FREE';
+        }
+        if (i === 14) {
+          result[i].premiacaoFinalFormatLista = 'FREE';
+        }
+
       }
 
 
