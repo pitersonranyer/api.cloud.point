@@ -106,7 +106,7 @@ const getTimeCartola = (idTime) => {
 
   var nrRodada = 37;
 
-  path = `/time/id/${idTime}`;
+  path = `/time/id/${idTime}/${nrRodada}`;
   var url = `${BASE_URL}${path}`;
 
   return unirest.get(url)
