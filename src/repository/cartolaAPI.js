@@ -104,7 +104,7 @@ const getTimesCartola = (time) => {
 
 const getTimeCartola = (idTime) => {
 
-  var nrRodada = 38;
+  var nrRodada = 37;
 
   path = `/time/id/${idTime}/${nrRodada}`;
   var url = `${BASE_URL}${path}`;
